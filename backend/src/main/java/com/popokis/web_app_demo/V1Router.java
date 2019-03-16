@@ -52,13 +52,22 @@ public final class V1Router implements Router {
   }
 
   private HttpHandler fileHandler(String filename) {
-    return exchange -> {
-      InputStream inputStream  = Application.class.getResourceAsStream(File.separator + "public" + filename);
-      Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
-      String html = scanner.hasNext() ? scanner.next() : "";
-      exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, contentType(filename));
-      exchange.getResponseSender().send(html);
-    };
+    if (filename.contains("favicon.ico") || filename.contains(".png")) {
+      return exchange -> {
+        InputStream inputStream = Application.class.getResourceAsStream(File.separator + "public" + filename);
+
+        exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, contentType(filename));
+        exchange.getResponseSender().send();
+      };
+    } else {
+      return exchange -> {
+        InputStream inputStream = Application.class.getResourceAsStream(File.separator + "public" + filename);
+        Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
+        String html = scanner.hasNext() ? scanner.next() : "";
+        exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, contentType(filename));
+        exchange.getResponseSender().send(html);
+      };
+    }
   }
 
   private String contentType(String filename) {
