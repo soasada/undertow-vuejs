@@ -123,8 +123,6 @@
                                         <include>static/</include>
                                         <include>index.html</include>
                                         <include>favicon.ico</include>
-                                        <include>app.js</include>
-                                        <include>about.js</include>
                                     </includes>
                                 </resource>
                             </resources>
