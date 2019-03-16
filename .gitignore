@@ -52,3 +52,6 @@ project/project
 *.iml
 package-lock.json
 backend/src/main/resources/public/
+dependency-reduced-pom.xml
+node/
+node_modules/
