@@ -40,7 +40,7 @@ public final class V1Router implements Router {
     String projectPath = System.getProperty("user.dir") + "/backend/target/classes/public";
 
     try {
-      return Files.walk(Paths.get(Application.class.getResource("/public").toURI()))
+      return Files.walk(Paths.get(V1Router.class.getResource("/public").toURI()))
           .filter(Files::isRegularFile)
           .filter(p -> !p.toString().contains("index.html"))
           .collect(toList()).stream()
@@ -56,8 +56,20 @@ public final class V1Router implements Router {
       InputStream inputStream  = Application.class.getResourceAsStream(File.separator + "public" + filename);
       Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
       String html = scanner.hasNext() ? scanner.next() : "";
-      exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
+      exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, contentType(filename));
       exchange.getResponseSender().send(html);
     };
+  }
+
+  private String contentType(String filename) {
+    if (filename.contains("favicon.ico") || filename.contains(".png")) {
+      return "image/png";
+    } else if (filename.contains(".css")) {
+      return "text/css";
+    } else if (filename.contains(".js")) {
+      return "text/javascript";
+    } else {
+      return "text/html";
+    }
   }
 }
