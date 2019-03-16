@@ -17,3 +17,5 @@
 4. Run application
 
 `java -jar backend/target/backend-0.0.1.jar`
+
+## Remember to add to router the routes of vue-router in order to avoid 404.

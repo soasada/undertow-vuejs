@@ -6,21 +6,29 @@ import io.undertow.util.Headers;
 import io.undertow.util.Methods;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static java.util.stream.Collectors.toList;
 
 public final class V1Router implements Router {
 
   @Override
   public List<Route> routes() {
-    return List.of(
-        Route.of(Methods.GET, "/", new BlockingHandler(fileHandler("index.html"))),
-        Route.of(Methods.GET, "/app.js", new BlockingHandler(fileHandler("app.js"))),
-        Route.of(Methods.GET, "/about.js", new BlockingHandler(fileHandler("about.js"))),
-        Route.of(Methods.GET, "/favicon.ico", new BlockingHandler(fileHandler("favicon.ico"))),
-        Route.of(Methods.GET, "/static/img/logo.82b9c7a5.png", new BlockingHandler(fileHandler("/static/img/logo.82b9c7a5.png")))
-    );
+    List<Route> staticFileRoutes = staticFileRoutes();
+    List<Route> normalRoutes = new ArrayList<>(List.of(
+        Route.of(Methods.GET, "/", new BlockingHandler(fileHandler("/index.html")))
+    ));
+
+    normalRoutes.addAll(staticFileRoutes);
+
+    return normalRoutes;
   }
 
   @Override
@@ -28,9 +36,24 @@ public final class V1Router implements Router {
     return "/api/v1";
   }
 
+  private List<Route> staticFileRoutes() {
+    String projectPath = System.getProperty("user.dir") + "/backend/target/classes/public";
+
+    try {
+      return Files.walk(Paths.get(Application.class.getResource("/public").toURI()))
+          .filter(Files::isRegularFile)
+          .filter(p -> !p.toString().contains("index.html"))
+          .collect(toList()).stream()
+          .map(p -> Route.of(Methods.GET, p.toString().replace(projectPath, ""), new BlockingHandler(fileHandler(p.toString().replace(projectPath, "")))))
+          .collect(toList());
+    } catch (IOException | URISyntaxException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   private HttpHandler fileHandler(String filename) {
     return exchange -> {
-      InputStream inputStream  = Application.class.getResourceAsStream(File.separator + "public" + File.separator + filename);
+      InputStream inputStream  = Application.class.getResourceAsStream(File.separator + "public" + filename);
       Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
       String html = scanner.hasNext() ? scanner.next() : "";
       exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
