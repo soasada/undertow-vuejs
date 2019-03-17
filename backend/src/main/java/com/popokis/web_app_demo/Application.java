@@ -37,7 +37,7 @@ public final class Application {
 //                .delete("/customers/{customerId}", exchange -> {...})
 //                .setFallbackHandler(exchange -> {...}))
 
-                // Redirect root path to /static to serve the index.html by default
+                // Redirect /about to root path to serve the index.html where the SPA lives
                 .addExactPath("/about", Handlers.redirect("/"))
 
                 // Serve all static files from a folder
