@@ -2,7 +2,7 @@ package com.popokis.web_app_demo;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;
-import io.undertow.server.handlers.resource.PathResourceManager;
+import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.server.handlers.resource.ResourceHandler;
 
 import javax.net.ssl.KeyManager;
@@ -13,8 +13,6 @@ import javax.net.ssl.TrustManagerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -26,7 +24,7 @@ public final class Application {
 
   private static final char[] STORE_PASSWORD = "password".toCharArray();
 
-  public static void main(String[] args) throws URISyntaxException {
+  public static void main(String[] args) {
     Undertow.builder()
         .addHttpListener(8080, "localhost")
         .addHttpsListener(8443, "localhost", createSSLContext(loadKeyStore("certificate/client.jks"), loadKeyStore("certificate/clienttrust.jks")))
@@ -42,9 +40,7 @@ public final class Application {
 
                 // Serve all static files from a folder
                 .addPrefixPath("/", new ResourceHandler(
-                    new PathResourceManager(
-                        Paths.get(Application.class.getResource("/public").toURI()),
-                        100))
+                    new ClassPathResourceManager(Thread.currentThread().getContextClassLoader(), "public"))
                     .setDirectoryListingEnabled(true))
         ).build().start();
   }
