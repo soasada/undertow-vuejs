@@ -27,7 +27,7 @@ public final class Application {
   public static void main(String[] args) {
     Undertow.builder()
         .addHttpListener(8080, "localhost")
-//        .addHttpsListener(8443, "localhost", createSSLContext(loadKeyStore("certificate/client.jks"), loadKeyStore("certificate/clienttrust.jks")))
+        .addHttpsListener(8443, "localhost", createSSLContext(loadKeyStore("certificate/client.jks"), loadKeyStore("certificate/clienttrust.jks")))
         .setHandler(Handlers.path()
                 // REST API path
 //            .addPrefixPath("/api", Handlers.routing()
