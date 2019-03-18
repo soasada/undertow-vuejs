@@ -14,7 +14,7 @@
 
 `mvn -U clean package -pl :backend`
 
-4. Run application (flag need in order to avoid TLSv1.3 bug see more: https://issues.jboss.org/browse/UNDERTOW-1493)
+4. Run application (flag needed in order to avoid TLSv1.3 bug see more: https://issues.jboss.org/browse/UNDERTOW-1493)
 
 `java -Djdk.tls.acknowledgeCloseNotify=true -jar backend/target/backend-0.0.1.jar`
 
