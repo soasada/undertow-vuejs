@@ -2,8 +2,10 @@ package com.popokis.web_app_demo;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;
-import io.undertow.server.handlers.resource.ClassPathResourceManager;
-import io.undertow.server.handlers.resource.ResourceHandler;
+import io.undertow.UndertowOptions;
+import io.undertow.attribute.ExchangeAttributes;
+import io.undertow.util.Headers;
+import io.undertow.util.StatusCodes;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -20,28 +22,22 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
+import static io.undertow.Handlers.predicate;
+import static io.undertow.predicate.Predicates.secure;
+
 public final class Application {
 
   private static final char[] STORE_PASSWORD = "password".toCharArray();
 
   public static void main(String[] args) {
     Undertow.builder()
+        .setServerOption(UndertowOptions.ENABLE_HTTP2, true)
         .addHttpListener(8080, "localhost")
         .addHttpsListener(8443, "localhost", createSSLContext(loadKeyStore("certificate/client.jks"), loadKeyStore("certificate/clienttrust.jks")))
-        .setHandler(Handlers.path()
-                // REST API path
-//            .addPrefixPath("/api", Handlers.routing()
-//                .get("/customers", exchange -> {...})
-//                .delete("/customers/{customerId}", exchange -> {...})
-//                .setFallbackHandler(exchange -> {...}))
-
-                // Redirect /about to root path to serve the index.html where the SPA lives
-                .addExactPath("/about", Handlers.redirect("/"))
-
-                // Serve all static files from a folder
-                .addPrefixPath("/", new ResourceHandler(
-                    new ClassPathResourceManager(Thread.currentThread().getContextClassLoader(), "public"))
-                    .setDirectoryListingEnabled(true))
+        .setHandler(Handlers.header(predicate(secure(), Router.router(), (exchange) -> {
+              exchange.getResponseHeaders().add(Headers.LOCATION, "https://" + exchange.getHostName() + ":" + (exchange.getHostPort() + 363) + exchange.getRelativePath());
+              exchange.setStatusCode(StatusCodes.TEMPORARY_REDIRECT);
+            }), "x-undertow-transport", ExchangeAttributes.transportProtocol())
         ).build().start();
   }
 
