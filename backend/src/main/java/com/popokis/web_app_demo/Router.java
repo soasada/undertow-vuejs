@@ -2,6 +2,7 @@ package com.popokis.web_app_demo;
 
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
+import io.undertow.server.handlers.encoding.EncodingHandler;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.server.handlers.resource.ResourceHandler;
 
@@ -21,8 +22,8 @@ public final class Router {
         .addExactPath("/about", Handlers.redirect("/"))
 
         // Serve all static files from a folder
-        .addPrefixPath("/", new ResourceHandler(
+        .addPrefixPath("/", new EncodingHandler.Builder().build(null).wrap(new ResourceHandler(
             new ClassPathResourceManager(Thread.currentThread().getContextClassLoader(), "public"))
-            .setDirectoryListingEnabled(true));
+            .setDirectoryListingEnabled(true)));
   }
 }
