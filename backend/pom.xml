@@ -14,8 +14,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>1.11</maven.compiler.source>
-        <maven.compiler.target>1.11</maven.compiler.target>
+        <maven.compiler.source>1.12</maven.compiler.source>
+        <maven.compiler.target>1.12</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -40,14 +40,14 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.4.0</version>
+            <version>5.4.1</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.4.0</version>
+            <version>5.4.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -96,7 +96,7 @@
                     <verbose>true</verbose>
                     <fork>true</fork>
                     <executable>/opt/prod_jdk/bin/javac</executable>
-                    <release>11</release>
+                    <release>12</release>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
