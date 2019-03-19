@@ -30,10 +30,16 @@ public final class Application {
   private static final char[] STORE_PASSWORD = "password".toCharArray();
 
   public static void main(String[] args) {
+    ConfigLoader configLoader = ConfigLoader.create();
+
+    int httpPort = configLoader.getInt("server.http.port");
+    int httpsPort = configLoader.getInt("server.https.port");
+    String address = configLoader.get("server.address");
+
     Undertow.builder()
         .setServerOption(UndertowOptions.ENABLE_HTTP2, true)
-        .addHttpListener(8080, "localhost")
-        .addHttpsListener(8443, "localhost", createSSLContext(loadKeyStore("certificate/client.jks"), loadKeyStore("certificate/clienttrust.jks")))
+        .addHttpListener(httpPort, address)
+        .addHttpsListener(httpsPort, address, createSSLContext(loadKeyStore("certificate/client.jks"), loadKeyStore("certificate/clienttrust.jks")))
         .setHandler(Handlers.header(predicate(secure(), Router.router(), (exchange) -> {
               exchange.getResponseHeaders().add(Headers.LOCATION, "https://" + exchange.getHostName() + ":" + (exchange.getHostPort() + 363) + exchange.getRelativePath());
               exchange.setStatusCode(StatusCodes.TEMPORARY_REDIRECT);
