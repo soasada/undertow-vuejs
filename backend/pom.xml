@@ -44,6 +44,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.simpleflatmapper</groupId>
+            <artifactId>sfm-jdbc</artifactId>
+            <version>6.5.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.4.1</version>
