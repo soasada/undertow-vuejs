@@ -42,7 +42,14 @@
         <dependency>
             <groupId>org.simpleflatmapper</groupId>
             <artifactId>sfm-jdbc</artifactId>
-            <version>6.5.0</version>
+            <version>6.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value</artifactId>
+            <version>2.7.5</version>
+            <scope>provided</scope>
         </dependency>
 
         <!--Security-->
@@ -134,6 +141,7 @@
                     <release>12</release>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
+                    <useIncrementalCompilation>false</useIncrementalCompilation>
                 </configuration>
             </plugin>
 

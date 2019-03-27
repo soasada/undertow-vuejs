@@ -2,8 +2,9 @@ package com.popokis.web_app_demo.repository;
 
 import com.popokis.web_app_demo.db.Database;
 import com.popokis.web_app_demo.db.Query;
+import com.popokis.web_app_demo.entity.ImmutableUser;
 import com.popokis.web_app_demo.entity.User;
-import org.simpleflatmapper.jdbc.JdbcMapper;
+import org.simpleflatmapper.jdbc.JdbcMapperBuilder;
 import org.simpleflatmapper.jdbc.JdbcMapperFactory;
 
 import javax.sql.rowset.CachedRowSet;
@@ -32,17 +33,25 @@ public final class UserRepository {
     };
 
     CachedRowSet rowSet = Database.executeQuery(findQuery);
-    JdbcMapper<User> mapper = JdbcMapperFactory.newInstance()
-        .addAlias("u_id", "id")
-        .addAlias("u_username", "username")
-        .addAlias("u_password", "password")
-        .addAlias("u_created_at", "createdAt")
-        .addAlias("u_updated_at", "updatedAt")
-        .newMapper(User.class);
     try {
+      JdbcMapperBuilder<ImmutableUser.Builder> builder = JdbcMapperFactory.newInstance()
+          .addAlias("u_id", "id")
+          .addAlias("u_username", "username")
+          .addAlias("u_password", "password")
+          .addAlias("u_created_at", "createdAt")
+          .addAlias("u_updated_at", "updatedAt")
+          .newBuilder(ImmutableUser.Builder.class);
       rowSet.next();
-      return mapper.map(rowSet);
-    } catch (SQLException e) {
+      return builder
+          .addKey("u_id")
+          .addKey("u_username")
+          .addKey("u_password")
+          .addKey("u_created_at")
+          .addKey("u_updated_at")
+          .mapper()
+          .map(rowSet)
+          .build();
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }

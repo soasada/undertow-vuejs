@@ -50,7 +50,7 @@ The intention of this repo is to give you a seed project (or example project?) t
 
 4. Compile backend, move static files to public/ and generate jar file (deployable artifact).
 
-`export APP_ENV=test && mvn -U clean test package -pl :backend`
+`export APP_ENV=test && mvn -U clean compile test package -pl :backend`
 
 5. Run application (flag needed in order to avoid TLSv1.3 bug see more: https://issues.jboss.org/browse/UNDERTOW-1493).
 
