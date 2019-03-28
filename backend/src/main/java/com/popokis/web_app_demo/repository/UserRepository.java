@@ -35,11 +35,6 @@ public final class UserRepository {
     CachedRowSet rowSet = Database.executeQuery(findQuery);
     try {
       JdbcMapperBuilder<ImmutableUser.Builder> builder = JdbcMapperFactory.newInstance()
-          .addAlias("u_id", "id")
-          .addAlias("u_username", "username")
-          .addAlias("u_password", "password")
-          .addAlias("u_created_at", "createdAt")
-          .addAlias("u_updated_at", "updatedAt")
           .newBuilder(ImmutableUser.Builder.class);
       rowSet.next();
       return builder

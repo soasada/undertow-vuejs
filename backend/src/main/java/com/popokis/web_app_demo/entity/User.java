@@ -5,10 +5,10 @@ import org.immutables.value.Value;
 import java.time.LocalDateTime;
 
 @Value.Immutable
-public interface User {
-  Long id();
-  String username();
-  String password();
-  LocalDateTime createdAt();
-  LocalDateTime updatedAt();
+public abstract class User {
+  public abstract Long uId();
+  public abstract String uUsername();
+  public abstract String uPassword();
+  public abstract LocalDateTime uCreatedAt();
+  public abstract LocalDateTime uUpdatedAt();
 }

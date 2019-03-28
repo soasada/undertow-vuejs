@@ -23,7 +23,7 @@ class UserRepositoryTest {
   @Test
   void getUser() {
     User user = UserRepository.find(1L);
-    assertEquals(1L, user.id());
-    assertEquals("soasada", user.username());
+    assertEquals(1L, user.uId());
+    assertEquals("soasada", user.uUsername());
   }
 }
