@@ -1,9 +1,5 @@
 package com.popokis.web_app_demo.db;
 
-import com.popokis.web_app_demo.HikariConnectionPool;
-
-import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,15 +35,13 @@ public final class Database {
     }
   }
 
-  public static CachedRowSet executeQuery(Query query) {
+  public static <T> T executeQuery(Query query, JdbcMapper<T> mapper) {
     try (Connection connection = HikariConnectionPool.getInstance().getConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(query.query())) {
       query.parameters(preparedStatement);
 
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
-        CachedRowSet cachedRowSet = RowSetProvider.newFactory().createCachedRowSet();
-        cachedRowSet.populate(resultSet);
-        return cachedRowSet;
+        return mapper.map(resultSet);
       }
     } catch (SQLException e) {
       throw new RuntimeException(e);
