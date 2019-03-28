@@ -1,4 +1,4 @@
-package com.popokis.web_app_demo;
+package com.popokis.web_app_demo.db;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
