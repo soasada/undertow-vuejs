@@ -16,27 +16,25 @@ public final class HikariConnectionPool {
   private final HikariDataSource dataSource;
 
   private HikariConnectionPool() {
-    HikariConfig hikariConfig;
     String env = System.getenv("APP_ENV");
     Properties properties = new Properties();
+    String filename;
 
-    if (Objects.isNull(env) || env.equals("test")) {
-      try (InputStream fi = HikariConnectionPool.class.getResourceAsStream(File.separator + "test_pool.properties")) {
-        properties.load(fi);
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-      hikariConfig = new HikariConfig(properties);
+    if (Objects.isNull(env) || env.equalsIgnoreCase("test")) {
+      filename = File.separator + "db_test_pool.properties";
+    } else if (env.equalsIgnoreCase("prod") || env.equalsIgnoreCase("production")) {
+      filename = File.separator + "db_prod_pool.properties";
     } else {
-      try (InputStream fi = HikariConnectionPool.class.getResourceAsStream(File.separator + "prod_pool.properties")) {
-        properties.load(fi);
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-      hikariConfig = new HikariConfig(properties);
+      throw new RuntimeException("Please indicate APP_ENV var: 'prod' or 'test'");
     }
 
-    this.dataSource = new HikariDataSource(hikariConfig);
+    try (InputStream fi = HikariConnectionPool.class.getResourceAsStream(filename)) {
+      properties.load(fi);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    this.dataSource = new HikariDataSource(new HikariConfig(properties));
   }
 
   private static class Holder {

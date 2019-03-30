@@ -29,6 +29,6 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeQuery(findQuery, new UserMapper());
+    return Database.executeQuery(findQuery, new UserMapper()).get();
   }
 }

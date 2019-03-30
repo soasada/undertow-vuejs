@@ -14,7 +14,6 @@ public final class UserMapper implements JdbcMapper<User> {
     try {
       JdbcMapperBuilder<ImmutableUser.Builder> builder = JdbcMapperFactory.newInstance()
           .newBuilder(ImmutableUser.Builder.class);
-      resultSet.next();
       return builder
           .addKey("u_id")
           .addKey("u_username")

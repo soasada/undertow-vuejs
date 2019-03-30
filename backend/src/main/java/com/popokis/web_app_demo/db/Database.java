@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 
 public final class Database {
 
@@ -35,13 +36,18 @@ public final class Database {
     }
   }
 
-  public static <T> T executeQuery(Query query, JdbcMapper<T> mapper) {
+  public static <T> Optional<T> executeQuery(Query query, JdbcMapper<T> mapper) {
     try (Connection connection = HikariConnectionPool.getInstance().getConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(query.query())) {
       query.parameters(preparedStatement);
 
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
-        return mapper.map(resultSet);
+        if (resultSet.isBeforeFirst()) {
+          resultSet.next();
+          return Optional.of(mapper.map(resultSet));
+        } else {
+          return Optional.empty();
+        }
       }
     } catch (SQLException e) {
       throw new RuntimeException(e);
