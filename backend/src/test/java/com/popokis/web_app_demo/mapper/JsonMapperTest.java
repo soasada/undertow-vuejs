@@ -60,8 +60,8 @@ class JsonMapperTest {
   void furnitureJsonDeserialization() throws IOException {
     String jsonFurniture = "{\"name\":\"table\",\"type\":\"wood\",\"houseId\":1}";
     Furniture furniture = JsonMapper.getInstance().mapper().readValue(jsonFurniture, Furniture.class);
-    assertEquals(1L, furniture.id());
     assertEquals("table", furniture.name());
     assertEquals("wood", furniture.type());
+    assertEquals(1L, furniture.houseId());
   }
 }

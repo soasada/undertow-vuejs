@@ -17,6 +17,8 @@ public final class BootstrapDatabase {
     Database.executeInsert(query("INSERT INTO furniture (f_id, f_name, f_type, f_house_id) VALUES (2, 'chair', 'wood', 1)"));
     Database.executeInsert(query("INSERT INTO furniture (f_id, f_name, f_type, f_house_id) VALUES (3, 'TV', 'electronic', 2)"));
     Database.executeInsert(query("INSERT INTO furniture (f_id, f_name, f_type, f_house_id) VALUES (4, 'sofa', 'misc', 2)"));
+
+    Database.executeInsert(query("INSERT INTO user (u_id, u_username, u_password) VALUES (2, 'zyonx', 'test2')"));
   }
 
   public static void setDown() {

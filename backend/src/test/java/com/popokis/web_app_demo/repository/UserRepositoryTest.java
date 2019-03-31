@@ -33,6 +33,16 @@ class UserRepositoryTest {
     User user = UserRepository.findUserHouses(1L);
     assertEquals(1L, user.id());
     assertEquals("soasada", user.username());
+    assertEquals(2, user.houses().size());
+    assertEquals(2, user.houses().get(0).furniture().size());
+    assertEquals(2, user.houses().get(1).furniture().size());
+  }
+
+  @Test
+  void findUserHousesWithoutHouses() {
+    User user = UserRepository.findUserHouses(2L);
+    assertEquals(2L, user.id());
+    assertEquals("zyonx", user.username());
     assertEquals(0, user.houses().size());
   }
 }
