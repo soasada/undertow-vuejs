@@ -1,40 +1,44 @@
 package com.popokis.web_app_demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
+
+import javax.annotation.Nullable;
 import java.time.LocalDateTime;
+import java.util.List;
 
-public final class House {
+@Value.Immutable
+@JsonSerialize(as = ImmutableHouse.class)
+@JsonDeserialize(as = ImmutableHouse.class)
+public abstract class House {
 
-  private final Long id;
-  private final String name;
-  private final Long userId;
-  private final LocalDateTime createdAt;
-  private final LocalDateTime updatedAt;
+  @Nullable
+  @JsonProperty("id")
+  @Value.Parameter
+  public abstract Long hId();
 
-  public House(Long id, String name, Long userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
-    this.id = id;
-    this.name = name;
-    this.userId = userId;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-  }
+  @JsonProperty("name")
+  @Value.Parameter
+  public abstract String hName();
 
-  public Long getId() {
-    return id;
-  }
+  @JsonProperty("userId")
+  @Value.Parameter
+  public abstract Long hUserId();
 
-  public String getName() {
-    return name;
-  }
+  @Nullable
+  @JsonProperty("createdAt")
+  @Value.Parameter
+  public abstract LocalDateTime hCreatedAt();
 
-  public Long getUserId() {
-    return userId;
-  }
+  @Nullable
+  @JsonProperty("updatedAt")
+  @Value.Parameter
+  public abstract LocalDateTime hUpdatedAt();
 
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
-  }
+  @Nullable
+  @JsonProperty("furniture")
+  @Value.Parameter
+  public abstract List<Furniture> furniture();
 }
