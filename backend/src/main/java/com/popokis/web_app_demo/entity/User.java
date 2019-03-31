@@ -17,25 +17,25 @@ public abstract class User {
   @Nullable
   @JsonProperty("id")
   @Value.Parameter
-  public abstract Long uId();
+  public abstract Long id();
 
   @JsonProperty("username")
   @Value.Parameter
-  public abstract String uUsername();
+  public abstract String username();
 
   @JsonProperty("password")
   @Value.Parameter
-  public abstract String uPassword();
+  public abstract String password();
 
   @Nullable
   @JsonProperty("createdAt")
   @Value.Parameter
-  public abstract LocalDateTime uCreatedAt();
+  public abstract LocalDateTime createdAt();
 
   @Nullable
   @JsonProperty("updatedAt")
   @Value.Parameter
-  public abstract LocalDateTime uUpdatedAt();
+  public abstract LocalDateTime updatedAt();
 
   @Nullable
   @JsonProperty("houses")

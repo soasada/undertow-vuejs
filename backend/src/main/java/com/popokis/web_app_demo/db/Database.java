@@ -43,6 +43,7 @@ public final class Database {
 
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
         if (resultSet.isBeforeFirst()) {
+          // here we move the cursor one step
           resultSet.next();
           return Optional.of(mapper.map(resultSet));
         } else {

@@ -1,6 +1,5 @@
 package com.popokis.web_app_demo.repository;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.popokis.web_app_demo.common.BootstrapDatabase;
 import com.popokis.web_app_demo.entity.User;
 import org.junit.jupiter.api.AfterEach;
@@ -22,9 +21,18 @@ class UserRepositoryTest {
   }
 
   @Test
-  void getUser() throws JsonProcessingException {
+  void findUser() {
     User user = UserRepository.find(1L);
-    assertEquals(1L, user.uId());
-    assertEquals("soasada", user.uUsername());
+    assertEquals(1L, user.id());
+    assertEquals("soasada", user.username());
+    assertEquals(0, user.houses().size());
+  }
+
+  @Test
+  void findUserHouses() {
+    User user = UserRepository.findUserHouses(1L);
+    assertEquals(1L, user.id());
+    assertEquals("soasada", user.username());
+    assertEquals(0, user.houses().size());
   }
 }

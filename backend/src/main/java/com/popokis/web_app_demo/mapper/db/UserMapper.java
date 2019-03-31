@@ -3,28 +3,22 @@ package com.popokis.web_app_demo.mapper.db;
 import com.popokis.web_app_demo.db.JdbcMapper;
 import com.popokis.web_app_demo.entity.ImmutableUser;
 import com.popokis.web_app_demo.entity.User;
-import org.simpleflatmapper.jdbc.JdbcMapperBuilder;
-import org.simpleflatmapper.jdbc.JdbcMapperFactory;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 public final class UserMapper implements JdbcMapper<User> {
+
   @Override
-  public User map(ResultSet resultSet) {
-    try {
-      JdbcMapperBuilder<ImmutableUser.Builder> builder = JdbcMapperFactory.newInstance()
-          .newBuilder(ImmutableUser.Builder.class);
-      return builder
-          .addKey("u_id")
-          .addKey("u_username")
-          .addKey("u_password")
-          .addKey("u_created_at")
-          .addKey("u_updated_at")
-          .mapper()
-          .map(resultSet)
-          .build();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+  public User map(ResultSet resultSet) throws SQLException {
+    return ImmutableUser.of(
+        resultSet.getLong("u_id"),
+        resultSet.getString("u_username"),
+        resultSet.getString("u_password"),
+        resultSet.getTimestamp("u_created_at").toLocalDateTime(),
+        resultSet.getTimestamp("u_updated_at").toLocalDateTime(),
+        List.of()
+    );
   }
 }

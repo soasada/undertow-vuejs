@@ -28,10 +28,10 @@ class JsonMapperTest {
 
   @Test
   void userJsonDeserialization() throws IOException {
-    String jsonUser = "{\"id\":1,\"username\":\"soasada\",\"password\":\"TEST\",\"createdAt\":\"2019-03-31T13:24:07.23841\",\"updatedAt\":\"2019-03-31T13:24:07.239629\"}";
+    String jsonUser = "{\"username\":\"soasada\",\"password\":\"TEST\"}";
     User user = JsonMapper.getInstance().mapper().readValue(jsonUser, User.class);
-    assertEquals(1L, user.uId());
-    assertEquals("soasada", user.uUsername());
+    assertEquals("soasada", user.username());
+    assertEquals("TEST", user.password());
   }
 
   @Test
@@ -43,10 +43,10 @@ class JsonMapperTest {
 
   @Test
   void houseJsonDeserialization() throws IOException {
-    String jsonHouse = "{\"id\":1,\"name\":\"soasadaHouse\",\"userId\":1,\"createdAt\":\"2019-03-31T21:08:14.622456\",\"updatedAt\":\"2019-03-31T21:08:14.623265\"}";
+    String jsonHouse = "{\"name\":\"soasadaHouse\",\"userId\":1}";
     House house = JsonMapper.getInstance().mapper().readValue(jsonHouse, House.class);
-    assertEquals(1L, house.hId());
-    assertEquals("soasadaHouse", house.hName());
+    assertEquals("soasadaHouse", house.name());
+    assertEquals(1L, house.userId());
   }
 
   @Test
@@ -58,10 +58,10 @@ class JsonMapperTest {
 
   @Test
   void furnitureJsonDeserialization() throws IOException {
-    String jsonFurniture = "{\"id\":1,\"name\":\"table\",\"type\":\"wood\",\"houseId\":1,\"createdAt\":\"2019-03-31T21:11:17.722026\",\"updatedAt\":\"2019-03-31T21:11:17.722806\"}";
+    String jsonFurniture = "{\"name\":\"table\",\"type\":\"wood\",\"houseId\":1}";
     Furniture furniture = JsonMapper.getInstance().mapper().readValue(jsonFurniture, Furniture.class);
-    assertEquals(1L, furniture.fId());
-    assertEquals("table", furniture.fName());
-    assertEquals("wood", furniture.fType());
+    assertEquals(1L, furniture.id());
+    assertEquals("table", furniture.name());
+    assertEquals("wood", furniture.type());
   }
 }

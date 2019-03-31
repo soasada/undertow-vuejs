@@ -17,25 +17,25 @@ public abstract class House {
   @Nullable
   @JsonProperty("id")
   @Value.Parameter
-  public abstract Long hId();
+  public abstract Long id();
 
   @JsonProperty("name")
   @Value.Parameter
-  public abstract String hName();
+  public abstract String name();
 
   @JsonProperty("userId")
   @Value.Parameter
-  public abstract Long hUserId();
+  public abstract Long userId();
 
   @Nullable
   @JsonProperty("createdAt")
   @Value.Parameter
-  public abstract LocalDateTime hCreatedAt();
+  public abstract LocalDateTime createdAt();
 
   @Nullable
   @JsonProperty("updatedAt")
   @Value.Parameter
-  public abstract LocalDateTime hUpdatedAt();
+  public abstract LocalDateTime updatedAt();
 
   @Nullable
   @JsonProperty("furniture")
