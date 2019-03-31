@@ -27,7 +27,6 @@ In the backend module we have the following dependencies:
 * WEB SERVER: **Undertow**.
 * RDBMS: **MySQL** (provided in a docker image).
 * DB CONNECTION POOL: **HikariCP**.
-* MAPPING: **SimpleFlatMapper**.
 * IMMUTABLE MODELS: **Immutables.org**.
 * JSON: **Jackson**.
 * HTTP AUTHORIZATION: **JWT**.
