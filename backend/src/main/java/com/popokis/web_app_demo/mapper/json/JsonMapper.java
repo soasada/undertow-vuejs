@@ -1,4 +1,4 @@
-package com.popokis.web_app_demo.mapper;
+package com.popokis.web_app_demo.mapper.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;

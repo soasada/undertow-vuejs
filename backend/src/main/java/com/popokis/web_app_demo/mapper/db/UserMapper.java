@@ -1,4 +1,4 @@
-package com.popokis.web_app_demo.mapper;
+package com.popokis.web_app_demo.mapper.db;
 
 import com.popokis.web_app_demo.db.JdbcMapper;
 import com.popokis.web_app_demo.entity.ImmutableUser;

@@ -31,7 +31,7 @@ public final class HikariConnectionPool {
     try (InputStream fi = HikariConnectionPool.class.getResourceAsStream(filename)) {
       properties.load(fi);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException(filename + " not found. Please create it inside resources folder.");
     }
 
     this.dataSource = new HikariDataSource(new HikariConfig(properties));

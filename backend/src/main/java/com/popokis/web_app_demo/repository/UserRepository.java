@@ -3,7 +3,7 @@ package com.popokis.web_app_demo.repository;
 import com.popokis.web_app_demo.db.Database;
 import com.popokis.web_app_demo.db.Query;
 import com.popokis.web_app_demo.entity.User;
-import com.popokis.web_app_demo.mapper.UserMapper;
+import com.popokis.web_app_demo.mapper.db.UserMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
