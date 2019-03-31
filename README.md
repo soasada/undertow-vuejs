@@ -18,6 +18,33 @@ The problem with the second option is that you are asking yourself the following
 
 The intention of this repo is to give you a seed project (or example project?) to build single page web applications with undertow and vuejs.
 
+The project consists in two module: **backend** and **frontend**.
+
+## Backend
+
+In the backend module we have the following dependencies:
+
+* WEB SERVER: **Undertow**.
+* RDBMS: **MySQL** (provided in a docker image).
+* DB CONNECTION POOL: **HikariCP**.
+* MAPPING: **SimpleFlatMapper**.
+* IMMUTABLE MODELS: **Immutables.org**.
+* JSON: **Jackson**.
+* HTTP AUTHORIZATION: **JWT**.
+* TESTING: **JUnit 5**.
+
+### 1. Web server
+
+The main class (Application.java) has all the logic to run undertow over HTTPs and the redirection from HTTP to HTTPs.
+It is a good idea to have all configurations in separate files (inside resources folder) and within the version control.
+In the main class we have a class that loads the server configuration from the `app.properties` file.
+
+### 2. Database
+
+Sometimes we need persistent storage, in this example project I used MySQL as RDBMS and HikariCP. HikariCP support configuration
+files, **db_prod_pool.properties** and **db_test_pool.properties** are used for HikariCP configuration for the production and
+testing database.
+
 ## Features
 
 * HTTPs/HTTP2.
