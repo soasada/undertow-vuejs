@@ -45,7 +45,6 @@ public final class Database {
         if (resultSet.isBeforeFirst()) {
           // here we move the cursor one step
           resultSet.next();
-          if (resultSet.getLong(1) == 0) return Optional.empty();
           return mapper.map(resultSet);
         } else {
           return Optional.empty();
