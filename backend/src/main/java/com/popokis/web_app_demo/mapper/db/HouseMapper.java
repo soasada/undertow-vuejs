@@ -7,20 +7,23 @@ import com.popokis.web_app_demo.entity.ImmutableHouse;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public final class HouseMapper implements JdbcMapper<House> {
 
   @Override
-  public House map(ResultSet resultSet) throws SQLException {
-    if (resultSet.getLong("h_id") == 0) return null;
+  public Optional<House> map(ResultSet resultSet) throws SQLException {
+    if (resultSet.getLong("h_id") == 0) return Optional.empty();
 
-    return ImmutableHouse.of(
-        resultSet.getLong("h_id"),
-        resultSet.getString("h_name"),
-        resultSet.getLong("h_user_id"),
-        resultSet.getTimestamp("h_created_at").toLocalDateTime(),
-        resultSet.getTimestamp("h_updated_at").toLocalDateTime(),
-        List.of()
+    return Optional.of(
+        ImmutableHouse.of(
+            resultSet.getLong("h_id"),
+            resultSet.getString("h_name"),
+            resultSet.getLong("h_user_id"),
+            resultSet.getTimestamp("h_created_at").toLocalDateTime(),
+            resultSet.getTimestamp("h_updated_at").toLocalDateTime(),
+            List.of()
+        )
     );
   }
 }

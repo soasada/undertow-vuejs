@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public final class FindUserHousesMapper implements JdbcMapper<User> {
@@ -28,17 +28,18 @@ public final class FindUserHousesMapper implements JdbcMapper<User> {
   }
 
   @Override
-  public User map(ResultSet resultSet) throws SQLException {
+  public Optional<User> map(ResultSet resultSet) throws SQLException {
     Set<User> users = new HashSet<>();
     Set<House> houses = new HashSet<>();
     Set<Furniture> furnitures = new HashSet<>();
 
     do {
-      users.add(userMapper.map(resultSet));
-      House house = houseMapper.map(resultSet);
-      Furniture furniture = furnitureMapper.map(resultSet);
-      if (Objects.nonNull(house)) houses.add(house);
-      if (Objects.nonNull(furniture)) furnitures.add(furniture);
+      Optional<User> optionalUser = userMapper.map(resultSet);
+      optionalUser.ifPresent(users::add);
+      Optional<House> optionalHouse = houseMapper.map(resultSet);
+      optionalHouse.ifPresent(houses::add);
+      Optional<Furniture> optionalFurniture = furnitureMapper.map(resultSet);
+      optionalFurniture.ifPresent(furnitures::add);
     } while (resultSet.next());
 
     User user = users.iterator().next();
@@ -52,6 +53,6 @@ public final class FindUserHousesMapper implements JdbcMapper<User> {
       userHouses.add(ImmutableHouse.copyOf(house).withFurniture(furnitureList));
     }
 
-    return ImmutableUser.copyOf(user).withHouses(userHouses);
+    return Optional.of(ImmutableUser.copyOf(user).withHouses(userHouses));
   }
 }
