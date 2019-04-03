@@ -2,7 +2,6 @@ package com.popokis.web_app_demo.mapper.db;
 
 import com.popokis.web_app_demo.db.JdbcMapper;
 import com.popokis.web_app_demo.entity.Furniture;
-import com.popokis.web_app_demo.entity.ImmutableFurniture;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +14,7 @@ public final class FurnitureMapper implements JdbcMapper<Furniture> {
     if (resultSet.getLong("f_id") == 0) return Optional.empty();
 
     return Optional.of(
-        ImmutableFurniture.of(
+        Furniture.create(
             resultSet.getLong("f_id"),
             resultSet.getString("f_name"),
             resultSet.getString("f_type"),

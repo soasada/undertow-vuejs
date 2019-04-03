@@ -3,8 +3,6 @@ package com.popokis.web_app_demo.mapper.db;
 import com.popokis.web_app_demo.db.JdbcMapper;
 import com.popokis.web_app_demo.entity.Furniture;
 import com.popokis.web_app_demo.entity.House;
-import com.popokis.web_app_demo.entity.ImmutableHouse;
-import com.popokis.web_app_demo.entity.ImmutableUser;
 import com.popokis.web_app_demo.entity.User;
 
 import java.sql.ResultSet;
@@ -48,11 +46,11 @@ public final class FindUserHousesMapper implements JdbcMapper<User> {
     for (House house : houses) {
       List<Furniture> furnitureList = new ArrayList<>();
       for (Furniture furniture : furnitures) {
-        if (house.id().equals(furniture.houseId())) furnitureList.add(furniture);
+        if (house.getId().longValue() == furniture.getHouseId()) furnitureList.add(furniture);
       }
-      userHouses.add(ImmutableHouse.copyOf(house).withFurniture(furnitureList));
+      userHouses.add(house.toBuilder().furniture(furnitureList).build());
     }
 
-    return Optional.of(ImmutableUser.copyOf(user).withHouses(userHouses));
+    return Optional.of(user.toBuilder().houses(userHouses).build());
   }
 }

@@ -1,7 +1,6 @@
 package com.popokis.web_app_demo.mapper.db;
 
 import com.popokis.web_app_demo.db.JdbcMapper;
-import com.popokis.web_app_demo.entity.ImmutableUser;
 import com.popokis.web_app_demo.entity.User;
 
 import java.sql.ResultSet;
@@ -16,7 +15,7 @@ public final class UserMapper implements JdbcMapper<User> {
     if (resultSet.getLong("u_id") == 0) return Optional.empty();
 
     return Optional.of(
-        ImmutableUser.of(
+        User.create(
             resultSet.getLong("u_id"),
             resultSet.getString("u_username"),
             resultSet.getString("u_password"),

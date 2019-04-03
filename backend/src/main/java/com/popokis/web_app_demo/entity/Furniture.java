@@ -1,42 +1,25 @@
 package com.popokis.web_app_demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.immutables.value.Value;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import lombok.Value;
 
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 
-@Value.Immutable
-@JsonSerialize(as = ImmutableFurniture.class)
-@JsonDeserialize(as = ImmutableFurniture.class)
-public abstract class Furniture {
+@Value
+@Builder(toBuilder = true)
+@JsonDeserialize(builder = Furniture.FurnitureBuilder.class)
+@AllArgsConstructor(staticName = "create")
+public class Furniture {
 
-  @Nullable
-  @JsonProperty("id")
-  @Value.Parameter
-  public abstract Long id();
-
-  @JsonProperty("name")
-  @Value.Parameter
-  public abstract String name();
-
-  @JsonProperty("type")
-  @Value.Parameter
-  public abstract String type();
-
-  @JsonProperty("houseId")
-  @Value.Parameter
-  public abstract Long houseId();
-
-  @Nullable
-  @JsonProperty("createdAt")
-  @Value.Parameter
-  public abstract LocalDateTime createdAt();
-
-  @Nullable
-  @JsonProperty("updatedAt")
-  @Value.Parameter
-  public abstract LocalDateTime updatedAt();
+  @Nullable Long id;
+  @NonNull String name;
+  @NonNull String type;
+  long houseId;
+  @EqualsAndHashCode.Exclude @Nullable LocalDateTime createdAt;
+  @EqualsAndHashCode.Exclude @Nullable LocalDateTime updatedAt;
 }

@@ -1,6 +1,7 @@
 package com.popokis.web_app_demo.repository;
 
 import com.popokis.web_app_demo.db.Database;
+import com.popokis.web_app_demo.db.ListMapper;
 import com.popokis.web_app_demo.db.Query;
 import com.popokis.web_app_demo.entity.User;
 import com.popokis.web_app_demo.mapper.db.FindUserHousesMapper;
@@ -8,6 +9,7 @@ import com.popokis.web_app_demo.mapper.db.UserMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public final class UserRepository {
 
@@ -54,5 +56,19 @@ public final class UserRepository {
     };
 
     return Database.executeQuery(findQuery, new UserMapper()).get();
+  }
+
+  public static List<User> all() {
+    Query findQuery = new Query() {
+      @Override
+      public String query() {
+        return "SELECT * FROM user LIMIT 100";
+      }
+
+      @Override
+      public void parameters(PreparedStatement stm) {}
+    };
+
+    return Database.executeQuery(findQuery, ListMapper.of(new UserMapper())).get();
   }
 }
