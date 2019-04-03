@@ -76,4 +76,12 @@ class UserRepositoryTest {
     int rowsAffected = UserRepository.delete(2L);
     assertTrue(rowsAffected > 0);
   }
+
+  @Test
+  void loginUser() {
+    User createdUser = User.builder().username("TEST").password("TEST").build();
+    long newId = UserRepository.create(createdUser);
+    User loggedUser = UserRepository.login(createdUser);
+    assertEquals(newId, loggedUser.getId());
+  }
 }

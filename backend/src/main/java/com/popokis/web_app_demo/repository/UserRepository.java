@@ -134,4 +134,25 @@ public final class UserRepository {
 
     return Database.executeQuery(query, new FindUserHousesMapper()).get();
   }
+
+  public static User login(User userWithoutHash) {
+    Query query = new Query() {
+      @Override
+      public String query() {
+        return "SELECT * FROM user WHERE u_username = ? AND u_password = ?";
+      }
+
+      @Override
+      public void parameters(PreparedStatement stm) {
+        try {
+          stm.setString(1, userWithoutHash.getUsername());
+          stm.setString(2, userWithoutHash.hashPassword());
+        } catch (SQLException e) {
+          throw new RuntimeException(e);
+        }
+      }
+    };
+
+    return Database.executeQuery(query, new UserMapper()).get();
+  }
 }
