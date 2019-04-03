@@ -40,7 +40,7 @@ public final class UserRepository {
       public void parameters(PreparedStatement stm) {
         try {
           stm.setString(1, user.getUsername());
-          stm.setString(2, user.getPassword());
+          stm.setString(2, user.hashPassword());
         } catch (SQLException e) {
           throw new RuntimeException(e);
         }
