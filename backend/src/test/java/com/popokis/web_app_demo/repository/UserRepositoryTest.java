@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserRepositoryTest {
 
@@ -24,7 +25,7 @@ class UserRepositoryTest {
 
   @Test
   void findUser() {
-    User user = UserRepository.find(1L);
+    User user = UserRepository.read(1L);
     assertEquals(1L, user.getId());
     assertEquals("soasada", user.getUsername());
     assertEquals(0, user.getHouses().size());
@@ -54,5 +55,25 @@ class UserRepositoryTest {
     assertEquals(2, users.size());
     assertEquals("soasada", users.get(0).getUsername());
     assertEquals("zyonx", users.get(1).getUsername());
+  }
+
+  @Test
+  void insertUser() {
+    User createdUser = User.builder().username("TEST").password("TEST").build();
+    long newId = UserRepository.create(createdUser);
+    assertEquals(3L, newId);
+  }
+
+  @Test
+  void updateUser() {
+    User updatedUser = User.builder().id(1L).username("TEST").password("TEST").build();
+    int rowsAffected = UserRepository.update(updatedUser);
+    assertTrue(rowsAffected > 0);
+  }
+
+  @Test
+  void deleteUser() {
+    int rowsAffected = UserRepository.delete(2L);
+    assertTrue(rowsAffected > 0);
   }
 }

@@ -23,8 +23,11 @@ public final class BootstrapDatabase {
 
   public static void setDown() {
     Database.executeDML(query("DELETE FROM furniture"));
+    Database.executeDML(query("ALTER TABLE furniture AUTO_INCREMENT = 1"));
     Database.executeDML(query("DELETE FROM house"));
+    Database.executeDML(query("ALTER TABLE house AUTO_INCREMENT = 1"));
     Database.executeDML(query("DELETE FROM user"));
+    Database.executeDML(query("ALTER TABLE user AUTO_INCREMENT = 1"));
   }
 
   private static Query query(String queryString) {
