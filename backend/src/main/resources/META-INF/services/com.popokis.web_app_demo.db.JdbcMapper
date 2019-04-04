@@ -1,0 +1,4 @@
+com.popokis.web_app_demo.mapper.db.FindUserHousesMapper
+com.popokis.web_app_demo.mapper.db.FurnitureMapper
+com.popokis.web_app_demo.mapper.db.HouseMapper
+com.popokis.web_app_demo.mapper.db.UserMapper

@@ -1,17 +1,20 @@
 package com.popokis.web_app_demo.repository;
 
+import com.popokis.web_app_demo.Application;
 import com.popokis.web_app_demo.db.Database;
+import com.popokis.web_app_demo.db.JdbcMapper;
 import com.popokis.web_app_demo.db.ListMapper;
 import com.popokis.web_app_demo.db.Query;
 import com.popokis.web_app_demo.entity.User;
 import com.popokis.web_app_demo.mapper.db.FindUserHousesMapper;
-import com.popokis.web_app_demo.mapper.db.UserMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 public final class UserRepository {
+
+  private static final JdbcMapper<User> mapper = Application.getMapper("UserMapper", User.class);
 
   private UserRepository() {}
 
@@ -26,7 +29,7 @@ public final class UserRepository {
       public void parameters(PreparedStatement stm) {}
     };
 
-    return Database.executeQuery(query, ListMapper.of(new UserMapper())).get();
+    return Database.executeQuery(query, ListMapper.of(mapper)).get();
   }
 
   public static long create(User user) {
@@ -67,7 +70,7 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeQuery(query, new UserMapper()).get();
+    return Database.executeQuery(query, mapper).get();
   }
 
   public static int update(User user) {
@@ -153,6 +156,6 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeQuery(query, new UserMapper()).get();
+    return Database.executeQuery(query, mapper).get();
   }
 }
