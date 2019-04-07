@@ -18,7 +18,7 @@ public final class Application {
     server.start();
   }
 
-  public static <T> JdbcMapper<T> getMapper(String name, Class<T> type) {
-    return JDBC_MAPPERS.get(name);
+  public static <T> JdbcMapper<T> getMapper(Class<T> type) {
+    return JDBC_MAPPERS.get(type.getSimpleName() + "Mapper");
   }
 }

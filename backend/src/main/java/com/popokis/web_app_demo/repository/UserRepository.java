@@ -14,7 +14,7 @@ import java.util.List;
 
 public final class UserRepository {
 
-  private static final JdbcMapper<User> mapper = Application.getMapper("UserMapper", User.class);
+  private static final JdbcMapper<User> mapper = Application.getMapper(User.class);
 
   private UserRepository() {}
 
