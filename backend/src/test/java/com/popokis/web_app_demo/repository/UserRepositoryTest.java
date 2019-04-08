@@ -37,7 +37,7 @@ class UserRepositoryTest {
     assertEquals(1L, user.getId());
     assertEquals("soasada", user.getUsername());
     assertEquals(2, user.getHouses().size());
-    assertEquals(2, user.getHouses().get(0).getFurniture().size());
+    assertEquals(3, user.getHouses().get(0).getFurniture().size());
     assertEquals(2, user.getHouses().get(1).getFurniture().size());
   }
 
@@ -52,16 +52,17 @@ class UserRepositoryTest {
   @Test
   void findAllUsers() {
     List<User> users = UserRepository.all();
-    assertEquals(2, users.size());
+    assertEquals(3, users.size());
     assertEquals("soasada", users.get(0).getUsername());
     assertEquals("zyonx", users.get(1).getUsername());
+    assertEquals("delete_house", users.get(2).getUsername());
   }
 
   @Test
   void insertUser() {
     User createdUser = User.builder().username("TEST").password("TEST").build();
     long newId = UserRepository.create(createdUser);
-    assertEquals(3L, newId);
+    assertEquals(4L, newId);
   }
 
   @Test

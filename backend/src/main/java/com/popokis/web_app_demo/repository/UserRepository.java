@@ -40,13 +40,9 @@ public final class UserRepository {
       }
 
       @Override
-      public void parameters(PreparedStatement stm) {
-        try {
-          stm.setString(1, user.getUsername());
-          stm.setString(2, user.hashPassword());
-        } catch (SQLException e) {
-          throw new RuntimeException(e);
-        }
+      public void parameters(PreparedStatement stm) throws SQLException {
+        stm.setString(1, user.getUsername());
+        stm.setString(2, user.hashPassword());
       }
     };
 
@@ -61,12 +57,8 @@ public final class UserRepository {
       }
 
       @Override
-      public void parameters(PreparedStatement stm) {
-        try {
-          stm.setLong(1, id);
-        } catch (SQLException e) {
-          throw new RuntimeException(e);
-        }
+      public void parameters(PreparedStatement stm) throws SQLException {
+        stm.setLong(1, id);
       }
     };
 
@@ -81,14 +73,10 @@ public final class UserRepository {
       }
 
       @Override
-      public void parameters(PreparedStatement stm) {
-        try {
-          stm.setString(1, user.getUsername());
-          stm.setString(2, user.getPassword());
-          stm.setLong(3, user.getId());
-        } catch (SQLException e) {
-          throw new RuntimeException(e);
-        }
+      public void parameters(PreparedStatement stm) throws SQLException {
+        stm.setString(1, user.getUsername());
+        stm.setString(2, user.getPassword());
+        stm.setLong(3, user.getId());
       }
     };
 
@@ -103,12 +91,8 @@ public final class UserRepository {
       }
 
       @Override
-      public void parameters(PreparedStatement stm) {
-        try {
-          stm.setLong(1, id);
-        } catch (SQLException e) {
-          throw new RuntimeException(e);
-        }
+      public void parameters(PreparedStatement stm) throws SQLException {
+        stm.setLong(1, id);
       }
     };
 
@@ -126,12 +110,8 @@ public final class UserRepository {
       }
 
       @Override
-      public void parameters(PreparedStatement stm) {
-        try {
-          stm.setLong(1, id);
-        } catch (SQLException e) {
-          throw new RuntimeException(e);
-        }
+      public void parameters(PreparedStatement stm) throws SQLException {
+        stm.setLong(1, id);
       }
     };
 
@@ -146,13 +126,9 @@ public final class UserRepository {
       }
 
       @Override
-      public void parameters(PreparedStatement stm) {
-        try {
-          stm.setString(1, userWithoutHash.getUsername());
-          stm.setString(2, userWithoutHash.hashPassword());
-        } catch (SQLException e) {
-          throw new RuntimeException(e);
-        }
+      public void parameters(PreparedStatement stm) throws SQLException {
+        stm.setString(1, userWithoutHash.getUsername());
+        stm.setString(2, userWithoutHash.hashPassword());
       }
     };
 
