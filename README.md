@@ -78,8 +78,8 @@ testing database.
 
 `export APP_ENV=test && mvn -U clean compile test package -pl :backend`
 
-5. Run application (flag needed in order to avoid TLSv1.3 bug see more: https://issues.jboss.org/browse/UNDERTOW-1493).
+5. Run application.
 
-`export APP_ENV=prod && java -Djdk.tls.acknowledgeCloseNotify=true -jar backend/target/backend-0.0.1.jar`
+`export APP_ENV=prod && java -jar backend/target/backend-0.0.1.jar`
 
 ## Remember to add to router the routes of vue-router in order to avoid 404.
