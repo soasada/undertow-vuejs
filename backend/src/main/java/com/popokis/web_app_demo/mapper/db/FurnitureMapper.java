@@ -2,15 +2,14 @@ package com.popokis.web_app_demo.mapper.db;
 
 import com.popokis.web_app_demo.db.JdbcMapper;
 import com.popokis.web_app_demo.entity.Furniture;
+import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Optional;
 
 public final class FurnitureMapper implements JdbcMapper<Furniture> {
 
   @Override
-  public Optional<Furniture> map(ResultSet resultSet) throws SQLException {
+  public Optional<Furniture> map(ResultSetWrappingSqlRowSet resultSet) {
     if (resultSet.getLong("f_id") == 0) return Optional.empty();
 
     return Optional.of(

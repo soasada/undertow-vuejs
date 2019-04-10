@@ -4,9 +4,8 @@ import com.popokis.web_app_demo.db.JdbcMapper;
 import com.popokis.web_app_demo.entity.Furniture;
 import com.popokis.web_app_demo.entity.House;
 import com.popokis.web_app_demo.entity.User;
+import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +25,7 @@ public final class FindUserHousesMapper implements JdbcMapper<User> {
   }
 
   @Override
-  public Optional<User> map(ResultSet resultSet) throws SQLException {
+  public Optional<User> map(ResultSetWrappingSqlRowSet resultSet) {
     Set<User> users = new HashSet<>();
     Set<House> houses = new HashSet<>();
     Set<Furniture> furnitures = new HashSet<>();

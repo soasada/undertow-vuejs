@@ -1,5 +1,9 @@
 package com.popokis.web_app_demo.db;
 
+import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
+
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,15 +41,17 @@ public final class Database {
   }
 
   public static <T> Optional<T> executeQuery(Query query, JdbcMapper<T> mapper) {
+    CachedRowSet cachedRowSet;
+    ResultSetWrappingSqlRowSet rowSet;
+
     try (Connection connection = HikariConnectionPool.getInstance().getConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(query.query())) {
       query.parameters(preparedStatement);
 
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
         if (resultSet.isBeforeFirst()) {
-          // here we move the cursor one step
-          resultSet.next();
-          return mapper.map(resultSet);
+          cachedRowSet = RowSetProvider.newFactory().createCachedRowSet();
+          cachedRowSet.populate(resultSet);
         } else {
           return Optional.empty();
         }
@@ -53,6 +59,13 @@ public final class Database {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+
+    // ResultSetWrappingSqlRowSet is necessary in order to use alias, if you don't need alias you can remove this class
+    // and the dependency of spring-jdbc.
+    rowSet = new ResultSetWrappingSqlRowSet(cachedRowSet);
+    // here we move the cursor one step
+    rowSet.next();
+    return mapper.map(rowSet);
   }
 
   private static long generateId(ResultSet generatedKeys) throws SQLException {

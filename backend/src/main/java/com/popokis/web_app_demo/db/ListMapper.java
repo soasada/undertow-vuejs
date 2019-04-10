@@ -1,7 +1,7 @@
 package com.popokis.web_app_demo.db;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +19,7 @@ public final class ListMapper<T> implements JdbcMapper<List<T>> {
   }
 
   @Override
-  public Optional<List<T>> map(ResultSet rowSet) throws SQLException {
+  public Optional<List<T>> map(ResultSetWrappingSqlRowSet rowSet) {
     List<T> resultList = new ArrayList<>();
 
     do {
