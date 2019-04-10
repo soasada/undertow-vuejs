@@ -33,16 +33,16 @@ class JsonMapperTest {
 
   @Test
   void houseJsonSerialization() throws JsonProcessingException {
-    House house = House.create(1L, "soasadaHouse", 1L, LocalDateTime.now(), LocalDateTime.now(), null);
+    House house = House.create(1L, "soasadaHouseá", 1L, LocalDateTime.now(), LocalDateTime.now(), null);
     String jsonHouse = JsonMapper.getInstance().mapper().writeValueAsString(house);
     assertFalse(jsonHouse.contains("furniture"));
   }
 
   @Test
   void houseJsonDeserialization() throws IOException {
-    String jsonHouse = "{\"name\":\"soasadaHouse\",\"userId\":1}";
+    String jsonHouse = "{\"name\":\"soasadaHouseá\",\"userId\":1}";
     House house = JsonMapper.getInstance().mapper().readValue(jsonHouse, House.class);
-    assertEquals("soasadaHouse", house.getName());
+    assertEquals("soasadaHouseá", house.getName());
     assertEquals(1L, house.getUserId());
   }
 

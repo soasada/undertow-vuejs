@@ -26,7 +26,7 @@ class HouseRepositoryTest {
   void findAllHousesOfUser() {
     List<House> houses = HouseRepository.all(1L);
     assertEquals(2, houses.size());
-    assertEquals("soasadaHouse", houses.get(0).getName());
+    assertEquals("soasadaHouseá", houses.get(0).getName());
     assertEquals("soasadaHouse2", houses.get(1).getName());
   }
 }
