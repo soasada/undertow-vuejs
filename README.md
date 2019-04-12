@@ -72,7 +72,7 @@ testing database.
 
 3. Test migrations.
 
-`mvn -U clean -pl :backend -Dflyway.configFiles=src/main/resources/test_migrations.properties flyway:migrate`
+`mvn -U clean -pl :backend -Dflyway.configFiles=src/main/resources/database/test_migrations.properties flyway:migrate`
 
 4. Compile backend, move static files to public/ and generate jar file (deployable artifact).
 

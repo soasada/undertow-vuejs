@@ -21,9 +21,9 @@ public final class HikariConnectionPool {
     String filename;
 
     if (Objects.isNull(env) || env.equalsIgnoreCase("test")) {
-      filename = File.separator + "db_test_pool.properties";
+      filename = File.separator + "database/db_test_pool.properties";
     } else if (env.equalsIgnoreCase("prod") || env.equalsIgnoreCase("production")) {
-      filename = File.separator + "db_prod_pool.properties";
+      filename = File.separator + "database/db_prod_pool.properties";
     } else {
       throw new RuntimeException("Please indicate APP_ENV var: 'prod' or 'test'");
     }
