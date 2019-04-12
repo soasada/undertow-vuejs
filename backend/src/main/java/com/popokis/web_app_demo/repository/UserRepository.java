@@ -22,7 +22,7 @@ public final class UserRepository {
     Query query = new Query() {
       @Override
       public String query() {
-        return "SELECT * FROM user ORDER BY u_id ASC LIMIT 100";
+        return "SELECT * FROM user ORDER BY u_id ASC LIMIT 1000";
       }
 
       @Override
