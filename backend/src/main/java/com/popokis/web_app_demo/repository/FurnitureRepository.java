@@ -37,7 +37,7 @@ public final class FurnitureRepository {
     Query query = new Query() {
       @Override
       public String query() {
-        return "INSERT INTO furniture (f_name, f_type, f_house_id) VALUES (?, ?)";
+        return "INSERT INTO furniture (f_name, f_type, f_house_id) VALUES (?, ?, ?)";
       }
 
       @Override
