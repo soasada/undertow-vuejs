@@ -1,10 +1,12 @@
 package com.popokis.web_app_demo.http;
 
+import com.popokis.web_app_demo.http.api.UserHandler;
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.encoding.EncodingHandler;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.server.handlers.resource.ResourceHandler;
+import io.undertow.util.StatusCodes;
 
 public final class Router {
 
@@ -13,10 +15,13 @@ public final class Router {
   public static HttpHandler router() {
     return Handlers.path()
         // REST API path
-//        .addPrefixPath("/api", Handlers.routing()
-//            .get("/customers", exchange -> {...})
-//            .delete("/customers/{customerId}", exchange -> {...})
-//            .setFallbackHandler(exchange -> {...}))
+        .addPrefixPath("/api/v1", Handlers.routing()
+            .get("/users", UserHandler.all())
+            .delete("/users/{id}", UserHandler.remove())
+            .setFallbackHandler(exchange -> {
+              exchange.setStatusCode(StatusCodes.NOT_FOUND);
+              exchange.getResponseSender().send("");
+            }))
 
         // Redirect /about to root path to serve the index.html where the SPA lives
         .addExactPath("/about", Handlers.redirect("/"))

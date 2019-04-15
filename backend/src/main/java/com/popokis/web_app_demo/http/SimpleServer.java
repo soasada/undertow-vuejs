@@ -64,6 +64,10 @@ public final class SimpleServer {
     server.start();
   }
 
+  public void stop() {
+    server.stop();
+  }
+
   private KeyStore loadKeyStore(String name) {
     try (InputStream is = SimpleServer.class.getResourceAsStream(File.separator + name)) {
       KeyStore loadedKeystore = KeyStore.getInstance("JKS");
