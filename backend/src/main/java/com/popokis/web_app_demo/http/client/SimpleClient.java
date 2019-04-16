@@ -67,6 +67,17 @@ public final class SimpleClient {
     return httpRequest(request);
   }
 
+  public String put(String url, String jsonBody) {
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(url))
+        .timeout(timeout)
+        .header("Content-Type", "application/json")
+        .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+        .build();
+
+    return httpRequest(request);
+  }
+
   public String delete(String url) {
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(url))

@@ -13,10 +13,18 @@ public final class Router {
 
   public static HttpHandler router() {
     return Handlers.path()
-        // REST API path
+        // HTTP based API
         .addPrefixPath("/api/v1", Handlers.routing()
+            // User resources
             .get("/users", UserHandler.all())
+            .post("/users", UserHandler.create())
+            .get("/users/{id}", UserHandler.read())
+            .put("/users", UserHandler.update())
             .delete("/users/{id}", UserHandler.remove())
+            .get("/users/{id}/houses", UserHandler.findUserHouses())
+            .post("/login", UserHandler.login())
+
+            // Health Checking
             .get("/health", Responses::ok)
             .setFallbackHandler(Responses::notFound))
 

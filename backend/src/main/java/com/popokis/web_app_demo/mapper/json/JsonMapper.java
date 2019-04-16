@@ -47,11 +47,19 @@ public final class JsonMapper {
     return mapper;
   }
 
-  public String toJson(Object o) {
+  public String toPrettyJson(Object o) {
     try {
       return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  public String toJson(Object o) {
+    try {
+      return mapper.writeValueAsString(o);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
     }
   }
 
