@@ -1,4 +1,4 @@
-package com.popokis.web_app_demo.http;
+package com.popokis.web_app_demo.http.server;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;

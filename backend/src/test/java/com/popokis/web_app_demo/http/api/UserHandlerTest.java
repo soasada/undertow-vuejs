@@ -1,19 +1,18 @@
 package com.popokis.web_app_demo.http.api;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.popokis.web_app_demo.common.BootstrapDatabase;
 import com.popokis.web_app_demo.entity.User;
-import com.popokis.web_app_demo.http.SimpleClient;
-import com.popokis.web_app_demo.http.SimpleServer;
-import com.popokis.web_app_demo.mapper.json.JsonMapper;
+import com.popokis.web_app_demo.http.client.SimpleClient;
+import com.popokis.web_app_demo.http.server.SimpleServer;
+import com.popokis.web_app_demo.mapper.json.JsonMappers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserHandlerTest {
 
@@ -32,13 +31,19 @@ class UserHandlerTest {
   }
 
   @Test
-  void findAllUsers() throws IOException {
-    String jsonResponse = SimpleClient.getInstance().get("https://localhost:8443/api/v1/users");
-    JavaType listType = JsonMapper.getInstance().mapper().getTypeFactory().constructCollectionType(List.class, User.class);
-    List<User> users = JsonMapper.getInstance().mapper().readValue(jsonResponse, listType);
+  void findAllUsers() {
+    String jsonResponse = SimpleClient.getInstance().get("http://localhost:8080/api/v1/users");
+    List<User> users = JsonMappers.list(jsonResponse, User.class);
     assertEquals(3, users.size());
     assertEquals("soasada", users.get(0).getUsername());
     assertEquals("zyonx", users.get(1).getUsername());
     assertEquals("delete_house", users.get(2).getUsername());
+  }
+
+  @Test
+  void deleteUser() {
+    String response = SimpleClient.getInstance().delete("http://localhost:8080/api/v1/users/2");
+    int rowsAffected = Integer.parseInt(response);
+    assertTrue(rowsAffected > 0);
   }
 }

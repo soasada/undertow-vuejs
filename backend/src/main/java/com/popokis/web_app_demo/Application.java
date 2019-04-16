@@ -1,7 +1,7 @@
 package com.popokis.web_app_demo;
 
 import com.popokis.web_app_demo.db.JdbcMapper;
-import com.popokis.web_app_demo.http.SimpleServer;
+import com.popokis.web_app_demo.http.server.SimpleServer;
 
 import java.util.Map;
 import java.util.ServiceLoader;
