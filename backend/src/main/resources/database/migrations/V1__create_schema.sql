@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `production_db`.`user`
     UNIQUE INDEX `u_username_UNIQUE` (`u_username` ASC)
 )
     ENGINE = InnoDB
-    DEFAULT CHARSET = utf8;
+    DEFAULT CHARSET = UTF8MB4;
 
 CREATE TABLE IF NOT EXISTS `production_db`.`house`
 (
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `production_db`.`house`
             ON UPDATE NO ACTION
 )
     ENGINE = InnoDB
-    DEFAULT CHARSET = utf8;
+    DEFAULT CHARSET = UTF8MB4;
 
 CREATE TABLE IF NOT EXISTS `production_db`.`furniture`
 (
@@ -48,4 +48,4 @@ CREATE TABLE IF NOT EXISTS `production_db`.`furniture`
             ON UPDATE NO ACTION
 )
     ENGINE = InnoDB
-    DEFAULT CHARSET = utf8;
+    DEFAULT CHARSET = UTF8MB4;
