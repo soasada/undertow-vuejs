@@ -73,8 +73,8 @@ If you want to have the `java` as a command without typing `/opt/prod_jdk/bin/ja
 
 or (ubuntu based) add this line at the end of your ~/.bashrc:
 
-`export PATH=/opt/apache-maven-3.6.1/bin:$PATH` (for maven)
-`export JAVA_HOME=/opt/prod_jdk`
+`export PATH=/opt/apache-maven-3.6.1/bin:$PATH` (for maven)\
+`export JAVA_HOME=/opt/prod_jdk`\
 `export PATH=$PATH:$JAVA_HOME/bin`
 
 1. Compile Vuejs project and generate static files.
