@@ -71,7 +71,7 @@ If you want to have the `java` as a command without typing `/opt/prod_jdk/bin/ja
 
 `sudo ln -s /opt/prod_jdk/bin/java /usr/local/bin/java`
 
-or (ubuntu based) add this line to your ~/.bashrc:
+or (ubuntu based) add this line at the end of your ~/.bashrc:
 
 `export PATH=/opt/apache-maven-3.6.1/bin:$PATH` (for maven)
 `export JAVA_HOME=/opt/prod_jdk`
