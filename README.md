@@ -18,7 +18,7 @@ The problem with the second option is that you are asking yourself the following
 
 The intention of this repo is to give you a seed project (or example project?) to build single page web applications with undertow and vuejs.
 
-The project consists in two module: **backend** and **frontend**.
+The project consists in two modules: **backend** and **frontend**.
 
 ## Backend
 
@@ -61,6 +61,12 @@ testing database.
 * Easy backend and frontend testing.
 
 ## Steps to deploy
+
+0. Download JDK12 from: https://jdk.java.net/12/ and put in your machine at:
+
+`/opt/prod_jdk`
+
+Maven will use this folder in order to compile the project, this allow us to update easily the JDK version.
 
 1. Compile Vuejs project and generate static files.
 
