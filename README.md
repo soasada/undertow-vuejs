@@ -67,6 +67,15 @@ testing database.
 `/opt/prod_jdk`
 
 Maven will use this folder in order to compile the project, this allow us to update easily the JDK version.
+If you want to have the `java` as a command without typing `/opt/prod_jdk/bin/java` you can do this:
+
+`sudo ln -s /opt/prod_jdk/bin/java /usr/local/bin/java`
+
+or (ubuntu based) add this line to your ~/.bashrc:
+
+`export PATH=/opt/apache-maven-3.6.1/bin:$PATH` (for maven)
+`export JAVA_HOME=/opt/prod_jdk`
+`export PATH=$PATH:$JAVA_HOME/bin`
 
 1. Compile Vuejs project and generate static files.
 
