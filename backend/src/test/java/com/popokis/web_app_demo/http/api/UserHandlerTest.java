@@ -1,13 +1,10 @@
 package com.popokis.web_app_demo.http.api;
 
-import com.popokis.web_app_demo.common.BootstrapDatabase;
+import com.popokis.web_app_demo.common.HttpTest;
 import com.popokis.web_app_demo.entity.User;
 import com.popokis.web_app_demo.http.client.SimpleClient;
-import com.popokis.web_app_demo.http.server.SimpleServer;
 import com.popokis.web_app_demo.mapper.json.JsonMapper;
 import com.popokis.web_app_demo.mapper.json.JsonMappers;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,22 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class UserHandlerTest {
-
-  private static SimpleServer server = new SimpleServer();
-  private static String address = "http://localhost:8080/api/v1";
-
-  @BeforeEach
-  void setUp() {
-    BootstrapDatabase.setUp();
-    server.start();
-  }
-
-  @AfterEach
-  void tearDown() {
-    BootstrapDatabase.setDown();
-    server.stop();
-  }
+class UserHandlerTest extends HttpTest {
 
   @Test
   void findAllUsers() {
@@ -83,5 +65,17 @@ class UserHandlerTest {
     assertEquals(2, user.getHouses().size());
     assertEquals(3, user.getHouses().get(0).getFurniture().size());
     assertEquals(2, user.getHouses().get(1).getFurniture().size());
+  }
+
+  @Test
+  void login() {
+    User userLogin = User.builder().username("TEST").password("TEST").build();
+    String loginBody = JsonMapper.getInstance().toJson(userLogin);
+    String response = SimpleClient.getInstance().post(address + "/users", loginBody);
+    long newId = Long.parseLong(response);
+    String jsonResponse = SimpleClient.getInstance().post(address + "/login", loginBody);
+    User loggedUser = JsonMappers.model(jsonResponse, User.class);
+    assertEquals(newId, loggedUser.getId());
+    assertEquals(userLogin.hashPassword(), loggedUser.getPassword());
   }
 }

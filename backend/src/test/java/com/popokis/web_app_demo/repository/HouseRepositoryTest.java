@@ -1,9 +1,7 @@
 package com.popokis.web_app_demo.repository;
 
-import com.popokis.web_app_demo.common.BootstrapDatabase;
+import com.popokis.web_app_demo.common.DatabaseTest;
 import com.popokis.web_app_demo.entity.House;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,17 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class HouseRepositoryTest {
-
-  @BeforeEach
-  void setUp() {
-    BootstrapDatabase.setUp();
-  }
-
-  @AfterEach
-  void tearDown() {
-    BootstrapDatabase.setDown();
-  }
+class HouseRepositoryTest extends DatabaseTest {
 
   @Test
   void findAllHousesOfUser() {

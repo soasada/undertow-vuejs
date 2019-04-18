@@ -1,5 +1,7 @@
 package com.popokis.web_app_demo.http.server;
 
+import com.popokis.web_app_demo.http.api.FurnitureHandler;
+import com.popokis.web_app_demo.http.api.HouseHandler;
 import com.popokis.web_app_demo.http.api.UserHandler;
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
@@ -23,6 +25,20 @@ public final class Router {
             .delete("/users/{id}", UserHandler.remove())
             .get("/users/{id}/houses", UserHandler.findUserHouses())
             .post("/login", UserHandler.login())
+
+            // House resources
+            .get("/user/{id}/houses", HouseHandler.all())
+            .post("/houses", HouseHandler.create())
+            .get("/houses/{id}", HouseHandler.read())
+            .put("/houses", HouseHandler.update())
+            .delete("/houses/{id}", HouseHandler.remove())
+
+            // Furniture resources
+            .get("/house/{id}/furniture", FurnitureHandler.all())
+            .post("/furniture", FurnitureHandler.create())
+            .get("/furniture/{id}", FurnitureHandler.read())
+            .put("/furniture", FurnitureHandler.update())
+            .delete("/furniture/{id}", FurnitureHandler.remove())
 
             // Health Checking
             .get("/health", Responses::ok)

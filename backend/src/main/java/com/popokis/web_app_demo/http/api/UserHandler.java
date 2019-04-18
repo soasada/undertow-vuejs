@@ -34,8 +34,6 @@ public final class UserHandler {
   }
 
   public static HttpHandler login() {
-    return exchange -> {
-      // TODO:
-    };
+    return Handlers.bodyBased(User.class, UserRepository::login);
   }
 }
