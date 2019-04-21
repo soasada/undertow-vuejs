@@ -6,7 +6,7 @@ If you are a java developer, sometimes you just need/want plain java and a front
 powerful and performance web applications. In order to do this you have two options:
 
 - Pick a java framework. There are many of them.
-- Use java and an embedded server such as: Netty, Jetty, Embedded Tomcat or in this case **Undertow**.
+- Use java and an embedded server such as: Netty, Jetty, Embedded Tomcat or in this case **Undertow** (to mention the most famous).
 
 The problem with the second option is that you are asking yourself the following:
 
