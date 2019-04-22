@@ -29,7 +29,7 @@ public final class UserRepository {
       public void parameters(PreparedStatement stm) {}
     };
 
-    return Database.executeQuery(query, ListMapper.of(mapper)).get();
+    return Database.executeQuery(query, ListMapper.of(mapper)).orElseGet(List::of);
   }
 
   public static long create(User user) {

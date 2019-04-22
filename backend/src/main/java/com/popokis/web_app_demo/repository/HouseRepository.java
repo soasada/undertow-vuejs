@@ -30,7 +30,7 @@ public final class HouseRepository {
       }
     };
 
-    return Database.executeQuery(query, ListMapper.of(mapper)).get();
+    return Database.executeQuery(query, ListMapper.of(mapper)).orElseGet(List::of);
   }
 
   public static long create(House house) {
