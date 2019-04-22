@@ -42,4 +42,20 @@ describe('CRUDTable.vue', () => {
         expect(wrapper.text()).toMatch('Test11');
         expect(wrapper.text()).not.toMatch('Test2');
     });
+
+    it('renders nested objects', () => {
+        const wrapper = shallowMount(CRUDTable, {
+            propsData: {
+                columnNames: ['id', 'address.zip'],
+                tableData: [
+                    {id: 1, address: {zip: 11111}},
+                    {id: 2, address: {zip: 22222}}
+                ]
+            }
+        });
+
+        expect(wrapper.text()).toMatch('address.zip');
+        expect(wrapper.text()).toMatch('11111');
+        expect(wrapper.text()).toMatch('22222');
+    });
 });
