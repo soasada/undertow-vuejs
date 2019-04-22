@@ -5,27 +5,31 @@
                 Search <input name="query" v-model="searchQuery">
             </div>
         </div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th v-for="columnName in columnNames">
-                    {{ columnName }}
-                </th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="val in getRows()" :key="val.id">
-                <td v-for="columnName in columnNames">
-                    {{ discoverValue(val, columnName) }}
-                </td>
-                <td class="text-right">
-                    <a href="#" @click.prevent="$emit('modelWasSelected', val)">Edit</a>|
-                    <a href="#" @click.prevent="$emit('modelWasDeleted', val)">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-striped table-responsive-lg">
+                    <thead>
+                    <tr>
+                        <th v-for="columnName in columnNames">
+                            {{ columnName }}
+                        </th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="val in getRows()" :key="val.id">
+                        <td v-for="columnName in columnNames">
+                            {{ discoverValue(val, columnName) }}
+                        </td>
+                        <td class="text-right">
+                            <a href="#" @click.prevent="$emit('modelWasSelected', val)">Edit</a>|
+                            <a href="#" @click.prevent="$emit('modelWasDeleted', val)">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="row">
             <div class="col-6 text-left">
                 <div class="number"
