@@ -43,7 +43,7 @@
 
 <script>
     export default {
-        name: 'CustomTable',
+        name: 'CRUDTable',
         props: {
             columnNames: {
                 type: Array,
