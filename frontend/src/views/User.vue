@@ -5,7 +5,6 @@
                 <CRUDTable v-if="tableData.length > 0"
                            :columnNames="columnNames"
                            :tableData="tableData"
-                           isCrud="true"
                            @modelWasSelected="model = $event"
                            @modelWasDeleted="deleteModel"/>
                 <img src="../assets/loading.gif" v-else>

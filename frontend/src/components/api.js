@@ -34,7 +34,7 @@ export default {
             data,
             // headers: { authorization: sessionStorage.getItem('token') } FOR AUTH
         })
-            .then((res) => res.data.payload)
+            .then((res) => res.data)
             .catch((error) => alert(error));
     }
 };

@@ -1,5 +1,5 @@
 <template>
-    <div class="custom-table">
+    <div class="crud-table">
         <div class="row">
             <div class="col-12 text-right">
                 Search <input name="query" v-model="searchQuery">
@@ -20,7 +20,7 @@
                     {{ discoverValue(val, columnName) }}
                 </td>
                 <td class="text-right">
-                    <a href="#" @click.prevent="$emit('modelWasSelected', val)">Edit</a>&nbsp;&nbsp;&nbsp;
+                    <a href="#" @click.prevent="$emit('modelWasSelected', val)">Edit</a>|
                     <a href="#" @click.prevent="$emit('modelWasDeleted', val)">Delete</a>
                 </td>
             </tr>
