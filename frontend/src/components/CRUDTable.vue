@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <table class="table table-striped table-responsive-lg">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th v-for="columnName in columnNames">
