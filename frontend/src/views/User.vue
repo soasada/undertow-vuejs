@@ -46,7 +46,7 @@
         },
         data() {
             return {
-                columnNames: ['id', 'username', 'password', 'createdAt', 'updatedAt'],
+                columnNames: ['id', 'username', 'createdAt', 'updatedAt'],
                 model: {},
                 tableData: [],
             };
