@@ -21,8 +21,8 @@
                         <td v-for="columnName in columnNames">
                             {{ discoverValue(val, columnName) }}
                         </td>
-                        <td class="text-right">
-                            <a href="#" @click.prevent="$emit('modelWasSelected', val)">Edit</a>|
+                        <td>
+                            <a href="#" @click.prevent="$emit('modelWasSelected', val)">Edit</a>&nbsp;|
                             <a href="#" @click.prevent="$emit('modelWasDeleted', val)">Delete</a>
                         </td>
                     </tr>
