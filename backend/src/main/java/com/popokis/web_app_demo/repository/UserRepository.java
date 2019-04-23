@@ -132,6 +132,6 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeQuery(query, mapper).get();
+    return Database.executeQuery(query, mapper).orElseThrow(() -> new RuntimeException("Invalid username or password"));
   }
 }

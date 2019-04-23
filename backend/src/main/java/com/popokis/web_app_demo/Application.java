@@ -10,6 +10,8 @@ import static java.util.stream.Collectors.toConcurrentMap;
 
 public final class Application {
 
+  public static final String SECRET = "P44$w0rDS3cret";
+
   private static final Map<String, JdbcMapper> JDBC_MAPPERS = ServiceLoader.load(JdbcMapper.class).stream()
       .collect(toConcurrentMap(m -> m.type().getSimpleName(), ServiceLoader.Provider::get));
 

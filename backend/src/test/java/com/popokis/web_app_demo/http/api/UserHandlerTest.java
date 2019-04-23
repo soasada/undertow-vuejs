@@ -1,7 +1,11 @@
 package com.popokis.web_app_demo.http.api;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.popokis.web_app_demo.Application;
 import com.popokis.web_app_demo.common.HttpTest;
 import com.popokis.web_app_demo.entity.User;
+import com.popokis.web_app_demo.http.api.model.Token;
 import com.popokis.web_app_demo.http.client.SimpleClient;
 import com.popokis.web_app_demo.mapper.json.JsonMapper;
 import com.popokis.web_app_demo.mapper.json.JsonMappers;
@@ -68,14 +72,20 @@ class UserHandlerTest extends HttpTest {
   }
 
   @Test
-  void login() {
+  void correctLogin() {
     User userLogin = User.builder().username("TEST").password("TEST").build();
     String loginBody = JsonMapper.getInstance().toJson(userLogin);
-    String response = SimpleClient.getInstance().post(address + "/users", loginBody);
-    long newId = Long.parseLong(response);
+    SimpleClient.getInstance().post(address + "/users", loginBody);
     String jsonResponse = SimpleClient.getInstance().post(address + "/login", loginBody);
-    User loggedUser = JsonMappers.model(jsonResponse, User.class);
-    assertEquals(newId, loggedUser.getId());
-    assertEquals(userLogin.hashPassword(), loggedUser.getPassword());
+    Token token = JsonMappers.model(jsonResponse, Token.class);
+    JWT.require(Algorithm.HMAC512(Application.SECRET.getBytes())).build().verify(token.getToken());
+  }
+
+  @Test
+  void incorrectLogin() {
+    User userLogin = User.builder().username("TEST").password("TEST").build();
+    String loginBody = JsonMapper.getInstance().toJson(userLogin);
+    String jsonResponse = SimpleClient.getInstance().post(address + "/login", loginBody);
+    assertEquals("Invalid username or password", jsonResponse);
   }
 }
