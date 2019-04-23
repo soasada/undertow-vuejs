@@ -93,8 +93,8 @@ or (ubuntu based) add this line at the end of your ~/.bashrc:
 
 `export APP_ENV=test && mvn -U clean compile test package -pl :backend`
 
-5. Run application.
+5. Run application (change APP_ENV with `prod` or `test`).
 
-`export APP_ENV=prod && java -jar backend/target/backend-0.0.1.jar`
+`export APP_ENV=test && java -jar backend/target/backend-0.0.1.jar`
 
 ## Remember to add to router the routes of vue-router in order to avoid 404.
