@@ -1,6 +1,11 @@
 <template>
     <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png">
+        <div class="container">
+            <div class="starter-template">
+                <h1>Web app demo with Undertow + Vue.js</h1>
+                <p class="lead">Use this project as a seed for building web applications with Undertow and Vue.js</p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -9,3 +14,10 @@
         name: 'home'
     }
 </script>
+
+<style scoped>
+    .starter-template {
+        padding: 3rem 1.5rem;
+        text-align: center;
+    }
+</style>

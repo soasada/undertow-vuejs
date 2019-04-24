@@ -1,31 +1,24 @@
 <template>
     <div id="app">
-        <header>
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="/">Demo</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <router-link class="nav-link" active-class="active" to="/" exact>Home</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" active-class="active" to="/about">About</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" active-class="active" to="/users">Users</router-link>
-                        </li>
-                    </ul>
-                    <form class="form-inline mt-2 mt-md-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-                </div>
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+            <h5 class="my-0 mr-md-auto font-weight-normal">Demo</h5>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <router-link class="p-2 text-dark" active-class="active" to="/" exact>Home</router-link>
+                <router-link class="p-2 text-dark" active-class="active" to="/about">About</router-link>
+                <router-link class="p-2 text-dark" active-class="active" to="/users">Users</router-link>
             </nav>
-        </header>
+            <a class="btn btn-outline-primary" href="#">Sign up</a>
+        </div>
+
         <router-view/>
+
+        <footer class="container">
+            <p>© {{ new Date().getFullYear() }} Popokis.com ·
+                <router-link to="/about">About</router-link>
+                ·
+                <router-link to="/users">Users</router-link>
+            </p>
+        </footer>
     </div>
 </template>
 
