@@ -1,5 +1,5 @@
 <template>
-    <div class="user">
+    <div class="users">
         <CRUDTemplate serviceName="Users">
             <template #tableContent>
                 <CRUDTable v-if="tableData.length > 0"
@@ -38,7 +38,7 @@
     import api from '@/components/api';
 
     export default {
-        name: 'user',
+        name: 'users',
         components: {
             CRUDTemplate,
             CRUDTable,
