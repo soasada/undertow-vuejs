@@ -1,7 +1,7 @@
 <template>
     <div class="container">
+        <h1>{{ serviceName }}</h1>
         <div class="columns">
-            <h1>{{ serviceName }}</h1>
             <slot name="selectorContent"></slot>
             <div class="column is-9">
                 <slot name="tableContent"></slot>
