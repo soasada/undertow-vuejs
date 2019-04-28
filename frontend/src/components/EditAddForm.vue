@@ -1,15 +1,17 @@
 <template>
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">{{ model.id ? 'Edit ID#' + model.id : 'Add' }}</p>
-            <a class="card-header-icon button is-info" @click="removeValToAdd()">Clear form</a>
-        </header>
+    <div class="edit-add-form">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">{{ model.id ? 'Edit ID#' + model.id : 'Add' }}</p>
+                <a class="card-header-icon button is-info" @click="removeValToAdd()">Clear form</a>
+            </header>
 
-        <div class="card-content">
-            <form @submit.prevent="sendForm()">
-                <slot name="formFieldsContent"></slot>
-                <button type="submit" class="button is-info">{{ model.id ? 'Edit' : 'Add' }}</button>
-            </form>
+            <div class="card-content">
+                <form @submit.prevent="sendForm()">
+                    <slot name="formFieldsContent"></slot>
+                    <button type="submit" class="button is-info">{{ model.id ? 'Edit' : 'Add' }}</button>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -46,8 +48,5 @@
 </script>
 
 <style scoped>
-    .number:hover, .number.active {
-        background: #42b983 !important;
-        border: #42b983 !important;
-    }
+
 </style>

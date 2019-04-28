@@ -1,6 +1,6 @@
 <template>
     <div class="users">
-        <CRUDTemplate serviceName="Users">
+        <CRUDTemplate>
             <template #tableContent>
                 <CRUDTable v-if="tableData.length > 0"
                            :columnNames="columnNames"
@@ -10,19 +10,30 @@
                 <img src="../assets/loading.gif" v-else>
             </template>
             <template #formContent>
-                <EditAddForm :model="model" resourceName="users" @submittedForm="submittedForm" @modelWasReset="model = $event">
+                <EditAddForm :model="model" resourceName="users" @submittedForm="submittedForm"
+                             @modelWasReset="model = $event">
                     <template #formFieldsContent>
-                        <div class="form-group">
-                            <label for="userIdInput">User ID</label>
-                            <input type="number" class="form-control" id="userIdInput" v-model="model.id" readonly>
+                        <fieldset disabled>
+                            <div class="field">
+                                <label for="userIdInput" class="label">User ID</label>
+                                <div class="control">
+                                    <input id="userIdInput" class="input" type="number" v-model="model.id">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="field">
+                            <label for="usernameInput" class="label">Username</label>
+                            <div class="control">
+                                <input id="usernameInput" class="input" type="text" v-model="model.username">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="usernameInput">Username</label>
-                            <input type="text" class="form-control" id="usernameInput" v-model="model.username">
-                        </div>
-                        <div class="form-group">
-                            <label for="passwordInput">Password</label>
-                            <input type="text" class="form-control" id="passwordInput" v-model="model.password">
+
+                        <div class="field">
+                            <label for="passwordInput" class="label">Username</label>
+                            <div class="control">
+                                <input id="passwordInput" class="input" type="text" v-model="model.password">
+                            </div>
                         </div>
                     </template>
                 </EditAddForm>

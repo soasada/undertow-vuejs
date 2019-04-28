@@ -2,7 +2,7 @@
     <div class="crud-table">
 
         <div class="columns">
-            <div class="column is-3 is-right">
+            <div class="column is-3 is-offset-9">
                 <div class="field">
                     <label class="label">Search</label>
                     <div class="control">
@@ -14,7 +14,7 @@
 
         <div class="columns">
             <div class="column">
-                <table class="table">
+                <table class="table is-fullwidth">
                     <thead>
                     <tr>
                         <th v-for="columnName in columnNames">
@@ -39,14 +39,14 @@
         </div>
 
         <div class="columns">
-            <div class="column is-6 is-left">
+            <div class="column is-6">
                 <div class="number"
                      v-for="i in numPages()"
                      v-bind:class="[i === currentPage ? 'active' : '']"
                      v-on:click="changePage(i)">{{ i }}
                 </div>
             </div>
-            <div class="column is-6 is-right">
+            <div class="column is-6 has-text-right">
                 Total: {{ tableData.length }}
             </div>
         </div>
@@ -112,13 +112,6 @@
 </script>
 
 <style lang="scss">
-    .pagination {
-        font-family: 'Open Sans', sans-serif;
-        text-align: right;
-        width: 750px;
-        padding: 8px;
-    }
-
     .number {
         display: inline-block;
         padding: 4px 10px;

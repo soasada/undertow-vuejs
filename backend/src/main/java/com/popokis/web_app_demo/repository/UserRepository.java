@@ -75,7 +75,7 @@ public final class UserRepository {
       @Override
       public void parameters(PreparedStatement stm) throws SQLException {
         stm.setString(1, user.getUsername());
-        stm.setString(2, user.getPassword());
+        stm.setString(2, user.hashPassword());
         stm.setLong(3, user.getId());
       }
     };
