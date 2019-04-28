@@ -3,7 +3,7 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a class="navbar-item" href="/">
-                    <img src="./assets/logo.png" width="28" height="28" alt="">
+                    <img src="./assets/logo.png" width="28" height="28" alt="Company logo">
                 </a>
 
                 <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"

@@ -1,11 +1,14 @@
 <template>
     <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">{{ model.id ? 'Edit ID#' + model.id : 'Add' }}</h4>
-            <button type="button" class="btn number active btn-secondary" @click="removeValToAdd()">Clear form</button>
+        <header class="card-header">
+            <p class="card-header-title">{{ model.id ? 'Edit ID#' + model.id : 'Add' }}</p>
+            <a class="card-header-icon button is-info" @click="removeValToAdd()">Clear form</a>
+        </header>
+
+        <div class="card-content">
             <form @submit.prevent="sendForm()">
                 <slot name="formFieldsContent"></slot>
-                <button type="submit" class="btn number active btn-secondary">{{ model.id ? 'Edit' : 'Add' }}</button>
+                <button type="submit" class="button is-info">{{ model.id ? 'Edit' : 'Add' }}</button>
             </form>
         </div>
     </div>

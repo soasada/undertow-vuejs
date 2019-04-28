@@ -1,17 +1,13 @@
 <template>
-    <div class="container-fluid">
-        <h1 class="h1">{{ serviceName }}</h1>
-        <slot name="selectorContent"></slot>
-        <div class="row">
-            <div class="col-lg-9">
+    <div class="container">
+        <div class="columns">
+            <h1>{{ serviceName }}</h1>
+            <slot name="selectorContent"></slot>
+            <div class="column is-9">
                 <slot name="tableContent"></slot>
             </div>
-            <div class="col-lg-3">
-                <div class="form-row">
-                    <div class="col-lg-12">
-                        <slot name="formContent"></slot>
-                    </div>
-                </div>
+            <div class="column is-3">
+                <slot name="formContent"></slot>
             </div>
         </div>
     </div>

@@ -1,13 +1,20 @@
 <template>
     <div class="crud-table">
-        <div class="row">
-            <div class="col-12 text-right">
-                Search <input name="query" v-model="searchQuery">
+
+        <div class="columns">
+            <div class="column is-3 is-right">
+                <div class="field">
+                    <label class="label">Search</label>
+                    <div class="control">
+                        <input class="input" name="query" type="text" placeholder="Search" v-model="searchQuery">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <table class="table table-striped">
+
+        <div class="columns">
+            <div class="column">
+                <table class="table">
                     <thead>
                     <tr>
                         <th v-for="columnName in columnNames">
@@ -30,15 +37,16 @@
                 </table>
             </div>
         </div>
-        <div class="row">
-            <div class="col-6 text-left">
+
+        <div class="columns">
+            <div class="column is-6 is-left">
                 <div class="number"
                      v-for="i in numPages()"
                      v-bind:class="[i === currentPage ? 'active' : '']"
                      v-on:click="changePage(i)">{{ i }}
                 </div>
             </div>
-            <div class="col-6 text-right">
+            <div class="column is-6 is-right">
                 Total: {{ tableData.length }}
             </div>
         </div>
