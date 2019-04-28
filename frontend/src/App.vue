@@ -1,41 +1,79 @@
 <template>
     <div id="app">
-        <nav class="level">
-            <p class="level-item has-text-centered">
-                <router-link class="p-2 text-dark" active-class="active" to="/" exact>Home</router-link>
-            </p>
-            <p class="level-item has-text-centered">
-                <router-link class="p-2 text-dark" active-class="active" to="/about">About</router-link>
-            </p>
-            <p class="level-item has-text-centered">
-                <img src="https://bulma.io/images/bulma-type.png" alt="" style="height: 30px;">
-            </p>
-            <p class="level-item has-text-centered">
-                <router-link class="p-2 text-dark" active-class="active" to="/users">Users</router-link>
-            </p>
-            <p class="level-item has-text-centered">
-                <a class="link is-info">Contact</a>
-            </p>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/">
+                    <img src="./assets/logo.png" width="28" height="28" alt="">
+                </a>
+
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                   data-target="navbarMainMenu" @click="toggleNav">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navbarMainMenu" class="navbar-menu is-active">
+                <div class="navbar-start">
+                    <router-link class="navbar-item" active-class="is-active is-tab" to="/" exact>Home</router-link>
+                    <router-link class="navbar-item" active-class="is-active is-tab" to="/about">About</router-link>
+                    <router-link class="navbar-item" active-class="is-active is-tab" to="/users">Users</router-link>
+                </div>
+
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-primary">
+                                <strong>Sign up</strong>
+                            </a>
+                            <a class="button is-light">
+                                Log in
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </nav>
 
         <router-view/>
 
         <footer class="footer">
-            <p>© {{ new Date().getFullYear() }} Popokis.com ·
-                <router-link to="/about">About</router-link>
-                ·
-                <router-link to="/users">Users</router-link>
-            </p>
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Undertow + Vue.js demo</strong> by <a href="https://github.com/soasada">Nicolás Vargas
+                    Ortega</a>. The source code is licensed
+                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. © {{ new Date().getFullYear() }}
+                    Popokis.com
+                </p>
+            </div>
         </footer>
     </div>
 </template>
 
-<style lang="scss">
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
+<script>
+    export default {
+        name: 'app',
+        methods: {
+            toggleNav() {
+                const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+                if ($navbarBurgers.length > 0) {
+                    $navbarBurgers.forEach(el => {
+                        el.addEventListener('click', () => {
+                            const target = el.dataset.target;
+                            const $target = document.getElementById(target);
+
+                            el.classList.toggle('is-active');
+                            $target.classList.toggle('is-active');
+                        });
+                    });
+                }
+            }
+        }
     }
+</script>
+
+<style lang="scss">
+
 </style>
