@@ -1,10 +1,55 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
+import jwt from 'jsonwebtoken';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {},
-    mutations: {},
-    actions: {}
+    state: {
+        token: null,
+        signInError: false
+    },
+    mutations: {
+        SET_TOKEN(state, token) {
+            state.token = token;
+        },
+        SET_SIGN_IN_ERROR(state, signInError) {
+            state.signInError = signInError;
+        }
+    },
+    actions: {
+        signIn({commit}, {username, password, router, route}) {
+
+            axios.post('/api/v1/login', {
+                username: username,
+                password: password
+            }).then((response) => {
+                const token = response.data.token;
+                commit('SET_TOKEN', token);
+                sessionStorage.setItem('token', token);
+                router.push(route.query.redirect);
+            }).catch((error) => {
+                commit('SET_TOKEN', null);
+                commit('SET_SIGN_IN_ERROR', true);
+                sessionStorage.removeItem('token');
+            });
+        },
+        signOut({commit}) {
+            commit('SET_TOKEN', null);
+            sessionStorage.removeItem('token');
+        }
+    },
+    getters: {
+        isAuthenticated(state) {
+            if (state.token === null) {
+                return false;
+            }
+
+            const decoded = jwt.decode(state.token.replace('Bearer ', ''));
+            const expDate = new Date(decoded.exp * 1000);
+            const now = new Date();
+            return expDate > now;
+        }
+    }
 });

@@ -3,9 +3,9 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="container">
                 <div class="navbar-brand">
-                    <a class="navbar-item" href="/">
+                    <router-link class="navbar-item" to="/">
                         <img src="./assets/logo.png" width="28" height="28" alt="Company logo">
-                    </a>
+                    </router-link>
 
                     <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
                        data-target="navbarMainMenu" @click="toggleNav">
@@ -28,9 +28,7 @@
                                 <a class="button is-primary">
                                     <strong>Sign up</strong>
                                 </a>
-                                <a class="button is-light">
-                                    Log in
-                                </a>
+                                <router-link class="button is-light" to="/login">Log in</router-link>
                             </div>
                         </div>
                     </div>

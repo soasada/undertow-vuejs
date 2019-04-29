@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Users from './views/Users.vue'
+import Login from './views/Login.vue'
 
 Vue.use(Router);
 
@@ -25,7 +26,13 @@ export default new Router({
         {
             path: '/users',
             name: 'users',
-            component: Users
+            component: Users,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login
         }
     ]
 });

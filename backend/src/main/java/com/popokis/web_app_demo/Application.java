@@ -1,7 +1,9 @@
 package com.popokis.web_app_demo;
 
 import com.popokis.web_app_demo.db.JdbcMapper;
+import com.popokis.web_app_demo.entity.User;
 import com.popokis.web_app_demo.http.server.SimpleServer;
+import com.popokis.web_app_demo.repository.UserRepository;
 
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -16,6 +18,8 @@ public final class Application {
       .collect(toConcurrentMap(m -> m.type().getSimpleName(), ServiceLoader.Provider::get));
 
   public static void main(String[] args) {
+    UserRepository.create(User.builder().username("admin").password("admin").build());
+
     SimpleServer server = new SimpleServer();
     server.start();
   }
