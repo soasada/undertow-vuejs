@@ -24,7 +24,12 @@
 
                     <div class="navbar-end">
                         <div class="navbar-item">
-                            <div class="buttons">
+                            <div class="buttons" v-if="$store.getters.isAuthenticated">
+                                <a class="button is-primary" @click="logout">
+                                    <strong>Log out</strong>
+                                </a>
+                            </div>
+                            <div class="buttons" v-else>
                                 <a class="button is-primary">
                                     <strong>Sign up</strong>
                                 </a>
@@ -74,6 +79,10 @@
                         });
                     });
                 }
+            },
+            logout() {
+                this.$store.dispatch('signOut');
+                this.$router.push('home');
             }
         }
     }

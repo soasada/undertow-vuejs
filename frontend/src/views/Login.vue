@@ -66,10 +66,6 @@
                     router: self.$router,
                     route: self.$route
                 });
-            },
-            signOut() {
-                this.$store.dispatch('signOut');
-                this.model = {};
             }
         }
     }

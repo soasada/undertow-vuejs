@@ -28,7 +28,11 @@ export default new Vuex.Store({
                 const token = response.data.token;
                 commit('SET_TOKEN', token);
                 sessionStorage.setItem('token', token);
-                router.push(route.query.redirect);
+                if (route.query.redirect) {
+                    router.push(route.query.redirect);
+                } else {
+                    router.push('home');
+                }
             }).catch((error) => {
                 commit('SET_TOKEN', null);
                 commit('SET_SIGN_IN_ERROR', true);
