@@ -17,7 +17,7 @@
                 <table class="table is-fullwidth">
                     <thead>
                     <tr>
-                        <th v-for="columnName in columnNames">
+                        <th v-for="columnName in columnNames" :key="columnName">
                             {{ columnName }}
                         </th>
                         <th>actions</th>
@@ -25,7 +25,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="val in getRows()" :key="val.id">
-                        <td v-for="columnName in columnNames">
+                        <td v-for="columnName in columnNames" :key="columnName">
                             {{ discoverValue(val, columnName) }}
                         </td>
                         <td>
@@ -42,6 +42,7 @@
             <div class="column is-6">
                 <div class="number"
                      v-for="i in numPages()"
+                     :key="i"
                      v-bind:class="[i === currentPage ? 'active' : '']"
                      v-on:click="changePage(i)">{{ i }}
                 </div>
