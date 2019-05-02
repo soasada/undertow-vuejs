@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         token: null,
-        signInError: false
+        signInError: false,
+        signInErrorMsg: ''
     },
     mutations: {
         SET_TOKEN(state, token) {
@@ -16,6 +17,9 @@ export default new Vuex.Store({
         },
         SET_SIGN_IN_ERROR(state, signInError) {
             state.signInError = signInError;
+        },
+        SET_SIGN_IN_ERROR_MSG(state, signInErrorMsg) {
+            state.signInErrorMsg = signInErrorMsg;
         }
     },
     actions: {
@@ -36,6 +40,7 @@ export default new Vuex.Store({
             }).catch((error) => {
                 commit('SET_TOKEN', null);
                 commit('SET_SIGN_IN_ERROR', true);
+                commit('SET_SIGN_IN_ERROR_MSG', error.response);
                 sessionStorage.removeItem('token');
             });
         },
