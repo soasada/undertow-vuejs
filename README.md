@@ -2,20 +2,6 @@
 
 **Inspired in https://github.com/jonashackt/spring-boot-vuejs**
 
-If you are a java developer, sometimes you just need/want plain java and a frontend framework (or just plain JavaScript) to build
-powerful and performance web applications. In order to do this you have two options:
-
-- Pick a java framework. There are many of them.
-- Use java and an embedded server such as: Netty, Jetty, Embedded Tomcat or in this case **Undertow** (to mention the most famous).
-
-The problem with the second option is that you are asking yourself the following:
-
-- How can I make a REST API?
-- How can I make the controllers of such REST API?
-- How can I make secure this REST API?
-- It is possible to use HTTPs? And HTTP2?
-- ... and many more
-
 The intention of this repo is to give you a seed project (or example project?) to build single page web applications with undertow and vuejs.
 
 The project consists in two modules: **backend** and **frontend**.
@@ -31,6 +17,9 @@ In the backend module we have the following dependencies:
 * JSON: **Jackson**.
 * HTTP AUTHORIZATION: **JWT**.
 * TESTING: **JUnit 5**.
+
+**Spring JDBC** is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
+One of the solutions is to put prefixes to the column names of the database tables. More info: https://stackoverflow.com/questions/15184709/cachedrowsetimpl-getstring-based-on-column-label-throws-invalid-column-name
 
 ### 1. Web server
 
@@ -97,4 +86,23 @@ or (ubuntu based) add this line at the end of your ~/.bashrc:
 
 `export APP_ENV=test && java -jar backend/target/backend-0.0.1.jar`
 
+**NOTE:** There is a script to deploy locally (_deploy.sh_), **use it for development only!**.
+
 ## Remember to add to router the routes of vue-router in order to avoid 404.
+
+## Manifesto
+
+Welcome to the basics. You don't need a backend framework or an ORM to be able to make web applications, **why not plain java?**.
+_"Don't reinvent the wheel"_ they say, and you pick a framework, now you have a bicycle with: a washing machine, an embedded
+microwave and a neon light beacon, a very cool bicycle!.
+
+**Wait a moment... why are you saying this about frameworks?**
+
+The problem isn't frameworks, it's us (developers). **Try to learn the basics first, later learn a framework**.
+Learn things like OOP, FP, HTTP, client-server model, plain SQL, VMs, containers... and then, when you know these things, when you are tired 
+of doing these things without no help, when you are tired of doing repetitive things only then, take a framework.
+
+Many of the problems that you are going to have with a framework, is due to the lack of knowledge of the framework itself or
+**the basics**. Soon you will have a good amount of spaghetti code unmaintainable, with some modules of your project that 
+fits the _"framework boundaries"_ and others that use hacks to fit these boundaries with your knowledge of the language,
+resulting in performance issues, cryptic errors, updating problems, slow development and more... 

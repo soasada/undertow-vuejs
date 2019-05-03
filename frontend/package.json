@@ -13,10 +13,9 @@
     "vue": "2.6.10",
     "vue-router": "3.0.6",
     "vuex": "3.1.0",
+    "bulma": "0.7.4",
     "axios": "0.18.0",
-    "jsonwebtoken": "8.5.1",
-    "buefy": "0.7.5",
-    "@mdi/font": "3.6.95"
+    "jsonwebtoken": "8.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.7.0",
