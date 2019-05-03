@@ -2,21 +2,6 @@
 
 **Inspired in https://github.com/jonashackt/spring-boot-vuejs**
 
-Welcome to the basics. You don't need a backend framework or an ORM to be able to make web applications, **why not plain java?**.
-_"Don't reinvent the wheel"_ they say, and you pick a framework, now you have a bicycle with: a washing machine, an embedded
-microwave and a neon light beacon, a very cool bicycle!.
-
-**Wait a moment... why are you saying this about frameworks?**
-
-The problem isn't frameworks, it's us (developers). **Try to learn the basics first, later learn a framework**.
-Learn things like OOP, FP, HTTP, client-server model, plain SQL... and then, when you know these things, whren you are tired 
-of doing these things without no help, when you are tired of doing repetitive things only then, take a framework.
-
-Many of the problems that you are going to have with a framework, is due to the lack of knowledge of the framework itself or
-**the basics**. Soon you will have a good amount of spaghetti code unmaintainable, with some modules of your project that 
-fits the _"framework boundaries"_ and others that use hacks to fit these boundaries with your knowledge of the language,
-resulting in performance issues, cryptic errors, updating problems, slow development and more... 
-
 The intention of this repo is to give you a seed project (or example project?) to build single page web applications with undertow and vuejs.
 
 The project consists in two modules: **backend** and **frontend**.
@@ -101,4 +86,23 @@ or (ubuntu based) add this line at the end of your ~/.bashrc:
 
 `export APP_ENV=test && java -jar backend/target/backend-0.0.1.jar`
 
+**NOTE:** There is a script to deploy locally (_deploy.sh_), **use it for development only!**.
+
 ## Remember to add to router the routes of vue-router in order to avoid 404.
+
+## Manifesto
+
+Welcome to the basics. You don't need a backend framework or an ORM to be able to make web applications, **why not plain java?**.
+_"Don't reinvent the wheel"_ they say, and you pick a framework, now you have a bicycle with: a washing machine, an embedded
+microwave and a neon light beacon, a very cool bicycle!.
+
+**Wait a moment... why are you saying this about frameworks?**
+
+The problem isn't frameworks, it's us (developers). **Try to learn the basics first, later learn a framework**.
+Learn things like OOP, FP, HTTP, client-server model, plain SQL, VMs, containers... and then, when you know these things, when you are tired 
+of doing these things without no help, when you are tired of doing repetitive things only then, take a framework.
+
+Many of the problems that you are going to have with a framework, is due to the lack of knowledge of the framework itself or
+**the basics**. Soon you will have a good amount of spaghetti code unmaintainable, with some modules of your project that 
+fits the _"framework boundaries"_ and others that use hacks to fit these boundaries with your knowledge of the language,
+resulting in performance issues, cryptic errors, updating problems, slow development and more... 
