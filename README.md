@@ -19,7 +19,7 @@ In the backend module we have the following dependencies:
 * TESTING: **JUnit 5**.
 
 **Spring JDBC** is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
-One of the solutions is to put prefixes to the column names of the database tables.
+One of the solutions is to put prefixes to the column names of the database tables. More info: https://stackoverflow.com/questions/15184709/cachedrowsetimpl-getstring-based-on-column-label-throws-invalid-column-name
 
 ### 1. Web server
 
