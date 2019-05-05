@@ -92,8 +92,8 @@ or (ubuntu based) add this line at the end of your ~/.bashrc:
 
 ## Manifesto
 
-Welcome to the basics. You don't need a backend framework or an ORM to be able to make web applications, **why not plain java?**.
-_"Don't reinvent the wheel"_ they say, and you pick a framework, now you have a bicycle with: a washing machine, an embedded
+You don't need a backend framework or an ORM to be able to make web applications, **why not plain java?**.
+_"Don't reinvent the wheel"_ they say, and you pick a framework, now you have a **bicycle** with: a washing machine, an embedded
 microwave and a neon light beacon, a very cool bicycle!.
 
 **Wait a moment... why are you saying this about frameworks?**
