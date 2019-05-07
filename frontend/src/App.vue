@@ -20,6 +20,8 @@
                         <router-link class="navbar-item" active-class="is-active is-tab" to="/" exact>Home</router-link>
                         <router-link class="navbar-item" active-class="is-active is-tab" to="/about">About</router-link>
                         <router-link class="navbar-item" active-class="is-active is-tab" to="/users">Users</router-link>
+                        <router-link class="navbar-item" active-class="is-active is-tab" to="/houses">Houses</router-link>
+                        <router-link class="navbar-item" active-class="is-active is-tab" to="/furniture">Furniture</router-link>
                     </div>
 
                     <div class="navbar-end">

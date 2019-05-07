@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Users from './views/Users.vue'
+import Houses from './views/Houses.vue'
+import Furniture from './views/Furniture.vue'
 import Login from './views/Login.vue'
 
 Vue.use(Router);
@@ -27,6 +29,18 @@ export default new Router({
             path: '/users',
             name: 'users',
             component: Users,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/houses',
+            name: 'houses',
+            component: Houses,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/furniture',
+            name: 'furniture',
+            component: Furniture,
             meta: {requiresAuth: true}
         },
         {

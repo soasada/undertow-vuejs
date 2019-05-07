@@ -1,5 +1,5 @@
 <template>
-    <div class="users">
+    <div class="houses">
         <CRUDTemplate>
             <template #tableContent>
                 <CRUDTable v-if="tableData.length > 0"
@@ -10,31 +10,26 @@
                 <img alt="loading" src="../assets/loading.gif" v-else>
             </template>
             <template #formContent>
-                <EditAddForm :model="model" resourceName="users" @submittedForm="submittedForm"
+                <EditAddForm :model="model" resourceName="houses" @submittedForm="submittedForm"
                              @modelWasReset="model = $event">
                     <template #formFieldsContent>
                         <fieldset disabled>
                             <div class="field">
-                                <label for="userIdInput" class="label">User ID</label>
+                                <label for="houseIdInput" class="label">House ID</label>
                                 <div class="control">
-                                    <input id="userIdInput" class="input" type="number" v-model="model.id">
+                                    <input id="houseIdInput" class="input" type="number" v-model="model.id">
                                 </div>
                             </div>
                         </fieldset>
 
                         <div class="field">
-                            <label for="usernameInput" class="label">Username</label>
+                            <label for="nameInput" class="label">House name</label>
                             <div class="control">
-                                <input id="usernameInput" class="input" type="text" v-model="model.username">
+                                <input id="nameInput" class="input" type="text" v-model="model.name">
                             </div>
                         </div>
 
-                        <div class="field">
-                            <label for="passwordInput" class="label">Username</label>
-                            <div class="control">
-                                <input id="passwordInput" class="input" type="text" v-model="model.password">
-                            </div>
-                        </div>
+                        <UserSelector v-model="model.userId"/>
                     </template>
                 </EditAddForm>
             </template>
@@ -46,18 +41,20 @@
     import CRUDTemplate from '@/components/CRUDTemplate.vue';
     import CRUDTable from '@/components/CRUDTable.vue';
     import EditAddForm from '@/components/EditAddForm.vue';
+    import UserSelector from '@/components/UserSelector.vue';
     import api from '@/components/api';
 
     export default {
-        name: 'users',
+        name: 'houses',
         components: {
             CRUDTemplate,
             CRUDTable,
-            EditAddForm
+            EditAddForm,
+            UserSelector
         },
         data() {
             return {
-                columnNames: ['id', 'username', 'createdAt', 'updatedAt'],
+                columnNames: ['id', 'name', 'userId', 'createdAt', 'updatedAt'],
                 model: {},
                 tableData: []
             };
@@ -67,10 +64,10 @@
         },
         methods: {
             async refreshTable() {
-                this.tableData = await api.all('/users');
+                this.tableData = await api.all('/houses');
             },
             async deleteModel(model) {
-                await api.delete('/users', model.id);
+                await api.delete('/houses', model.id);
                 this.refreshTable();
             },
             async submittedForm() {
@@ -78,7 +75,7 @@
                 this.refreshTable();
             }
         }
-    };
+    }
 </script>
 
 <style scoped>
