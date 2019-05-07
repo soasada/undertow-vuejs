@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="field">
-                            <label for="passwordInput" class="label">Username</label>
+                            <label for="passwordInput" class="label">Password</label>
                             <div class="control">
                                 <input id="passwordInput" class="input" type="text" v-model="model.password">
                             </div>

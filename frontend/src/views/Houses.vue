@@ -7,6 +7,9 @@
                            :tableData="tableData"
                            @modelWasSelected="model = $event"
                            @modelWasDeleted="deleteModel"/>
+                <h2 class="title is-2" v-else-if="model.userId === null || model.userId === undefined">Please select a
+                    user</h2>
+                <h2 class="title is-2" v-else-if="tableData.length <= 0">No data found</h2>
                 <img alt="loading" src="../assets/loading.gif" v-else>
             </template>
             <template #formContent>
@@ -59,20 +62,30 @@
                 tableData: []
             };
         },
-        async mounted() {
-            this.refreshTable();
+        computed: {
+            userId() {
+                return this.model.userId;
+            }
+        },
+        watch: {
+            async userId(newUserId, oldUserId) {
+                // Avoid triggering when edit change userId
+                console.log('newUserId: ' + newUserId + ' oldUserId: ' + oldUserId);
+                this.refreshTable(newUserId);
+            }
         },
         methods: {
-            async refreshTable() {
-                this.tableData = await api.all('/houses');
+            async refreshTable(userId) {
+                if (userId) this.tableData = await api.all('/user/' + userId + '/houses');
             },
             async deleteModel(model) {
                 await api.delete('/houses', model.id);
-                this.refreshTable();
+                this.refreshTable(model.userId);
             },
             async submittedForm() {
-                this.model = {};
-                this.refreshTable();
+                const userId = this.model.userId;
+                this.refreshTable(userId);
+                this.model = {userId: userId};
             }
         }
     }

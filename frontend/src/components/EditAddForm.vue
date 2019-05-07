@@ -42,8 +42,8 @@
             },
             removeValToAdd() {
                 this.$emit('modelWasReset', {});
-            },
-        },
+            }
+        }
     };
 </script>
 
