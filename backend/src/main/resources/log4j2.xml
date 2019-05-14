@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <RollingRandomAccessFile name="APILoggerRandomFile"
+                                 fileName="${env:HOME}/api_log/${sys:logfilename}_system.log"
+                                 filePattern="${env:HOME}/api_log/$${date:yyyy}/${sys:logfilename}_system-%d{yyyy-MM-dd}-%i.log.gz"
+                                 immediateFlush="false">
+            <PatternLayout>
+                <pattern>{"timestamp": "%d", "level": "%p", "logger": "%c", "msg": %m, "extra": "%X"}%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+        <Null name="APINullAppender"/>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO" includeLocation="false">
+            <AppenderRef ref="APILoggerRandomFile"/>
+        </Root>
+
+        <Logger name="null" level="ALL" additivity="false">
+            <appender-ref ref="APINullAppender" level="ALL"/>
+        </Logger>
+    </Loggers>
+</Configuration>
