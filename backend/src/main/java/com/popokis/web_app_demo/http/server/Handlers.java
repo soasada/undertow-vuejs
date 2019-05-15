@@ -1,5 +1,8 @@
 package com.popokis.web_app_demo.http.server;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.async.NonBlockingInputFeeder;
 import com.google.common.base.Stopwatch;
 import com.popokis.web_app_demo.exception.Exceptions;
 import com.popokis.web_app_demo.mapper.json.JsonMapper;
@@ -21,6 +24,9 @@ public final class Handlers {
     return new BlockingHandler(
         exchange -> {
           try {
+            JsonFactory jsonFactory = new JsonFactory();
+            JsonParser parser = jsonFactory.createNonBlockingByteArrayParser();
+            NonBlockingInputFeeder feeder = parser.getNonBlockingInputFeeder();
             String jsonBody = Requests.body(exchange);
             R request = JsonMappers.model(jsonBody, requestType);
             S response = f.apply(request);
