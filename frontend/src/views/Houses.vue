@@ -69,8 +69,6 @@
         },
         watch: {
             async userId(newUserId, oldUserId) {
-                // Avoid triggering when edit change userId
-                console.log('newUserId: ' + newUserId + ' oldUserId: ' + oldUserId);
                 this.refreshTable(newUserId);
             }
         },
@@ -88,7 +86,7 @@
                 this.model = {userId: userId};
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
