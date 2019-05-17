@@ -1,6 +1,5 @@
 <template>
     <div class="furniture">
-        {{ userId }}
         <CRUDTemplate>
             <template #tableContent>
                 <CRUDTable v-if="tableData.length > 0"
