@@ -37,6 +37,10 @@ The database is configured via `.properties` files (thanks to HikariCP that supp
 for production configuration and [db_test_pool.properties](/backend/src/main/resources/database/db_test_pool.properties) for testing.
 The class responsible of load this config files is: [HikariConnectionPool.java](/backend/src/main/java/com/popokis/web_app_demo/db/HikariConnectionPool.java).
 
+## Frontend
+
+TODO
+
 ## Features
 
 * HTTPs/HTTP2.
