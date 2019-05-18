@@ -22,7 +22,7 @@ In the backend module we have the following dependencies:
 **Spring JDBC** is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
 One of the solutions is to put prefixes to the column names of the database tables. More info: https://stackoverflow.com/questions/15184709/cachedrowsetimpl-getstring-based-on-column-label-throws-invalid-column-name
 
-**Guava** is optional, is part of a proof of concept with [RequestHandler.java](RequestHandler.java) and [ResponseHandler.java](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/java/com/popokis/web_app_demo/http/server/ResponseHandler.java).
+**Guava** is optional, is part of a proof of concept with [RequestHandler.java](/backend/src/main/java/com/popokis/web_app_demo/http/server/RequestHandler.java) and [ResponseHandler.java](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/java/com/popokis/web_app_demo/http/server/ResponseHandler.java).
 
 ### 1. Web server
 
