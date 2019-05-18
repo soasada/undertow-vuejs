@@ -1,7 +1,5 @@
 # Web application demo with Undertow + Vue.js
 
-# [Demo](http://popokis.com:8080) Remember to accept risks (self-signed cert)
-
 **Inspired in https://github.com/jonashackt/spring-boot-vuejs**
 
 Example project to build single page web applications with [Undertow](http://undertow.io) and [Vue.js](https://vuejs.org).
@@ -24,13 +22,14 @@ In the backend module we have the following dependencies:
 **Spring JDBC** is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
 One of the solutions is to put prefixes to the column names of the database tables. More info: https://stackoverflow.com/questions/15184709/cachedrowsetimpl-getstring-based-on-column-label-throws-invalid-column-name
 
-**Guava** is optional, is part of a proof of concept with [RequestHandler.java](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/java/com/popokis/web_app_demo/http/server/RequestHandler.java) and [ResponseHandler.java](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/java/com/popokis/web_app_demo/http/server/ResponseHandler.java).
+**Guava** is optional, is part of a proof of concept with [RequestHandler.java](RequestHandler.java) and [ResponseHandler.java](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/java/com/popokis/web_app_demo/http/server/ResponseHandler.java).
 
 ### 1. Web server
 
-The main class (Application.java) has all the logic to run undertow over HTTPs and the redirection from HTTP to HTTPs.
-It is a good idea to have all configurations in separate files (inside resources folder) and within the version control.
-In the main class we have a class that loads the server configuration from the `app.properties` file.
+The web server is configured via [app.properties](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/resources/app.properties) and
+certificates (key-store and trust-store) inside `certificate` folder.
+
+The router of the server is an Undertow HttpHandler you can see it in [Router.java]()
 
 ### 2. Database
 
@@ -54,6 +53,12 @@ testing database.
 * OpenJDK 12 support.
 * Easy backend and frontend testing.
 
+## Try it!
+
+[Demo here](http://popokis.com:8080) Remember to accept risks (self-signed cert), for login use:\
+`admin`\
+`admin`\
+
 ## Steps to deploy
 
 0. Download JDK12 from: https://jdk.java.net/12/ and put in your machine at:
@@ -71,7 +76,7 @@ or (ubuntu based) add this line at the end of your ~/.bashrc:
 `export JAVA_HOME=/opt/prod_jdk`\
 `export PATH=$PATH:$JAVA_HOME/bin`
 
-1. Compile Vuejs project and generate static files.
+1. Compile Vue.js project and generate static files.
 
 `mvn -U clean install -pl :frontend`
 
@@ -79,7 +84,7 @@ or (ubuntu based) add this line at the end of your ~/.bashrc:
 
 `rm -rf backend/src/main/resources/public`
 
-3. Test migrations.
+3. Test migrations (require a running docker).
 
 `mvn -U clean -pl :backend -Dflyway.configFiles=src/main/resources/database/test_migrations.properties flyway:migrate`
 
@@ -89,11 +94,9 @@ or (ubuntu based) add this line at the end of your ~/.bashrc:
 
 5. Run application (change APP_ENV with `prod` or `test`).
 
-`export APP_ENV=test && java -jar backend/target/backend-0.0.1.jar`
+`export APP_ENV=test && java -Xms64M -Xmx512M -Dlogfilename=web -Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector -jar backend/target/backend-0.0.1.jar`
 
-**NOTE:** There is a script to deploy locally (_deploy.sh_), **use it for development only!**.
-
-## Remember to add to router the routes of vue-router in order to avoid 404.
+**NOTE:** There is a script to deploy locally (_local_deploy.sh_), **use it for development only!**.
 
 ## Manifesto
 

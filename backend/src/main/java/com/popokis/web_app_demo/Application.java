@@ -2,6 +2,7 @@ package com.popokis.web_app_demo;
 
 import com.popokis.web_app_demo.db.JdbcMapper;
 import com.popokis.web_app_demo.entity.User;
+import com.popokis.web_app_demo.http.server.Router;
 import com.popokis.web_app_demo.http.server.SimpleServer;
 import com.popokis.web_app_demo.repository.UserRepository;
 
@@ -21,7 +22,7 @@ public final class Application {
     // This should be in other class.
     UserRepository.create(User.builder().username("admin").password("admin").build());
 
-    SimpleServer server = new SimpleServer();
+    SimpleServer server = new SimpleServer(Router.toHttpsRedirect(Router.router()));
     server.start();
   }
 

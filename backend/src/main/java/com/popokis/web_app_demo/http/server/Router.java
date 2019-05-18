@@ -4,14 +4,33 @@ import com.popokis.web_app_demo.http.api.FurnitureHandler;
 import com.popokis.web_app_demo.http.api.HouseHandler;
 import com.popokis.web_app_demo.http.api.UserHandler;
 import io.undertow.Handlers;
+import io.undertow.attribute.ExchangeAttributes;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.encoding.EncodingHandler;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.server.handlers.resource.ResourceHandler;
+import io.undertow.util.Headers;
+import io.undertow.util.StatusCodes;
+
+import static io.undertow.Handlers.predicate;
+import static io.undertow.predicate.Predicates.secure;
 
 public final class Router {
 
   private Router() {}
+
+  public static HttpHandler toHttpsRedirect(HttpHandler routes) {
+    return Handlers.header(
+        predicate(
+            secure(),
+            routes,
+            (exchange) -> {
+              exchange.getResponseHeaders().add(Headers.LOCATION, "https://" + exchange.getHostName() + ":" + (exchange.getHostPort() + 363) + exchange.getRelativePath());
+              exchange.setStatusCode(StatusCodes.TEMPORARY_REDIRECT);
+            }
+        ), "x-undertow-transport", ExchangeAttributes.transportProtocol()
+    );
+  }
 
   public static HttpHandler router() {
     return Handlers.path()

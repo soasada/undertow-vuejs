@@ -1,11 +1,8 @@
 package com.popokis.web_app_demo.http.server;
 
-import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
-import io.undertow.attribute.ExchangeAttributes;
-import io.undertow.util.Headers;
-import io.undertow.util.StatusCodes;
+import io.undertow.server.HttpHandler;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -24,16 +21,13 @@ import java.security.cert.CertificateException;
 import java.util.Objects;
 import java.util.Properties;
 
-import static io.undertow.Handlers.predicate;
-import static io.undertow.predicate.Predicates.secure;
-
 public final class SimpleServer {
 
   private static final char[] STORE_PASSWORD = "password".toCharArray();
 
   private final Undertow server;
 
-  public SimpleServer() {
+  public SimpleServer(HttpHandler router) {
     Properties appProps = new Properties();
 
     try (InputStream fi = SimpleServer.class.getResourceAsStream(File.separator + "app.properties")) {
@@ -53,11 +47,8 @@ public final class SimpleServer {
         .setServerOption(UndertowOptions.ENABLE_HTTP2, true)
         .addHttpListener(Integer.parseInt(httpPort), address)
         .addHttpsListener(Integer.parseInt(httpsPort), address, createSSLContext(loadKeyStore("certificate/client.jks"), loadKeyStore("certificate/clienttrust.jks")))
-        .setHandler(Handlers.header(predicate(secure(), Router.router(), (exchange) -> {
-              exchange.getResponseHeaders().add(Headers.LOCATION, "https://" + exchange.getHostName() + ":" + (exchange.getHostPort() + 363) + exchange.getRelativePath());
-              exchange.setStatusCode(StatusCodes.TEMPORARY_REDIRECT);
-            }), "x-undertow-transport", ExchangeAttributes.transportProtocol())
-        ).build();
+        .setHandler(router)
+        .build();
   }
 
   public void start() {
