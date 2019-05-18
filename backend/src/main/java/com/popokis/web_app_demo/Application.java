@@ -18,6 +18,7 @@ public final class Application {
       .collect(toConcurrentMap(m -> m.type().getSimpleName(), ServiceLoader.Provider::get));
 
   public static void main(String[] args) {
+    // This should be in other class.
     UserRepository.create(User.builder().username("admin").password("admin").build());
 
     SimpleServer server = new SimpleServer();

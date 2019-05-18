@@ -1,8 +1,8 @@
-# Web application demo with Undertow + Vuejs
+# Web application demo with Undertow + Vue.js
 
 **Inspired in https://github.com/jonashackt/spring-boot-vuejs**
 
-The intention of this repo is to give you a seed project (or example project?) to build single page web applications with undertow and vuejs.
+Example project to build single page web applications with [Undertow](http://undertow.io) and [Vue.js](https://vuejs.org).
 
 The project consists in two modules: **backend** and **frontend**.
 
@@ -16,10 +16,13 @@ In the backend module we have the following dependencies:
 * IMMUTABLE MODELS: **Lombok**.
 * JSON: **Jackson**.
 * HTTP AUTHORIZATION: **JWT**.
+* LOGGING: **Log4j2**.
 * TESTING: **JUnit 5**.
 
 **Spring JDBC** is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
 One of the solutions is to put prefixes to the column names of the database tables. More info: https://stackoverflow.com/questions/15184709/cachedrowsetimpl-getstring-based-on-column-label-throws-invalid-column-name
+
+**Guava** is optional, is part of a proof of concept with [RequestHandler.java](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/java/com/popokis/web_app_demo/http/server/RequestHandler.java) and [ResponseHandler.java](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/java/com/popokis/web_app_demo/http/server/ResponseHandler.java).
 
 ### 1. Web server
 
