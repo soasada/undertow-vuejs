@@ -22,7 +22,7 @@ public final class Application {
     // This should be in other class.
     UserRepository.create(User.builder().username("admin").password("admin").build());
 
-    SimpleServer server = new SimpleServer(Router.toHttpsRedirect(Router.router()));
+    SimpleServer server = new SimpleServer(Router.withHttpsRedirect(Router.router()));
     server.start();
   }
 

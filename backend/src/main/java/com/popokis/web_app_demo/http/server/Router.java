@@ -19,7 +19,7 @@ public final class Router {
 
   private Router() {}
 
-  public static HttpHandler toHttpsRedirect(HttpHandler routes) {
+  public static HttpHandler withHttpsRedirect(HttpHandler routes) {
     return Handlers.header(
         predicate(
             secure(),

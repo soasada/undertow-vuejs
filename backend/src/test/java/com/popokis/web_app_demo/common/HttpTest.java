@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class HttpTest extends DatabaseTest {
 
-  private static SimpleServer server = new SimpleServer(Router.toHttpsRedirect(Router.router()));
+  private static SimpleServer server = new SimpleServer(Router.withHttpsRedirect(Router.router()));
   protected String address = "http://localhost:8080/api/v1";
 
   @BeforeEach
