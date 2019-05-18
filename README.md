@@ -22,20 +22,20 @@ In the backend module we have the following dependencies:
 **Spring JDBC** is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
 One of the solutions is to put prefixes to the column names of the database tables. More info: https://stackoverflow.com/questions/15184709/cachedrowsetimpl-getstring-based-on-column-label-throws-invalid-column-name
 
-**Guava** is optional, is part of a proof of concept with [RequestHandler.java](/backend/src/main/java/com/popokis/web_app_demo/http/server/RequestHandler.java) and [ResponseHandler.java](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/java/com/popokis/web_app_demo/http/server/ResponseHandler.java).
+**Guava** is optional, is part of a proof of concept with [RequestHandler.java](/backend/src/main/java/com/popokis/web_app_demo/http/server/RequestHandler.java) and [ResponseHandler.java](/backend/src/main/java/com/popokis/web_app_demo/http/server/ResponseHandler.java).
 
 ### 1. Web server
 
-The web server is configured via [app.properties](https://github.com/soasada/web-app-demo/blob/master/backend/src/main/resources/app.properties) and
+The web server is configured via [app.properties](/backend/src/main/resources/app.properties) and
 certificates (key-store and trust-store) inside `certificate` folder.
 
-The router of the server is an Undertow HttpHandler you can see it in [Router.java]()
+The router of the server is an Undertow HttpHandler you can see it in [Router.java](/backend/src/main/java/com/popokis/web_app_demo/http/server/Router.java).
 
 ### 2. Database
 
-Sometimes we need persistent storage, in this example project I used MySQL as RDBMS and HikariCP. HikariCP support configuration
-files, **db_prod_pool.properties** and **db_test_pool.properties** are used for HikariCP configuration for the production and
-testing database.
+The database is configured via `.properties` files (thanks to HikariCP that supports them) via [db_prod_pool.properties](/backend/src/main/resources/database/db_prod_pool.properties)
+for production configuration and [db_test_pool.properties](/backend/src/main/resources/database/db_test_pool.properties) for testing.
+The class responsible of load this config files is: [HikariConnectionPool.java](/backend/src/main/java/com/popokis/web_app_demo/db/HikariConnectionPool.java).
 
 ## Features
 
