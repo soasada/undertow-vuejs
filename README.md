@@ -57,7 +57,7 @@ The class responsible of load this config files is: [HikariConnectionPool.java](
 
 [Demo here](http://popokis.com:8080) Remember to accept risks (self-signed cert), for login use:\
 `admin`\
-`admin`\
+`admin`
 
 ## Steps to deploy
 
