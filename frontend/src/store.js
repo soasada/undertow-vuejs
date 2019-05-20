@@ -31,6 +31,8 @@ export default new Vuex.Store({
             }).then((response) => {
                 const token = response.data.token;
                 commit('SET_TOKEN', token);
+                commit('SET_SIGN_IN_ERROR', false);
+                commit('SET_SIGN_IN_ERROR_MSG', '');
                 sessionStorage.setItem('token', token);
                 if (route.query.redirect) {
                     router.push(route.query.redirect);
@@ -40,7 +42,7 @@ export default new Vuex.Store({
             }).catch((error) => {
                 commit('SET_TOKEN', null);
                 commit('SET_SIGN_IN_ERROR', true);
-                commit('SET_SIGN_IN_ERROR_MSG', error.response);
+                commit('SET_SIGN_IN_ERROR_MSG', error.response.data);
                 sessionStorage.removeItem('token');
             });
         },
@@ -51,7 +53,7 @@ export default new Vuex.Store({
     },
     getters: {
         isAuthenticated(state) {
-            if (state.token === null) {
+            if (state.token === null || state.token === undefined) {
                 return false;
             }
 

@@ -23,7 +23,7 @@ public final class Handlers {
             S response = f.apply(request);
             Responses.asJson(exchange, JsonMapper.getInstance().toJson(response));
           } catch (Exception e) {
-            Responses.asJson(exchange, Exceptions.rootCause(e).getMessage());
+            Responses.serverError(exchange, Exceptions.rootCause(e).getMessage());
           }
         }
     );
@@ -38,7 +38,7 @@ public final class Handlers {
             S response = f.apply(id);
             Responses.asJson(exchange, JsonMapper.getInstance().toJson(response));
           } catch (Exception e) {
-            Responses.asJson(exchange, Exceptions.rootCause(e).getMessage());
+            Responses.serverError(exchange, Exceptions.rootCause(e).getMessage());
           }
         }
     );
@@ -51,7 +51,7 @@ public final class Handlers {
             List<S> response = f.apply(null);
             Responses.asJson(exchange, JsonMapper.getInstance().toJson(response));
           } catch (Exception e) {
-            Responses.asJson(exchange, Exceptions.rootCause(e).getMessage());
+            Responses.serverError(exchange, Exceptions.rootCause(e).getMessage());
           }
         }
     );

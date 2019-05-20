@@ -23,4 +23,9 @@ public final class Responses {
     exchange.setStatusCode(StatusCodes.NOT_FOUND);
     exchange.getResponseSender().send("NOT FOUND");
   }
+
+  public static void serverError(HttpServerExchange exchange, String response) {
+    exchange.setStatusCode(StatusCodes.INTERNAL_SERVER_ERROR);
+    exchange.getResponseSender().send(response);
+  }
 }

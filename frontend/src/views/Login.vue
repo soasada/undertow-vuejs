@@ -6,6 +6,9 @@
                     <div class="column is-4 is-offset-4">
                         <h3 class="title has-text-grey">Login</h3>
                         <p class="subtitle has-text-grey">Please login to proceed.</p>
+                        <div class="notification is-warning" v-if="signInError">
+                            {{signInErrorMsg}}
+                        </div>
                         <div class="box">
                             <figure class="avatar">
                                 <img src="../assets/example_128x128.png" alt="">
@@ -56,6 +59,14 @@
             return {
                 model: {}
             };
+        },
+        computed: {
+            signInError() {
+                return this.$store.state.signInError;
+            },
+            signInErrorMsg() {
+                return this.$store.state.signInErrorMsg;
+            }
         },
         methods: {
             signIn() {

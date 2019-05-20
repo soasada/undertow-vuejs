@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserRepositoryTest extends DatabaseTest {
@@ -72,5 +73,13 @@ class UserRepositoryTest extends DatabaseTest {
     long newId = UserRepository.create(createdUser);
     User loggedUser = UserRepository.login(createdUser);
     assertEquals(newId, loggedUser.getId());
+  }
+
+  @Test
+  void loginBadUser() {
+    assertThrows(RuntimeException.class, () -> {
+      User createdUser = User.builder().username("ASDAQ").password("ASDAQ").build();
+      UserRepository.login(createdUser);
+    });
   }
 }
