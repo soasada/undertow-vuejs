@@ -1,0 +1,4 @@
+com.popokis.undertow_vuejs.user.FindUserHousesMapper
+com.popokis.undertow_vuejs.furniture.FurnitureMapper
+com.popokis.undertow_vuejs.house.HouseMapper
+com.popokis.undertow_vuejs.user.UserMapper

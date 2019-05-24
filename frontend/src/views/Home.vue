@@ -2,7 +2,7 @@
     <div class="home">
         <div class="container">
             <div class="starter-template">
-                <h1>Web app demo with Undertow + Vue.js</h1>
+                <h1>Undertow + Vue.js demo web application</h1>
                 <p class="lead">Use this project as a seed for building web applications with Undertow and Vue.js</p>
             </div>
         </div>
