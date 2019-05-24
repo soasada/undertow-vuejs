@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.popokis</groupId>
-    <artifactId>web-app-demo</artifactId>
+    <artifactId>undertow-vuejs</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1</version>
     <modules>
