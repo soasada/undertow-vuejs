@@ -2,9 +2,7 @@
 
 **Inspired in https://github.com/jonashackt/spring-boot-vuejs**
 
-Example project to build single page web applications with [Undertow](http://undertow.io) and [Vue.js](https://vuejs.org).
-
-The project consists in two modules: **backend** and **frontend**.
+Sample project that shows how to build single-page applications with [Undertow](http://undertow.io) and [Vue.js](https://vuejs.org). The project is divided in two modules: **backend** and **frontend**.
 
 ## Backend
 
@@ -22,7 +20,7 @@ In the backend module we have the following dependencies:
 **Spring JDBC** is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
 One of the solutions is to put prefixes to the column names of the database tables. More info: https://stackoverflow.com/questions/15184709/cachedrowsetimpl-getstring-based-on-column-label-throws-invalid-column-name
 
-**Guava** is optional, is part of a proof of concept with [RequestHandler.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/RequestHandler.java) and [ResponseHandler.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/ResponseHandler.java).
+**Guava** is optional, is part of a proof of concept with [RequestHandler.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/RequestHandler.java) and [ResponseHandler.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/ResponseHandler.java). This is a work in progress approach.
 
 ### 1. Web server
 
@@ -30,6 +28,11 @@ The web server is configured via [app.properties](/backend/src/main/resources/ap
 certificates (key-store and trust-store) inside `certificate` folder.
 
 The router of the server is an Undertow HttpHandler you can see it in [Router.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/Router.java).
+All of the HTTP API handlers are wrapped with `BlockingHandler` in [Handlers.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/Handlers.java) 
+because all of them do blocking operations and we execute all these operations in the pool of workers of undertow. One of the reasons of this is the blocking nature of the JDBC.
+
+Static files are served from the `public` folder inside `resources` folder. The frontend project compiles all the static files and the `maven-resources-plugin` 
+moves the files from `/frontend/target/dist` to `/resources/public` in the backend module. This happens in the backend module compilation.
 
 ### 2. Database
 
@@ -37,9 +40,16 @@ The database is configured via `.properties` files (thanks to HikariCP that supp
 for production configuration and [db_test_pool.properties](/backend/src/main/resources/database/db_test_pool.properties) for testing.
 The class responsible of load this config files is: [HikariConnectionPool.java](/backend/src/main/java/com/popokis/undertow_vuejs/db/HikariConnectionPool.java).
 
+In order to access to the database, I use raw JDBC with a minimal abstraction to build queries ([Query.java](/backend/src/main/java/com/popokis/undertow_vuejs/db/Query.java)) and execute them ([Database.java](/backend/src/main/java/com/popokis/undertow_vuejs/db/Database.java)).
+To map a table record to an object I made a mapper interface ([JdbcMapper.java](/backend/src/main/java/com/popokis/undertow_vuejs/db/JdbcMapper.java)) to do it manually (the mapping).
+One of the problems that I have encountered is the aliases problem: If you want to return the `ResultSet` to other layers of your application, 
+you have to store it in some cache and return to the layers. This is because if you close the `ResultSet` you lose the connection and the 
+`ResultSet` would be empty. To avoid this situation you can use the `CachedRowSet` class, and then you can close the `ResultSet` and the 
+connection returns to the pool, with the connection closed (returned to the pool) and the record in memory you can map it to an object.
+
 ## Frontend
 
-TODO
+The frontend module is pretty simple is a back-office application to manage the houses and the furniture of it's users.
 
 ## Features
 
