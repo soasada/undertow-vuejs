@@ -18,8 +18,7 @@ import static io.undertow.predicate.Predicates.secure;
 
 public final class Router {
 
-  private Router() {
-  }
+  private Router() {}
 
   public static HttpHandler withHttpsRedirect(HttpHandler routes) {
     return Handlers.header(
