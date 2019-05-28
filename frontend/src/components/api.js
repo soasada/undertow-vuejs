@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const CLIENT = axios.create({
-    baseURL: '/api/v1',
+    baseURL: '/api/v1'
 });
 
 export default {
@@ -32,7 +32,7 @@ export default {
             method,
             url: resource,
             data,
-            // headers: { authorization: sessionStorage.getItem('token') } FOR AUTH
+            headers: {authorization: sessionStorage.getItem('token')}
         })
             .then((res) => res.data)
             .catch((error) => alert(error));

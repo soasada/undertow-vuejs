@@ -2,6 +2,8 @@ package com.popokis.undertow_vuejs.common;
 
 import com.popokis.undertow_vuejs.db.Database;
 import com.popokis.undertow_vuejs.db.Query;
+import com.popokis.undertow_vuejs.user.User;
+import com.popokis.undertow_vuejs.user.UserRepository;
 
 import java.sql.PreparedStatement;
 
@@ -22,6 +24,8 @@ public final class BootstrapDatabase {
     Database.executeInsert(query("INSERT INTO user (u_id, u_username, u_password) VALUES (3, 'delete_house', 'test3')"));
     Database.executeInsert(query("INSERT INTO house (h_id, h_name, h_user_id) VALUES (3, 'delete_house', 3)"));
     Database.executeInsert(query("INSERT INTO furniture (f_id, f_name, f_type, f_house_id) VALUES (5, 'lamp', 'electronic', 2)"));
+
+    UserRepository.create(User.builder().username("admin").password("admin").build());
   }
 
   public static void setDown() {

@@ -40,7 +40,7 @@ class UserRepositoryTest extends DatabaseTest {
   @Test
   void findAllUsers() {
     List<User> users = UserRepository.all();
-    assertEquals(3, users.size());
+    assertEquals(4, users.size());
     assertEquals("soasada", users.get(0).getUsername());
     assertEquals("zyonx", users.get(1).getUsername());
     assertEquals("delete_house", users.get(2).getUsername());
@@ -50,7 +50,7 @@ class UserRepositoryTest extends DatabaseTest {
   void insertUser() {
     User createdUser = User.builder().username("TEST").password("TEST").build();
     long newId = UserRepository.create(createdUser);
-    assertEquals(4L, newId);
+    assertTrue(newId > 0);
   }
 
   @Test

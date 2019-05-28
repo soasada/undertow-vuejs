@@ -2,6 +2,7 @@ package com.popokis.undertow_vuejs.http.server;
 
 import com.popokis.undertow_vuejs.furniture.FurnitureHandler;
 import com.popokis.undertow_vuejs.house.HouseHandler;
+import com.popokis.undertow_vuejs.http.AuthorizationHandler;
 import com.popokis.undertow_vuejs.user.UserHandler;
 import io.undertow.Handlers;
 import io.undertow.attribute.ExchangeAttributes;
@@ -17,7 +18,8 @@ import static io.undertow.predicate.Predicates.secure;
 
 public final class Router {
 
-  private Router() {}
+  private Router() {
+  }
 
   public static HttpHandler withHttpsRedirect(HttpHandler routes) {
     return Handlers.header(
@@ -34,38 +36,42 @@ public final class Router {
 
   public static HttpHandler router() {
     return Handlers.path()
-        // HTTP based API
-        .addPrefixPath("/api/v1", Handlers.routing()
-            // User resources
-            .get("/users", UserHandler.all())
-            .post("/users", UserHandler.create())
-            .get("/users/{id}", UserHandler.read())
-            .put("/users", UserHandler.update())
-            .delete("/users/{id}", UserHandler.remove())
-            .get("/users/{id}/houses", UserHandler.findUserHouses())
+        // Unsecured endpoints
+        .addPrefixPath("/api", Handlers.routing()
             .post("/login", UserHandler.login())
-
-            // House resources
-            .get("/user/{id}/houses", HouseHandler.all())
-            .post("/houses", HouseHandler.create())
-            .get("/houses/{id}", HouseHandler.read())
-            .put("/houses", HouseHandler.update())
-            .delete("/houses/{id}", HouseHandler.remove())
-
-            // Furniture resources
-            .get("/house/{id}/furniture", FurnitureHandler.all())
-            .post("/furniture", FurnitureHandler.create())
-            .get("/furniture/{id}", FurnitureHandler.read())
-            .put("/furniture", FurnitureHandler.update())
-            .delete("/furniture/{id}", FurnitureHandler.remove())
-
             // Health Checking
             .get("/health", Responses::ok)
-            .setFallbackHandler(Responses::notFound))
+        )
+        // HTTP based API
+        .addPrefixPath("/api/v1", new AuthorizationHandler(
+                Handlers.routing()
+                    // User resources
+                    .get("/users", UserHandler.all())
+                    .post("/users", UserHandler.create())
+                    .get("/users/{id}", UserHandler.read())
+                    .put("/users", UserHandler.update())
+                    .delete("/users/{id}", UserHandler.remove())
+                    .get("/users/{id}/houses", UserHandler.findUserHouses())
 
+                    // House resources
+                    .get("/user/{id}/houses", HouseHandler.all())
+                    .post("/houses", HouseHandler.create())
+                    .get("/houses/{id}", HouseHandler.read())
+                    .put("/houses", HouseHandler.update())
+                    .delete("/houses/{id}", HouseHandler.remove())
+
+                    // Furniture resources
+                    .get("/house/{id}/furniture", FurnitureHandler.all())
+                    .post("/furniture", FurnitureHandler.create())
+                    .get("/furniture/{id}", FurnitureHandler.read())
+                    .put("/furniture", FurnitureHandler.update())
+                    .delete("/furniture/{id}", FurnitureHandler.remove())
+
+                    .setFallbackHandler(Responses::notFound)
+            )
+        )
         // Redirect /about to root path to serve the index.html where the SPA lives
         .addExactPath("/about", Handlers.redirect("/"))
-
         // Serve all static files from a folder
         .addPrefixPath("/", new EncodingHandler.Builder().build(null).wrap(new ResourceHandler(
             new ClassPathResourceManager(Thread.currentThread().getContextClassLoader(), "public"))

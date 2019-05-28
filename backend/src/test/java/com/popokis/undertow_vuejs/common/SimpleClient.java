@@ -1,4 +1,11 @@
-package com.popokis.undertow_vuejs.http;
+package com.popokis.undertow_vuejs.common;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.popokis.undertow_vuejs.login.Token;
+import com.popokis.undertow_vuejs.mapper.JsonMapper;
+import com.popokis.undertow_vuejs.mapper.JsonMappers;
+import com.popokis.undertow_vuejs.user.User;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -13,9 +20,19 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
+// HTTP Client for testing purpose
 public final class SimpleClient {
+
+  private static final Map<String, String> TOKEN_CACHE = new ConcurrentHashMap<>();
+  private static final String LOGIN_ENDPOINT = "http://localhost:8080/api/login";
+  private static final String USERNAME = "admin";
+  private static final String PASSWORD = "admin";
 
   private final Duration timeout;
   private final HttpClient httpClient;
@@ -50,6 +67,7 @@ public final class SimpleClient {
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(url))
         .timeout(timeout)
+        .header("Authorization", "Bearer " + loadToken())
         .GET()
         .build();
 
@@ -57,6 +75,18 @@ public final class SimpleClient {
   }
 
   public String post(String url, String jsonBody) {
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(url))
+        .timeout(timeout)
+        .header("Content-Type", "application/json")
+        .header("Authorization", "Bearer " + loadToken())
+        .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+        .build();
+
+    return httpRequest(request);
+  }
+
+  public String unsecurePost(String url, String jsonBody) {
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(url))
         .timeout(timeout)
@@ -72,6 +102,7 @@ public final class SimpleClient {
         .uri(URI.create(url))
         .timeout(timeout)
         .header("Content-Type", "application/json")
+        .header("Authorization", "Bearer " + loadToken())
         .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
         .build();
 
@@ -82,6 +113,7 @@ public final class SimpleClient {
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(url))
         .timeout(timeout)
+        .header("Authorization", "Bearer " + loadToken())
         .DELETE()
         .build();
 
@@ -111,4 +143,29 @@ public final class SimpleClient {
         }
       }
   };
+
+  private String loadToken() {
+    String TOKEN_KEY = USERNAME + PASSWORD;
+    if (TOKEN_CACHE.containsKey(TOKEN_KEY)) {
+      String token = TOKEN_CACHE.get(TOKEN_KEY);
+      DecodedJWT decodedJWT = JWT.decode(token);
+      LocalDateTime expirationDate = decodedJWT.getExpiresAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+      if (expirationDate.isAfter(LocalDateTime.now())) {
+        return TOKEN_CACHE.get(TOKEN_KEY);
+      } else {
+        TOKEN_CACHE.put(TOKEN_KEY, login());
+        return TOKEN_CACHE.get(TOKEN_KEY);
+      }
+    } else {
+      TOKEN_CACHE.put(TOKEN_KEY, login());
+      return TOKEN_CACHE.get(TOKEN_KEY);
+    }
+  }
+
+  private String login() {
+    User userLogin = User.builder().username(USERNAME).password(PASSWORD).build();
+    String loginBody = JsonMapper.getInstance().toJson(userLogin);
+    String jsonResponse = unsecurePost(LOGIN_ENDPOINT, loginBody);
+    return JsonMappers.model(jsonResponse, Token.class).getToken();
+  }
 }

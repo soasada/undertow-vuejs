@@ -1,7 +1,7 @@
 package com.popokis.undertow_vuejs.house;
 
 import com.popokis.undertow_vuejs.common.HttpTest;
-import com.popokis.undertow_vuejs.http.SimpleClient;
+import com.popokis.undertow_vuejs.common.SimpleClient;
 import com.popokis.undertow_vuejs.mapper.JsonMapper;
 import com.popokis.undertow_vuejs.mapper.JsonMappers;
 import org.junit.jupiter.api.Test;
