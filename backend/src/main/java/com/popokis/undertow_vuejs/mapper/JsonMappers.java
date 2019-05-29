@@ -25,4 +25,12 @@ public final class JsonMappers {
       throw new RuntimeException(e);
     }
   }
+
+  public static <T> T model(byte[] jsonModel, Class<T> type) {
+    try {
+      return JsonMapper.getInstance().mapper().readValue(jsonModel, type);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }
