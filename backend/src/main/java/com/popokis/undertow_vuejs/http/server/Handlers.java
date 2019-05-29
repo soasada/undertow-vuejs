@@ -9,6 +9,7 @@ import io.undertow.server.handlers.sse.ServerSentEventConnection;
 import io.undertow.server.handlers.sse.ServerSentEventHandler;
 import io.undertow.util.PathTemplateMatch;
 import io.undertow.util.StringReadChannelListener;
+import org.xnio.IoUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -70,12 +71,17 @@ public final class Handlers {
           new StringReadChannelListener(exchange.getConnection().getByteBufferPool()) {
             @Override
             protected void stringDone(String s) {
-              for (ServerSentEventConnection h : sseHandler.getConnections()) {
-                for (S user : response) {
-                  try {
-                    Thread.sleep(500);
-                  } catch (InterruptedException e) {}
-                  h.send(JsonMapper.getInstance().toJson(user), "user", UUID.randomUUID().toString(), null);
+              for (ServerSentEventConnection connection : sseHandler.getConnections()) {
+                if (connection.isOpen()) {
+                  for (S user : response) {
+                    try {
+                      Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                      throw new RuntimeException(e);
+                    }
+                    connection.send(JsonMapper.getInstance().toJson(user), "user", UUID.randomUUID().toString(), null);
+                  }
+                  IoUtils.safeClose(connection);
                 }
               }
             }
