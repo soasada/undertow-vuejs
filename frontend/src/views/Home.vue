@@ -45,7 +45,9 @@
 
                 axios.get('/api/stream/users')
                     .then((response) => {
-                        this.loading = false;
+                        self.loading = false;
+                        eventSource.close();
+                        self.users = [];
                     })
                     .catch((error) => {
 
