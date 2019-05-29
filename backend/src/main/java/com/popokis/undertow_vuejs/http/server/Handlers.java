@@ -21,18 +21,17 @@ public final class Handlers {
   private Handlers() {}
 
   public static <R, S> HttpHandler bodyBased(Class<R> requestType, Function<R, S> f) {
-    return new BlockingHandler(
-        exchange -> {
-          try {
-            String jsonBody = Requests.body(exchange);
-            R request = JsonMappers.model(jsonBody, requestType);
-            S response = f.apply(request);
-            Responses.asJson(exchange, JsonMapper.getInstance().toJson(response));
-          } catch (Exception e) {
-            Responses.serverError(exchange, Exceptions.rootCause(e).getMessage());
-          }
+    return exchange -> exchange.getRequestReceiver().receiveFullBytes((fullExchange, jsonBody) -> {
+      fullExchange.dispatch(() -> {
+        try {
+          R request = JsonMappers.model(jsonBody, requestType);
+          S response = f.apply(request);
+          fullExchange.dispatch(fullExchange.getIoThread(), () -> Responses.asJson(fullExchange, JsonMapper.getInstance().toJson(response)));
+        } catch (Exception e) {
+          Responses.serverError(fullExchange, Exceptions.rootCause(e).getMessage());
         }
-    );
+      });
+    }, (errorExchange, exception) -> Responses.serverError(errorExchange, Exceptions.rootCause(exception).getMessage()));
   }
 
   public static <S> HttpHandler idBased(Function<Long, S> f) {
