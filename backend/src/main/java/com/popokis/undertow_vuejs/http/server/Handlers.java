@@ -26,7 +26,7 @@ public final class Handlers {
         try {
           R request = JsonMappers.model(jsonBody, requestType);
           S response = f.apply(request);
-          fullExchange.dispatch(fullExchange.getIoThread(), () -> Responses.asJson(fullExchange, JsonMapper.getInstance().toJson(response)));
+          Responses.asJson(fullExchange, JsonMapper.getInstance().toJson(response));
         } catch (Exception e) {
           Responses.serverError(fullExchange, Exceptions.rootCause(e).getMessage());
         }
