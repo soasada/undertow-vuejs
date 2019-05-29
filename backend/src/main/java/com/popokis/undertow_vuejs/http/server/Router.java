@@ -10,10 +10,12 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.encoding.EncodingHandler;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.server.handlers.resource.ResourceHandler;
+import io.undertow.server.handlers.sse.ServerSentEventHandler;
 import io.undertow.util.Headers;
 import io.undertow.util.StatusCodes;
 
 import static io.undertow.Handlers.predicate;
+import static io.undertow.Handlers.serverSentEvents;
 import static io.undertow.predicate.Predicates.secure;
 
 public final class Router {
@@ -34,12 +36,15 @@ public final class Router {
   }
 
   public static HttpHandler router() {
+    final ServerSentEventHandler sseHandler = serverSentEvents();
     return Handlers.path()
+        .addPrefixPath("/sse", sseHandler)
         // Unsecured endpoints
         .addPrefixPath("/api", Handlers.routing()
             .post("/login", UserHandler.login())
             // Health Checking
             .get("/health", Responses::ok)
+            .get("/stream/users", UserHandler.streamUsers(sseHandler))
         )
         // HTTP based API
         .addPrefixPath("/api/v1", new AuthorizationHandler(
