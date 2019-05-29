@@ -5,6 +5,7 @@ import com.popokis.undertow_vuejs.Application;
 import com.popokis.undertow_vuejs.http.server.Handlers;
 import com.popokis.undertow_vuejs.login.Token;
 import io.undertow.server.HttpHandler;
+import io.undertow.server.handlers.sse.ServerSentEventHandler;
 
 import java.util.Date;
 
@@ -48,5 +49,9 @@ public final class UserHandler {
               .sign(HMAC512(Application.SECRET.getBytes()))
       );
     });
+  }
+
+  public static HttpHandler streamUsers(ServerSentEventHandler sseHandler) {
+    return Handlers.streamUsers((Void v) -> UserRepository.all(), sseHandler);
   }
 }

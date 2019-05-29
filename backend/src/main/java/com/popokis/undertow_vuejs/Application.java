@@ -8,6 +8,7 @@ import com.popokis.undertow_vuejs.user.UserRepository;
 
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.UUID;
 
 import static java.util.stream.Collectors.toConcurrentMap;
 
@@ -21,6 +22,9 @@ public final class Application {
   public static void main(String[] args) {
     // This should be in other class.
     UserRepository.create(User.builder().username("admin").password("admin").build());
+    for (int i = 0; i < 10; i++) {
+      UserRepository.create(User.builder().username(UUID.randomUUID().toString()).password(UUID.randomUUID().toString()).build());
+    }
 
     SimpleServer server = new SimpleServer(Router.withHttpsRedirect(Router.router()));
     server.start();

@@ -25,7 +25,7 @@ export default new Vuex.Store({
     actions: {
         signIn({commit}, {username, password, router, route}) {
 
-            axios.post('/api/v1/login', {
+            axios.post('/api/login', {
                 username: username,
                 password: password
             }).then((response) => {

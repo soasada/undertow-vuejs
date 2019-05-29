@@ -5,9 +5,14 @@ import com.popokis.undertow_vuejs.mapper.JsonMapper;
 import com.popokis.undertow_vuejs.mapper.JsonMappers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.BlockingHandler;
+import io.undertow.server.handlers.sse.ServerSentEventConnection;
+import io.undertow.server.handlers.sse.ServerSentEventHandler;
 import io.undertow.util.PathTemplateMatch;
+import io.undertow.util.StringReadChannelListener;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
 
 public final class Handlers {
@@ -53,6 +58,33 @@ public final class Handlers {
           } catch (Exception e) {
             Responses.serverError(exchange, Exceptions.rootCause(e).getMessage());
           }
+        }
+    );
+  }
+
+  public static <S> HttpHandler streamUsers(Function<Void, List<S>> f, ServerSentEventHandler sseHandler) {
+    return new BlockingHandler(
+        exchange -> {
+          // Get the list
+          List<S> response = f.apply(null);
+          new StringReadChannelListener(exchange.getConnection().getByteBufferPool()) {
+            @Override
+            protected void stringDone(String s) {
+              for (ServerSentEventConnection h : sseHandler.getConnections()) {
+                for (S user : response) {
+                  try {
+                    Thread.sleep(500);
+                  } catch (InterruptedException e) {}
+                  h.send(JsonMapper.getInstance().toJson(user), "user", UUID.randomUUID().toString(), null);
+                }
+              }
+            }
+
+            @Override
+            protected void error(IOException e) {
+
+            }
+          }.setup(exchange.getRequestChannel());
         }
     );
   }
