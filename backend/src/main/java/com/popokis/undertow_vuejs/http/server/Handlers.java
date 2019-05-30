@@ -64,6 +64,9 @@ public final class Handlers {
     );
   }
 
+  // See http://lists.jboss.org/pipermail/undertow-dev/2017-May/002019.html
+  // https://github.com/undertow-io/undertow/blob/master/examples/src/main/java/io/undertow/examples/sse/ServerSentEventsServer.java
+  // https://github.com/undertow-io/undertow/blob/master/core/src/test/java/io/undertow/server/handlers/sse/ServerSentEventTestCase.java
   public static <S> HttpHandler streamUsers(Function<Void, List<S>> f, ServerSentEventHandler sseHandler) {
     return new BlockingHandler(
         exchange -> {
