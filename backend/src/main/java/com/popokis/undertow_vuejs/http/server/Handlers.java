@@ -10,8 +10,10 @@ import io.undertow.server.handlers.sse.ServerSentEventHandler;
 import io.undertow.util.PathTemplateMatch;
 import io.undertow.util.StringReadChannelListener;
 import org.xnio.IoUtils;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
@@ -62,6 +64,9 @@ public final class Handlers {
     );
   }
 
+  // See http://lists.jboss.org/pipermail/undertow-dev/2017-May/002019.html
+  // https://github.com/undertow-io/undertow/blob/master/examples/src/main/java/io/undertow/examples/sse/ServerSentEventsServer.java
+  // https://github.com/undertow-io/undertow/blob/master/core/src/test/java/io/undertow/server/handlers/sse/ServerSentEventTestCase.java
   public static <S> HttpHandler streamUsers(Function<Void, List<S>> f, ServerSentEventHandler sseHandler) {
     return new BlockingHandler(
         exchange -> {
@@ -91,6 +96,27 @@ public final class Handlers {
             }
           }.setup(exchange.getRequestChannel());
         }
+    );
+  }
+
+  public static HttpHandler streamNumbers() {
+    return new ServerSentEventHandler(
+        (connection, lastEventId) -> Flux.interval(Duration.ofMillis(500))
+            .take(10)
+            .doOnTerminate(() -> connection.send("close", "close", lastEventId, new ServerSentEventConnection.EventCallback() {
+                  @Override
+                  public void done(ServerSentEventConnection connection, String data, String event, String id) {
+                    connection.shutdown();
+                  }
+
+                  @Override
+                  public void failed(ServerSentEventConnection connection, String data, String event, String id, IOException e) {
+                    e.printStackTrace();
+                    IoUtils.safeClose(connection);
+                  }
+                })
+            )
+            .subscribe((number) -> connection.send(Long.toString(number), "number", Long.toString(number++), null))
     );
   }
 }

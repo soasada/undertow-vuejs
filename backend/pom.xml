@@ -26,6 +26,13 @@
             <version>2.0.21.Final</version>
         </dependency>
 
+        <!-- Reactor -->
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.2.9.RELEASE</version>
+        </dependency>
+
         <!--Database-->
         <dependency>
             <groupId>mysql</groupId>

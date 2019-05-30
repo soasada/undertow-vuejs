@@ -66,7 +66,7 @@ The frontend module is pretty simple is a back-office application to manage the 
 * Application configuration.
 * OpenJDK 12 support.
 * Easy backend and frontend testing.
-* Streams data from the backend to the frontend.
+* Streams data from the backend to the frontend vie SSE with Reactor and vanilla undertow.
 
 ## Try it!
 
