@@ -68,7 +68,7 @@
             }
         },
         watch: {
-            async userId(newUserId, oldUserId) {
+            async userId(newUserId) {
                 this.refreshTable(newUserId);
             }
         },

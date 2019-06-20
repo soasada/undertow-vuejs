@@ -63,13 +63,10 @@
                 }, false);
 
                 axios.get('/api/stream/users')
-                    .then((response) => {
+                    .then(() => {
                         self.loadingUsers = false;
                         eventSource.close();
                         self.users = [];
-                    })
-                    .catch((error) => {
-
                     });
             },
             streamNumbers() {
@@ -80,7 +77,7 @@
                     this.numbers.push(event.data);
                 }, false);
 
-                eventSource.addEventListener('close', (event) => {
+                eventSource.addEventListener('close', () => {
                     this.loadingNumbers = false;
                     this.numbers = [];
                     eventSource.close();

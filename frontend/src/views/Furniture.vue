@@ -78,7 +78,7 @@
             }
         },
         watch: {
-            async houseId(newHouseId, oldHouseId) {
+            async houseId(newHouseId) {
                 this.refreshTable(newHouseId);
             }
         },
