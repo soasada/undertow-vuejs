@@ -77,7 +77,7 @@ public final class SimpleServer {
       keyManagers = keyManagerFactory.getKeyManagers();
 
       TrustManager[] trustManagers;
-      TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+      TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
       trustManagerFactory.init(trustStore);
       trustManagers = trustManagerFactory.getTrustManagers();
 
