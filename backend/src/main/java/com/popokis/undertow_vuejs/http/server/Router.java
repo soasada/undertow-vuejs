@@ -5,35 +5,17 @@ import com.popokis.undertow_vuejs.house.HouseHandler;
 import com.popokis.undertow_vuejs.http.AuthorizationHandler;
 import com.popokis.undertow_vuejs.user.UserHandler;
 import io.undertow.Handlers;
-import io.undertow.attribute.ExchangeAttributes;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.encoding.EncodingHandler;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.server.handlers.resource.ResourceHandler;
 import io.undertow.server.handlers.sse.ServerSentEventHandler;
-import io.undertow.util.Headers;
-import io.undertow.util.StatusCodes;
 
-import static io.undertow.Handlers.predicate;
 import static io.undertow.Handlers.serverSentEvents;
-import static io.undertow.predicate.Predicates.secure;
 
 public final class Router {
 
   private Router() {}
-
-  public static HttpHandler withHttpsRedirect(HttpHandler routes) {
-    return Handlers.header(
-        predicate(
-            secure(),
-            routes,
-            (exchange) -> {
-              exchange.getResponseHeaders().add(Headers.LOCATION, "https://" + exchange.getHostName() + ":" + (exchange.getHostPort() + 363) + exchange.getRelativePath());
-              exchange.setStatusCode(StatusCodes.TEMPORARY_REDIRECT);
-            }
-        ), "x-undertow-transport", ExchangeAttributes.transportProtocol()
-    );
-  }
 
   public static HttpHandler router() {
     final ServerSentEventHandler sseHandler = serverSentEvents();

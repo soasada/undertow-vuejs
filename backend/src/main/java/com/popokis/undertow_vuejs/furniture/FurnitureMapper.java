@@ -1,6 +1,6 @@
 package com.popokis.undertow_vuejs.furniture;
 
-import com.popokis.undertow_vuejs.db.JdbcMapper;
+import com.popokis.popok.sql_db.JdbcMapper;
 import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
 
 import java.util.Optional;

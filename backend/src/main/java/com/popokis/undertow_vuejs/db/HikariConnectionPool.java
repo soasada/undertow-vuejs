@@ -3,17 +3,16 @@ package com.popokis.undertow_vuejs.db;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Properties;
 
 public final class HikariConnectionPool {
 
-  private final HikariDataSource dataSource;
+  private final DataSource dataSource;
 
   private HikariConnectionPool() {
     String env = System.getenv("APP_ENV");
@@ -45,11 +44,7 @@ public final class HikariConnectionPool {
     return Holder.INSTANCE;
   }
 
-  public Connection getConnection() {
-    try {
-      return dataSource.getConnection();
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
+  public DataSource getDataSource() {
+    return dataSource;
   }
 }

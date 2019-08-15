@@ -1,6 +1,6 @@
 package com.popokis.undertow_vuejs.user;
 
-import com.popokis.undertow_vuejs.db.JdbcMapper;
+import com.popokis.popok.sql_db.JdbcMapper;
 import com.popokis.undertow_vuejs.furniture.Furniture;
 import com.popokis.undertow_vuejs.furniture.FurnitureMapper;
 import com.popokis.undertow_vuejs.house.House;

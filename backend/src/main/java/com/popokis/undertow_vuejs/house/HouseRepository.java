@@ -1,10 +1,11 @@
 package com.popokis.undertow_vuejs.house;
 
+import com.popokis.popok.sql_db.Database;
+import com.popokis.popok.sql_db.JdbcMapper;
+import com.popokis.popok.sql_db.ListMapper;
+import com.popokis.popok.sql_db.Query;
 import com.popokis.undertow_vuejs.Application;
-import com.popokis.undertow_vuejs.db.Database;
-import com.popokis.undertow_vuejs.db.JdbcMapper;
-import com.popokis.undertow_vuejs.db.ListMapper;
-import com.popokis.undertow_vuejs.db.Query;
+import com.popokis.undertow_vuejs.db.HikariConnectionPool;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.List;
 public final class HouseRepository {
 
   private static final JdbcMapper<House> mapper = Application.getMapper(House.class);
+  private static final Database db = Database.create(HikariConnectionPool.getInstance().getDataSource());
 
   private HouseRepository() {}
 
@@ -29,7 +31,7 @@ public final class HouseRepository {
       }
     };
 
-    return Database.executeQuery(query, ListMapper.of(mapper)).orElseGet(List::of);
+    return db.executeQuery(query, ListMapper.of(mapper)).orElseGet(List::of);
   }
 
   public static long create(House house) {
@@ -46,7 +48,7 @@ public final class HouseRepository {
       }
     };
 
-    return Database.executeInsert(query);
+    return db.executeInsert(query);
   }
 
   public static House read(long id) {
@@ -62,7 +64,7 @@ public final class HouseRepository {
       }
     };
 
-    return Database.executeQuery(query, mapper).get();
+    return db.executeQuery(query, mapper).get();
   }
 
   public static int update(House house) {
@@ -80,7 +82,7 @@ public final class HouseRepository {
       }
     };
 
-    return Database.executeDML(query);
+    return db.executeDML(query);
   }
 
   public static int delete(long id) {
@@ -96,6 +98,6 @@ public final class HouseRepository {
       }
     };
 
-    return Database.executeDML(query);
+    return db.executeDML(query);
   }
 }

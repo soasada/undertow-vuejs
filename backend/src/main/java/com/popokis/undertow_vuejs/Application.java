@@ -1,10 +1,11 @@
 package com.popokis.undertow_vuejs;
 
-import com.popokis.undertow_vuejs.db.JdbcMapper;
+import com.popokis.popok.http.Server;
+import com.popokis.popok.sql_db.JdbcMapper;
 import com.popokis.undertow_vuejs.http.server.Router;
-import com.popokis.undertow_vuejs.http.server.SimpleServer;
 import com.popokis.undertow_vuejs.user.User;
 import com.popokis.undertow_vuejs.user.UserRepository;
+import io.undertow.util.StatusCodes;
 
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -26,8 +27,13 @@ public final class Application {
       UserRepository.create(User.builder().username(UUID.randomUUID().toString()).password(UUID.randomUUID().toString()).build());
     }
 
-    SimpleServer server = new SimpleServer(Router.withHttpsRedirect(Router.router()));
-    server.start();
+    Server.builder(Router.router())
+        .enableHttps()
+        .keyStorePath("certificate/client.jks")
+        .redirectToHttps(StatusCodes.TEMPORARY_REDIRECT)
+        .enableHttp2()
+        .build()
+        .start();
   }
 
   public static <T> JdbcMapper<T> getMapper(Class<T> type) {

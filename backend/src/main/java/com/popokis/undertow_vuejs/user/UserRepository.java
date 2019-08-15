@@ -1,10 +1,11 @@
 package com.popokis.undertow_vuejs.user;
 
+import com.popokis.popok.sql_db.Database;
+import com.popokis.popok.sql_db.JdbcMapper;
+import com.popokis.popok.sql_db.ListMapper;
+import com.popokis.popok.sql_db.Query;
 import com.popokis.undertow_vuejs.Application;
-import com.popokis.undertow_vuejs.db.Database;
-import com.popokis.undertow_vuejs.db.JdbcMapper;
-import com.popokis.undertow_vuejs.db.ListMapper;
-import com.popokis.undertow_vuejs.db.Query;
+import com.popokis.undertow_vuejs.db.HikariConnectionPool;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.List;
 public final class UserRepository {
 
   private static final JdbcMapper<User> mapper = Application.getMapper(User.class);
+  private static final Database db = Database.create(HikariConnectionPool.getInstance().getDataSource());
 
   private UserRepository() {}
 
@@ -27,7 +29,7 @@ public final class UserRepository {
       public void parameters(PreparedStatement stm) {}
     };
 
-    return Database.executeQuery(query, ListMapper.of(mapper)).orElseGet(List::of);
+    return db.executeQuery(query, ListMapper.of(mapper)).orElseGet(List::of);
   }
 
   public static long create(User user) {
@@ -44,7 +46,7 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeInsert(query);
+    return db.executeInsert(query);
   }
 
   public static User read(long id) {
@@ -60,7 +62,7 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeQuery(query, mapper).get();
+    return db.executeQuery(query, mapper).get();
   }
 
   public static int update(User user) {
@@ -78,7 +80,7 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeDML(query);
+    return db.executeDML(query);
   }
 
   public static int delete(long id) {
@@ -94,7 +96,7 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeDML(query);
+    return db.executeDML(query);
   }
 
   public static User findUserHouses(long id) {
@@ -113,7 +115,7 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeQuery(query, new FindUserHousesMapper()).get();
+    return db.executeQuery(query, new FindUserHousesMapper()).get();
   }
 
   public static User login(User userWithoutHash) {
@@ -130,6 +132,6 @@ public final class UserRepository {
       }
     };
 
-    return Database.executeQuery(query, mapper).orElseThrow(() -> new RuntimeException("Invalid username or password"));
+    return db.executeQuery(query, mapper).orElseThrow(() -> new RuntimeException("Invalid username or password"));
   }
 }

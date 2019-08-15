@@ -1,13 +1,19 @@
 package com.popokis.undertow_vuejs.common;
 
+import com.popokis.popok.http.Server;
 import com.popokis.undertow_vuejs.http.server.Router;
-import com.popokis.undertow_vuejs.http.server.SimpleServer;
+import io.undertow.util.StatusCodes;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 public class HttpTest extends DatabaseTest {
 
-  private static SimpleServer server = new SimpleServer(Router.withHttpsRedirect(Router.router()));
+  private static Server server = Server.builder(Router.router())
+      .enableHttps()
+      .keyStorePath("certificate/client.jks")
+      .enableHttp2()
+      .redirectToHttps(StatusCodes.TEMPORARY_REDIRECT)
+      .build();
   protected String address = "http://localhost:8080/api/v1";
 
   @BeforeEach

@@ -1,10 +1,11 @@
 package com.popokis.undertow_vuejs.furniture;
 
+import com.popokis.popok.sql_db.Database;
+import com.popokis.popok.sql_db.JdbcMapper;
+import com.popokis.popok.sql_db.ListMapper;
+import com.popokis.popok.sql_db.Query;
 import com.popokis.undertow_vuejs.Application;
-import com.popokis.undertow_vuejs.db.Database;
-import com.popokis.undertow_vuejs.db.JdbcMapper;
-import com.popokis.undertow_vuejs.db.ListMapper;
-import com.popokis.undertow_vuejs.db.Query;
+import com.popokis.undertow_vuejs.db.HikariConnectionPool;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.List;
 public final class FurnitureRepository {
 
   private static final JdbcMapper<Furniture> mapper = Application.getMapper(Furniture.class);
+  private static final Database db = Database.create(HikariConnectionPool.getInstance().getDataSource());
 
   private FurnitureRepository() {}
 
@@ -29,7 +31,7 @@ public final class FurnitureRepository {
       }
     };
 
-    return Database.executeQuery(query, ListMapper.of(mapper)).orElseGet(List::of);
+    return db.executeQuery(query, ListMapper.of(mapper)).orElseGet(List::of);
   }
 
   public static long create(Furniture furniture) {
@@ -47,7 +49,7 @@ public final class FurnitureRepository {
       }
     };
 
-    return Database.executeInsert(query);
+    return db.executeInsert(query);
   }
 
   public static Furniture read(long id) {
@@ -63,7 +65,7 @@ public final class FurnitureRepository {
       }
     };
 
-    return Database.executeQuery(query, mapper).get();
+    return db.executeQuery(query, mapper).get();
   }
 
   public static int update(Furniture furniture) {
@@ -82,7 +84,7 @@ public final class FurnitureRepository {
       }
     };
 
-    return Database.executeDML(query);
+    return db.executeDML(query);
   }
 
   public static int delete(long id) {
@@ -98,6 +100,6 @@ public final class FurnitureRepository {
       }
     };
 
-    return Database.executeDML(query);
+    return db.executeDML(query);
   }
 }
