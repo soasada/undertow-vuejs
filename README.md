@@ -8,16 +8,16 @@ Sample project that shows how to build single-page applications with [Undertow](
 
 In the backend module we have the following dependencies:
 
-* WEB SERVER: **Undertow**.
+* WEB SERVER: **Undertow**. (via popok)
 * RDBMS: **MySQL** (provided in a docker image).
 * DB CONNECTION POOL: **HikariCP**.
 * IMMUTABLE MODELS: **Lombok**.
-* JSON: **Jackson**.
+* JSON: **Jackson**. (via popok)
 * HTTP AUTHORIZATION: **JWT**.
 * LOGGING: **Log4j2**.
 * TESTING: **JUnit 5**.
 
-**Spring JDBC** is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
+**Spring JDBC** (via popok) is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
 One of the solutions is to put prefixes to the column names of the database tables. More info: https://stackoverflow.com/questions/15184709/cachedrowsetimpl-getstring-based-on-column-label-throws-invalid-column-name
 
 **Guava** is optional, is part of a proof of concept with [RequestHandler.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/RequestHandler.java) and [ResponseHandler.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/ResponseHandler.java). This is a work in progress approach.
