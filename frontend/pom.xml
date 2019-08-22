@@ -12,10 +12,11 @@
     <artifactId>frontend</artifactId>
 
     <properties>
+        <java.version>12</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>1.12</maven.compiler.source>
-        <maven.compiler.target>1.12</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
     <build>
@@ -23,7 +24,7 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.7.6</version>
+                <version>1.8.0</version>
 
                 <executions>
                     <!-- Install our node and npm version to run npm/node scripts-->
@@ -33,8 +34,8 @@
                             <goal>install-node-and-npm</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v12.7.0</nodeVersion>
-                            <npmVersion>6.10.2</npmVersion>
+                            <nodeVersion>v12.9.0</nodeVersion>
+                            <npmVersion>6.11.1</npmVersion>
                         </configuration>
                     </execution>
 
