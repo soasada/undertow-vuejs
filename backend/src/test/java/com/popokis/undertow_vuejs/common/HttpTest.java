@@ -9,8 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 public class HttpTest extends DatabaseTest {
 
   private static Server server = Server.builder(Router.router())
-      .enableHttps()
-      .keyStorePath("certificate/client.jks")
+      .enableHttps("certificate/client.jks")
       .enableHttp2()
       .redirectToHttps(StatusCodes.TEMPORARY_REDIRECT)
       .build();

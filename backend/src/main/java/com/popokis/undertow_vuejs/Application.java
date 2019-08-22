@@ -28,8 +28,7 @@ public final class Application {
     }
 
     Server.builder(Router.router())
-        .enableHttps()
-        .keyStorePath("certificate/client.jks")
+        .enableHttps("certificate/client.jks")
         .redirectToHttps(StatusCodes.TEMPORARY_REDIRECT)
         .enableHttp2()
         .build()
