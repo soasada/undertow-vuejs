@@ -17,15 +17,14 @@ In the backend module we have the following dependencies:
 * LOGGING: **Log4j2**.
 * TESTING: **JUnit 5**.
 
-**Spring JDBC** (via popok) is optional, in this project you can remove it, but you are going to have problems with aliases in the SQL queries.
+**Spring JDBC** (via popok) provides the functionality to use aliases in the SQL queries.
 One of the solutions is to put prefixes to the column names of the database tables. More info: https://stackoverflow.com/questions/15184709/cachedrowsetimpl-getstring-based-on-column-label-throws-invalid-column-name
 
 **Guava** is optional, is part of a proof of concept with [RequestHandler.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/RequestHandler.java) and [ResponseHandler.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/ResponseHandler.java). This is a work in progress approach.
 
 ### 1. Web server
 
-The web server is configured via [app.properties](/backend/src/main/resources/app.properties) and
-certificates (key-store and trust-store) inside `certificate` folder.
+The web server is configured via [app.properties](/backend/src/main/resources/app.properties).
 
 The router of the server is an Undertow HttpHandler you can see it in [Router.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/Router.java).
 All of the HTTP API handlers are wrapped with `BlockingHandler` in [Handlers.java](/backend/src/main/java/com/popokis/undertow_vuejs/http/server/Handlers.java) 
