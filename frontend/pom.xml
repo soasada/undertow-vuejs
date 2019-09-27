@@ -11,14 +11,6 @@
 
     <artifactId>frontend</artifactId>
 
-    <properties>
-        <java.version>12</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -34,8 +26,8 @@
                             <goal>install-node-and-npm</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v12.9.0</nodeVersion>
-                            <npmVersion>6.11.1</npmVersion>
+                            <nodeVersion>v12.11.0</nodeVersion>
+                            <npmVersion>6.11.3</npmVersion>
                         </configuration>
                     </execution>
 
