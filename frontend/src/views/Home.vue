@@ -72,16 +72,19 @@
             streamNumbers() {
                 let eventSource = new EventSource("sse");
                 this.loadingNumbers = true;
+                const self = this;
 
                 eventSource.addEventListener('number', (event) => {
-                    this.numbers.push(event.data);
+                    self.numbers.push(event.data);
                 }, false);
 
                 eventSource.addEventListener('close', () => {
-                    this.loadingNumbers = false;
-                    this.numbers = [];
+                    self.loadingNumbers = false;
+                    self.numbers = [];
                     eventSource.close();
                 }, false);
+
+                axios.get('/api/stream/numbers');
             }
         }
     }
