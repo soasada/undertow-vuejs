@@ -27,7 +27,7 @@ public final class Router {
             // Health Checking
             .get("/health", Responses::ok)
             .get("/stream/users", UserHandler.streamUsers(sseHandler))
-            .get("/stream/numbers", com.popokis.undertow_vuejs.http.server.Handlers.streamNumbers())
+            .get("/stream/numbers", com.popokis.undertow_vuejs.http.server.Handlers.streamNumbers(sseHandler))
         )
         // HTTP based API
         .addPrefixPath("/api/v1", new AuthorizationHandler(
