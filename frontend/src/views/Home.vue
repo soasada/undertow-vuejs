@@ -70,7 +70,7 @@
                     });
             },
             streamNumbers() {
-                let eventSource = new EventSource("api/stream/numbers");
+                let eventSource = new EventSource("sse");
                 this.loadingNumbers = true;
 
                 eventSource.addEventListener('number', (event) => {
