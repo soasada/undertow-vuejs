@@ -8,8 +8,10 @@ import io.undertow.server.handlers.BlockingHandler;
 import io.undertow.server.handlers.sse.ServerSentEventConnection;
 import io.undertow.server.handlers.sse.ServerSentEventHandler;
 import io.undertow.util.PathTemplateMatch;
+import org.xnio.IoUtils;
 import reactor.core.publisher.Flux;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
@@ -83,32 +85,39 @@ public final class Handlers {
             }
           }
 
-          for (ServerSentEventConnection connection : sseHandler.getConnections()) {
-            if (connection.isOpen()) {
-              connection.shutdown();
-            }
-          }
+          closeConnections(sseHandler);
         }
     );
   }
 
-  public static HttpHandler streamNumbers(ServerSentEventHandler sseHandler) {
-    return exchange -> Flux.interval(Duration.ofMillis(500))
-        .take(10)
-        .doOnTerminate(() -> {
-          for (ServerSentEventConnection connection : sseHandler.getConnections()) {
-            if (connection.isOpen()) {
-              connection.send("close", "close", "LAST_ID", null);
-              connection.shutdown();
-            }
-          }
-        })
-        .subscribe(number -> {
-          for (ServerSentEventConnection connection : sseHandler.getConnections()) {
-            if (connection.isOpen()) {
-              connection.send(Long.toString(number), "number", Long.toString(number++), null);
-            }
-          }
-        });
+  public static HttpHandler streamNumbers() {
+    return new ServerSentEventHandler(
+        (connection, lastEventId) -> Flux.interval(Duration.ofMillis(500))
+            .take(10)
+            .doOnTerminate(() -> connection.send("close", "close", lastEventId, new CloseSSEConnection()))
+            .subscribe(number -> connection.send(Long.toString(number), "number", Long.toString(number), null))
+    );
+  }
+
+  private static void closeConnections(ServerSentEventHandler sseHandler) {
+    for (ServerSentEventConnection connection : sseHandler.getConnections()) {
+      if (connection.isOpen()) {
+        connection.send("close", "close", "close", new CloseSSEConnection());
+      }
+    }
+  }
+
+  private static class CloseSSEConnection implements ServerSentEventConnection.EventCallback {
+
+    @Override
+    public void done(ServerSentEventConnection connection, String data, String event, String id) {
+      connection.shutdown();
+    }
+
+    @Override
+    public void failed(ServerSentEventConnection connection, String data, String event, String id, IOException e) {
+      e.printStackTrace();
+      IoUtils.safeClose(connection);
+    }
   }
 }

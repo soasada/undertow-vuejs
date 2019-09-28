@@ -62,15 +62,16 @@
                     self.users.push(JSON.parse(event.data));
                 }, false);
 
-                axios.get('/api/stream/users')
-                    .then(() => {
-                        self.loadingUsers = false;
-                        eventSource.close();
-                        self.users = [];
-                    });
+                eventSource.addEventListener('close', () => {
+                    self.loadingUsers = false;
+                    self.users = [];
+                    eventSource.close();
+                }, false);
+
+                axios.get('/api/stream/users');
             },
             streamNumbers() {
-                let eventSource = new EventSource("sse");
+                let eventSource = new EventSource("api/stream/numbers");
                 this.loadingNumbers = true;
                 const self = this;
 
@@ -83,8 +84,6 @@
                     self.numbers = [];
                     eventSource.close();
                 }, false);
-
-                axios.get('/api/stream/numbers');
             }
         }
     }
