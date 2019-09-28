@@ -66,33 +66,23 @@ public final class Handlers {
   // See http://lists.jboss.org/pipermail/undertow-dev/2017-May/002019.html
   // https://github.com/undertow-io/undertow/blob/master/examples/src/main/java/io/undertow/examples/sse/ServerSentEventsServer.java
   // https://github.com/undertow-io/undertow/blob/master/core/src/test/java/io/undertow/server/handlers/sse/ServerSentEventTestCase.java
-  public static <S> HttpHandler streamUsers(Function<Void, List<S>> f, ServerSentEventHandler sseHandler) {
+  public static <S> HttpHandler streamUsers(Function<Void, List<S>> f) {
     return new BlockingHandler(
-        exchange -> {
-          // Get the list
-          List<S> response = f.apply(null);
+        new ServerSentEventHandler(
+            (connection, lastEventId) -> {
+              List<S> response = f.apply(null);
 
-          for (S user : response) {
-            for (ServerSentEventConnection connection : sseHandler.getConnections()) {
-              if (connection.isOpen()) {
-                connection.send(JsonMapper.getInstance().toJson(user), "user", UUID.randomUUID().toString(), null);
-              }
+              Flux.interval(Duration.ofMillis(100))
+                  .zipWithIterable(response)
+                  .doOnTerminate(() -> connection.send("close", "close", lastEventId, new CloseSSEConnection()))
+                  .subscribe(tuple -> connection.send(JsonMapper.getInstance().toJson(tuple.getT2()), "user", UUID.randomUUID().toString(), null));
             }
-            try {
-              Thread.sleep(500);
-            } catch (InterruptedException e) {
-              throw new RuntimeException(e);
-            }
-          }
-
-          closeConnections(sseHandler);
-        }
-    );
+        ));
   }
 
   public static HttpHandler streamNumbers() {
     return new ServerSentEventHandler(
-        (connection, lastEventId) -> Flux.interval(Duration.ofMillis(500))
+        (connection, lastEventId) -> Flux.interval(Duration.ofMillis(100))
             .take(10)
             .doOnTerminate(() -> connection.send("close", "close", lastEventId, new CloseSSEConnection()))
             .subscribe(number -> connection.send(Long.toString(number), "number", Long.toString(number), null))
@@ -101,14 +91,11 @@ public final class Handlers {
 
   private static void closeConnections(ServerSentEventHandler sseHandler) {
     for (ServerSentEventConnection connection : sseHandler.getConnections()) {
-      if (connection.isOpen()) {
-        connection.send("close", "close", "close", new CloseSSEConnection());
-      }
+      connection.send("close", "close", "close", new CloseSSEConnection());
     }
   }
 
   private static class CloseSSEConnection implements ServerSentEventConnection.EventCallback {
-
     @Override
     public void done(ServerSentEventConnection connection, String data, String event, String id) {
       connection.shutdown();
@@ -116,7 +103,6 @@ public final class Handlers {
 
     @Override
     public void failed(ServerSentEventConnection connection, String data, String event, String id, IOException e) {
-      e.printStackTrace();
       IoUtils.safeClose(connection);
     }
   }

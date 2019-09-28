@@ -54,7 +54,7 @@
         },
         methods: {
             streamUsers() {
-                let eventSource = new EventSource("sse");
+                let eventSource = new EventSource("api/stream/users");
                 this.loadingUsers = true;
                 const self = this;
 
@@ -67,8 +67,6 @@
                     self.users = [];
                     eventSource.close();
                 }, false);
-
-                axios.get('/api/stream/users');
             },
             streamNumbers() {
                 let eventSource = new EventSource("api/stream/numbers");

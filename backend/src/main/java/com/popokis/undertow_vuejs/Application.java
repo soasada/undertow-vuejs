@@ -12,6 +12,7 @@ import java.util.ServiceLoader;
 import java.util.UUID;
 
 import static java.util.stream.Collectors.toConcurrentMap;
+import static java.util.stream.Collectors.toList;
 
 public final class Application {
 
@@ -22,10 +23,12 @@ public final class Application {
 
   public static void main(String[] args) {
     // This should be in other class.
+    UserRepository.all().stream()
+        .map(u -> UserRepository.delete(u.getId()))
+        .collect(toList()).stream()
+        .map(i -> UserRepository.create(User.builder().username(UUID.randomUUID().toString()).password(UUID.randomUUID().toString()).build()))
+        .collect(toList());
     UserRepository.create(User.builder().username("admin").password("admin").build());
-    for (int i = 0; i < 10; i++) {
-      UserRepository.create(User.builder().username(UUID.randomUUID().toString()).password(UUID.randomUUID().toString()).build());
-    }
 
     Server.builder(Router.router())
         .enableHttps("certificate/client.jks")

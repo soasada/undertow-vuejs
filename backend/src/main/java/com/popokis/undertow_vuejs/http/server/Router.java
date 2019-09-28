@@ -9,24 +9,19 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.encoding.EncodingHandler;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.server.handlers.resource.ResourceHandler;
-import io.undertow.server.handlers.sse.ServerSentEventHandler;
-
-import static io.undertow.Handlers.serverSentEvents;
 
 public final class Router {
 
   private Router() {}
 
   public static HttpHandler router() {
-    final ServerSentEventHandler sseHandler = serverSentEvents();
     return Handlers.path()
-        .addPrefixPath("/sse", sseHandler)
         // Unsecured endpoints
         .addPrefixPath("/api", Handlers.routing()
             .post("/login", UserHandler.login())
             // Health Checking
             .get("/health", Responses::ok)
-            .get("/stream/users", UserHandler.streamUsers(sseHandler))
+            .get("/stream/users", UserHandler.streamUsers())
             .get("/stream/numbers", com.popokis.undertow_vuejs.http.server.Handlers.streamNumbers())
         )
         // HTTP based API
