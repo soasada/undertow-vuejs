@@ -16,6 +16,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.function.LongFunction;
 
 public final class Handlers {
 
@@ -35,7 +36,7 @@ public final class Handlers {
     }, (errorExchange, exception) -> Responses.serverError(errorExchange, Exceptions.rootCause(exception).getMessage()));
   }
 
-  public static <S> HttpHandler idBased(Function<Long, S> f) {
+  public static <S> HttpHandler idBased(LongFunction<S> f) {
     return new BlockingHandler(
         exchange -> {
           try {
@@ -74,7 +75,7 @@ public final class Handlers {
 
               Flux.interval(Duration.ofMillis(100))
                   .zipWithIterable(response)
-                  .doOnTerminate(() -> connection.send("close", "close", lastEventId, new CloseSSEConnection()))
+                  .doOnTerminate(() -> close(connection, lastEventId))
                   .subscribe(tuple -> connection.send(JsonMapper.getInstance().toJson(tuple.getT2()), "user", UUID.randomUUID().toString(), null));
             }
         ));
@@ -84,15 +85,13 @@ public final class Handlers {
     return new ServerSentEventHandler(
         (connection, lastEventId) -> Flux.interval(Duration.ofMillis(100))
             .take(10)
-            .doOnTerminate(() -> connection.send("close", "close", lastEventId, new CloseSSEConnection()))
+            .doOnTerminate(() -> close(connection, lastEventId))
             .subscribe(number -> connection.send(Long.toString(number), "number", Long.toString(number), null))
     );
   }
 
-  private static void closeConnections(ServerSentEventHandler sseHandler) {
-    for (ServerSentEventConnection connection : sseHandler.getConnections()) {
-      connection.send("close", "close", "close", new CloseSSEConnection());
-    }
+  private static void close(ServerSentEventConnection connection, String lastEventId) {
+    connection.send("close", "close", lastEventId, new CloseSSEConnection());
   }
 
   private static class CloseSSEConnection implements ServerSentEventConnection.EventCallback {
