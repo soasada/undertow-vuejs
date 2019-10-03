@@ -2,9 +2,7 @@ package com.popokis.undertow_vuejs.user;
 
 import com.popokis.popok.sql_db.JdbcMapper;
 import com.popokis.undertow_vuejs.furniture.Furniture;
-import com.popokis.undertow_vuejs.furniture.FurnitureMapper;
 import com.popokis.undertow_vuejs.house.House;
-import com.popokis.undertow_vuejs.house.HouseMapper;
 import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
 
 import java.util.ArrayList;
@@ -20,9 +18,9 @@ public final class FindUserHousesMapper implements JdbcMapper<User> {
   private final JdbcMapper<Furniture> furnitureMapper;
 
   public FindUserHousesMapper() {
-    this.userMapper = new UserMapper();
-    this.houseMapper = new HouseMapper();
-    this.furnitureMapper = new FurnitureMapper();
+    this.userMapper = User.mapper();
+    this.houseMapper = House.mapper();
+    this.furnitureMapper = Furniture.mapper();
   }
 
   @Override

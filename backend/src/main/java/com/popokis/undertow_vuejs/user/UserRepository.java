@@ -4,7 +4,6 @@ import com.popokis.popok.sql_db.Database;
 import com.popokis.popok.sql_db.JdbcMapper;
 import com.popokis.popok.sql_db.ListMapper;
 import com.popokis.popok.sql_db.Query;
-import com.popokis.undertow_vuejs.Application;
 import com.popokis.undertow_vuejs.db.HikariConnectionPool;
 
 import java.sql.PreparedStatement;
@@ -13,7 +12,7 @@ import java.util.List;
 
 public final class UserRepository {
 
-  private static final JdbcMapper<User> mapper = Application.getMapper(User.class);
+  private static final JdbcMapper<User> mapper = User.mapper();
   private static final Database db = Database.create(HikariConnectionPool.getInstance().getDataSource());
 
   private UserRepository() {}
