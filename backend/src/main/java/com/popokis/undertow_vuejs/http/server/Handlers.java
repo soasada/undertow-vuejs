@@ -73,7 +73,7 @@ public final class Handlers {
             (connection, lastEventId) -> {
               List<S> response = f.apply(null);
 
-              Flux.interval(Duration.ofMillis(100))
+              Flux.interval(Duration.ofMillis(250))
                   .zipWithIterable(response)
                   .doOnTerminate(() -> close(connection, lastEventId))
                   .subscribe(tuple -> connection.send(JsonMapper.getInstance().toJson(tuple.getT2()), "user", UUID.randomUUID().toString(), null));
@@ -83,7 +83,7 @@ public final class Handlers {
 
   public static HttpHandler streamNumbers() {
     return new ServerSentEventHandler(
-        (connection, lastEventId) -> Flux.interval(Duration.ofMillis(100))
+        (connection, lastEventId) -> Flux.interval(Duration.ofMillis(250))
             .take(10)
             .doOnTerminate(() -> close(connection, lastEventId))
             .subscribe(number -> connection.send(Long.toString(number), "number", Long.toString(number), null))
