@@ -7,8 +7,7 @@ import com.popokis.undertow_vuejs.user.UserRepository;
 import io.undertow.util.StatusCodes;
 
 import java.util.UUID;
-
-import static java.util.stream.Collectors.toList;
+import java.util.stream.IntStream;
 
 public final class Application {
 
@@ -16,11 +15,10 @@ public final class Application {
 
   public static void main(String[] args) {
     // This should be in other class.
-    UserRepository.all().stream()
-        .map(u -> UserRepository.delete(u.getId()))
-        .collect(toList()).stream()
-        .map(i -> UserRepository.create(User.builder().username(UUID.randomUUID().toString()).password(UUID.randomUUID().toString()).build()))
-        .collect(toList());
+    UserRepository.all().forEach(u -> UserRepository.delete(u.getId()));
+    IntStream.iterate(0, i -> i + 1)
+        .limit(9)
+        .forEach(i -> UserRepository.create(User.builder().username(UUID.randomUUID().toString()).password(UUID.randomUUID().toString()).build()));
     UserRepository.create(User.builder().username("admin").password("admin").build());
 
     Server.builder(Router.router())
