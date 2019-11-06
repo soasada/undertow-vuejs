@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class SimpleClient {
 
   private static final Map<String, String> TOKEN_CACHE = new ConcurrentHashMap<>();
-  private static final String LOGIN_ENDPOINT = "http://localhost:8080/api/login";
+  private static final String LOGIN_ENDPOINT = "http://localhost:8081/api/login";
   private static final String USERNAME = "admin";
   private static final String PASSWORD = "admin";
 
