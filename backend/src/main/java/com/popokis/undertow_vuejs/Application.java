@@ -4,7 +4,6 @@ import com.popokis.popok.http.Server;
 import com.popokis.undertow_vuejs.http.server.Router;
 import com.popokis.undertow_vuejs.user.User;
 import com.popokis.undertow_vuejs.user.UserRepository;
-import io.undertow.util.StatusCodes;
 
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -22,9 +21,6 @@ public final class Application {
     UserRepository.create(User.builder().username("admin").password("admin").build());
 
     Server.builder(Router.router())
-        .enableHttps("certificate/client.jks")
-        .redirectToHttps(StatusCodes.TEMPORARY_REDIRECT)
-        .enableHttp2()
         .build()
         .start();
   }
