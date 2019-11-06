@@ -9,11 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 public class HttpTest extends DatabaseTest {
 
   private static Server server = Server.builder(Router.router())
-      .enableHttps("certificate/client.jks")
-      .enableHttp2()
-      .redirectToHttps(StatusCodes.TEMPORARY_REDIRECT)
       .build();
-  protected String address = "http://localhost:8080/api/v1";
+  protected String address = "http://localhost:8081/api/v1";
 
   @BeforeEach
   protected void setUp() {

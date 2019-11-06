@@ -75,7 +75,7 @@ class UserHandlerTest extends HttpTest {
     User userLogin = User.builder().username("TEST").password("TEST").build();
     String loginBody = JsonMapper.getInstance().toJson(userLogin);
     SimpleClient.getInstance().post(address + "/users", loginBody);
-    String jsonResponse = SimpleClient.getInstance().unsecurePost("http://localhost:8080/api/login", loginBody);
+    String jsonResponse = SimpleClient.getInstance().unsecurePost("http://localhost:8081/api/login", loginBody);
     Token token = JsonMappers.model(jsonResponse, Token.class);
     JWT.require(Algorithm.HMAC512(Application.SECRET.getBytes())).build().verify(token.getToken());
   }
@@ -84,7 +84,7 @@ class UserHandlerTest extends HttpTest {
   void incorrectLogin() {
     User userLogin = User.builder().username("TEST").password("TEST").build();
     String loginBody = JsonMapper.getInstance().toJson(userLogin);
-    String jsonResponse = SimpleClient.getInstance().unsecurePost("http://localhost:8080/api/login", loginBody);
+    String jsonResponse = SimpleClient.getInstance().unsecurePost("http://localhost:8081/api/login", loginBody);
     assertEquals("Invalid username or password", jsonResponse);
   }
 }
