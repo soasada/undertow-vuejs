@@ -69,13 +69,13 @@ The frontend module is pretty simple is a back-office application to manage the 
 
 ## Try it!
 
-[Demo here](http://popokis.com:8080), remember to accept risks (self-signed cert), for login use:\
+[Demo here](http://uv.popokis.com), remember to accept risks (self-signed cert), for login use:\
 `admin`\
 `admin`
 
 ## Steps to deploy
 
-0. Download JDK12 from: https://jdk.java.net/12/ and put in your machine at:
+0. Download JDK13 from: https://jdk.java.net/13/ and put in your machine at:
 
 `/opt/prod_jdk`
 
@@ -86,7 +86,7 @@ If you want to have the `java` as a command without typing `/opt/prod_jdk/bin/ja
 
 or (ubuntu based) add this line at the end of your ~/.bashrc:
 
-`export PATH=/opt/apache-maven-3.6.1/bin:$PATH` (for maven)\
+`export PATH=/opt/apache-maven-3.6.2/bin:$PATH` (for maven)\
 `export JAVA_HOME=/opt/prod_jdk`\
 `export PATH=$PATH:$JAVA_HOME/bin`
 
