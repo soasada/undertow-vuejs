@@ -47,4 +47,4 @@ jobs:
           scp -P ${{ secrets.PORT }} $JAR_TO_DEPLOY ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/undertow-vuejs-0.0.1.jar
       - name: Launch app
         run: |
-          ssh -f -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "/opt/prod_jdk/bin/java -jar undertow-vuejs-0.0.1.jar &"
+          ssh -f -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "/opt/prod_jdk/bin/java -Xms64M -Xmx256M -Dlogfilename=web -Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector -jar undertow-vuejs-0.0.1.jar &"
