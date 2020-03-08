@@ -1,0 +1,50 @@
+name: Undertow & Vue.js CI/CD
+
+on: [push]
+
+jobs:
+
+  ci_cd_job:
+    name: Undertow & Vue.js job
+    runs-on: ubuntu-latest
+    env:
+      KILL_JAVA_SH: ${{ github.workspace }}/ci/kill_java_process.sh
+      SERVER_PUB_KEY: ${{ github.workspace }}/data/server/server_pub_key.txt
+      JAR_TO_DEPLOY: ${{ github.workspace }}/backend/target/backend-0.0.1.jar
+    services:
+      mysqldb:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: production_db
+        ports:
+          - 3329:3306
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Set up JDK 13
+        uses: actions/setup-java@v1
+        with:
+          java-version: 13
+      - name: Testing migrations
+        run: mvn -B clean -pl :backend -Dflyway.configFiles=src/main/resources/database/test_migrations.properties flyway:migrate
+      - name: Test & Package frontend
+        run: mvn -B clean install -pl :frontend
+      - name: Test & Package backend
+        run: export APP_ENV=test && mvn -B clean test package -pl :backend
+      - name: Prepare SSH Keys
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat "$SERVER_PUB_KEY" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+      - name: Kill java process
+        run: |
+          ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'bash -s' < $KILL_JAVA_SH
+      - name: Copy jar to server
+        run: |
+          scp -P ${{ secrets.PORT }} $JAR_TO_DEPLOY ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/undertow-vuejs-0.0.1.jar
+      - name: Launch app
+        run: |
+          ssh -f -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "/opt/prod_jdk/bin/java -jar undertow-vuejs-0.0.1.jar &"
