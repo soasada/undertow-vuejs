@@ -39,6 +39,12 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           cat "$SERVER_PUB_KEY" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
+      - name: Launching migrations into production
+        run: |
+          ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "mysql -uroot -proot <<< 'DROP DATABASE production_db; CREATE DATABASE production_db;'"
+          ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "rm -rf undertow-vuejs"
+          ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "git clone git@github.com:soasada/undertow-vuejs.git"
+          ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "/opt/maven/bin/mvn -f undertow-vuejs/backend/pom.xml flyway:migrate"
       - name: Kill java process
         run: |
           ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'bash -s' < $KILL_JAVA_SH
