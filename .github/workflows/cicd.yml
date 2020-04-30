@@ -5,7 +5,7 @@ on: [push]
 jobs:
 
   ci_cd_job:
-    name: Undertow & Vue.js job
+    name: Undertow & Vue.js pipeline
     runs-on: ubuntu-latest
     env:
       KILL_JAVA_SH: ${{ github.workspace }}/ci/kill_java_process.sh
