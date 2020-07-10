@@ -36,7 +36,7 @@ jobs:
       - name: Launching migrations into production
         run: |
           ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "mysql -uroot -proot <<< 'DROP DATABASE IF EXISTS production_db; CREATE DATABASE production_db;'"
-          ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "git clone git@github.com:soasada/undertow-vuejs.git"
+          ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "git clone https://github.com/soasada/undertow-vuejs.git"
           ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "export JAVA_HOME=~/jdk && ~/maven/bin/mvn -f undertow-vuejs/backend/pom.xml flyway:migrate"
           ssh -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "rm -rf undertow-vuejs"
       - name: Kill java process
