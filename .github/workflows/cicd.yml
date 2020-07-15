@@ -1,4 +1,4 @@
-name: Undertow & Vue.js CI/CD pipeline
+name: Undertow & Vue.js CI/CD
 
 on: [push]
 
