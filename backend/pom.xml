@@ -14,7 +14,7 @@
     <properties>
         <popok.version>1.3.13</popok.version>
         <reactor-core.version>3.3.3.RELEASE</reactor-core.version>
-        <mysql-connector-java.version>8.0.19</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
         <hikari.version>3.4.2</hikari.version>
         <lombok.version>1.18.12</lombok.version>
         <jsr305.version>3.0.2</jsr305.version>
